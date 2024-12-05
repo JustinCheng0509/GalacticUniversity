@@ -91,7 +91,7 @@ public class GameTimer : MonoBehaviour
     void EndGame()
     {
         Debug.Log("Time's up! Game Over.");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Example: Reload the scene
+        SceneManager.LoadScene(SceneName.SCENE_OVERWORLD); // Example: Reload the scene
     }
 
     // Call this method when the boss is defeated

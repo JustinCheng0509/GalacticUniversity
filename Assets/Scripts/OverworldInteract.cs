@@ -1,6 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class OverworldInteract : MonoBehaviour
 {
@@ -43,6 +43,7 @@ public class OverworldInteract : MonoBehaviour
         switch (tag) {
             case var value when value == Interaction.INTERACTABLE_TAG_CLASS:
                 Debug.Log("Interacting with class");
+                StartClass();
                 break;
             default:
                 Debug.Log("No interaction found");
@@ -52,6 +53,7 @@ public class OverworldInteract : MonoBehaviour
 
     private void StartClass()
     {
-        
+        // Open the mini-game scene
+        SceneManager.LoadScene(SceneName.SCENE_MINIGAME);
     }
 }
