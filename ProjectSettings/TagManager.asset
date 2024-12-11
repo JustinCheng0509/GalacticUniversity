@@ -15,7 +15,7 @@ TagManager:
   - UI
   - Player
   - INTERACTABLE_LAYER
-  - 
+  - EXCLUDE_GLOBAL_LIGHT
   - 
   - 
   - 
@@ -46,8 +46,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BACKGROUND
+    uniqueID: 3983819877
+    locked: 0
+  - name: BACKGROUND_INDOOR
+    uniqueID: 1298135851
+    locked: 0
   - name: Player
     uniqueID: 2177876831
+    locked: 0
+  - name: FOREGROUND
+    uniqueID: 28477667
+    locked: 0
+  - name: FOREGROUND_INDOOR
+    uniqueID: 2491078379
+    locked: 0
+  - name: UI
+    uniqueID: 3136614727
     locked: 0
   m_RenderingLayers:
   - Default
