@@ -7,6 +7,7 @@ public class OverworldTimeController : MonoBehaviour
     public string currentTime = "07:00";
 
     // 1 means a minute in the game is 1 second in real life
+    [SerializeField]
     private float intervalBetweenMinute = 0.01f;
 
     [SerializeField]
