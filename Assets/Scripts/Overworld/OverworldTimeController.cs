@@ -7,8 +7,7 @@ public class OverworldTimeController : MonoBehaviour
     public string currentTime = "07:00";
 
     // 1 means a minute in the game is 1 second in real life
-    [SerializeField]
-    private float intervalBetweenMinute = 0.01f;
+    public float intervalBetweenMinute = 0.01f;
 
     [SerializeField]
     private TMP_Text timeText;
@@ -17,6 +16,10 @@ public class OverworldTimeController : MonoBehaviour
 
     void Start()
     {
+        if (PlayerPrefs.HasKey("currentTime"))
+        {
+            currentTime = PlayerPrefs.GetString("currentTime");
+        }
         timeText.text = currentTime;
         timeCoroutine = TimeCoroutine(intervalBetweenMinute);
         StartCoroutine(timeCoroutine);
@@ -60,5 +63,8 @@ public class OverworldTimeController : MonoBehaviour
         currentTime = hour.ToString("00") + ":" + minute.ToString("00");
 
         timeText.text = currentTime;
+
+        // Save the time to PlayerPrefs
+        PlayerPrefs.SetString("currentTime", currentTime);
     }
 }
