@@ -36,6 +36,9 @@ public class PlayerInfo: MonoBehaviour
     [SerializeField]
     private TMP_Text interactStatusText;
 
+    [SerializeField]
+    private OverworldUIController overworldUIController;
+
     public void Start()
     {
         // Check PlayerPrefs for saved data
@@ -93,6 +96,7 @@ public class PlayerInfo: MonoBehaviour
                 stress += 0.2f;
                 if (isDoingHomework && dailyGrade.homeworkProgress < 100) {
                     dailyGrade.homeworkProgress += 1f;
+                    overworldUIController.UpdateHomeworkProgress(dailyGrade.homeworkProgress);
                 }
             }
             if (isPlaying){
