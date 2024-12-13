@@ -29,6 +29,12 @@ public class OverworldInteract : MonoBehaviour
     [SerializeField]
     private OverworldSwitchScene overworldSwitchScene;
 
+    [SerializeField]
+    private DialogueController dialogueController;
+
+    [SerializeField]
+    private OverworldTimeController overworldTimeController;
+
     void Update() {
         if (playerInfo.isSleeping) {
             interactPromptPanel.SetActive(false);
@@ -118,6 +124,20 @@ public class OverworldInteract : MonoBehaviour
 
     private void StartClass()
     {
+        if (playerInfo.dailyGrade.attendance)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.alreadyAttendedDialogues);
+            return;
+        }
+
+        if (!overworldTimeController.canAttendClass)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.notClassTimeDialogues);
+            return;
+        }
+        
+        // Set attendance to true
+        playerInfo.dailyGrade.attendance = true;
         // Play the school bell sound
         schoolBell.Play();
         // Open the mini-game scene

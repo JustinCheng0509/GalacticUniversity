@@ -5,6 +5,10 @@ public class DialogueController : MonoBehaviour
 {
     public Dialogue[] introDialogues;
 
+    public Dialogue[] notClassTimeDialogues;
+
+    public Dialogue[] alreadyAttendedDialogues;
+
     [SerializeField]
     private GameObject dialoguePanel;
 
@@ -42,8 +46,6 @@ public class DialogueController : MonoBehaviour
 
     public void SetCurrentDialogues(Dialogue[] dialogues)
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         Time.timeScale = 0;
         currentDialogues = dialogues;
         currentDialogueIndex = 0;
@@ -53,8 +55,6 @@ public class DialogueController : MonoBehaviour
     public void EndDialogue()
     {
         dialoguePanel.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         Time.timeScale = 1;
     }
     

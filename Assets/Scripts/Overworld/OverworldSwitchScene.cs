@@ -46,7 +46,12 @@ public class OverworldSwitchScene : MonoBehaviour
         }
         fadeCanvas.alpha = 0.0f;
         fadeCanvas.gameObject.SetActive(false);
-        dialogueController.SetCurrentDialogues(dialogueController.introDialogues);
+        // check PlayerPrefs to see if the the intro dialogues have been played
+        if (!PlayerPrefs.HasKey("introDialoguesPlayed"))
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.introDialogues);
+            PlayerPrefs.SetInt("introDialoguesPlayed", 1);
+        }
     }
 
     public void FadeOutGame(string sceneName)
