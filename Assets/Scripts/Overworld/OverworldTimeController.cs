@@ -14,6 +14,19 @@ public class OverworldTimeController : MonoBehaviour
 
     IEnumerator timeCoroutine;
 
+    public bool canAttendClass
+    {
+        get
+        {
+            // between 13:45 and 14:15
+            string[] time = currentTime.Split(':');
+            int hour = int.Parse(time[0]);
+            int minute = int.Parse(time[1]);
+
+            return hour == 13 && minute >= 45 || hour == 14 && minute <= 15;
+        }
+    }
+
     void Start()
     {
         if (PlayerPrefs.HasKey("currentTime"))

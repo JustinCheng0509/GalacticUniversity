@@ -14,6 +14,9 @@ public class OverworldSwitchScene : MonoBehaviour
 
     private float musicVolume;
 
+    [SerializeField]
+    private DialogueController dialogueController;
+
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
     void Awake()
     {
@@ -43,6 +46,12 @@ public class OverworldSwitchScene : MonoBehaviour
         }
         fadeCanvas.alpha = 0.0f;
         fadeCanvas.gameObject.SetActive(false);
+        // check PlayerPrefs to see if the the intro dialogues have been played
+        if (!PlayerPrefs.HasKey("introDialoguesPlayed"))
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.introDialogues);
+            PlayerPrefs.SetInt("introDialoguesPlayed", 1);
+        }
     }
 
     public void FadeOutGame(string sceneName)
