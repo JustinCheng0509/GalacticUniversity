@@ -7,6 +7,8 @@ TagManager:
   - Bullet
   - INTERACTABLE_TAG_CLASS
   - TAG_GRASS
+  - INTERACTABLE_TAG_SLEEP
+  - INTERACTABLE_TAG_HOMEWORK
   layers:
   - Default
   - TransparentFX

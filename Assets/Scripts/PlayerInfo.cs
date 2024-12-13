@@ -30,6 +30,12 @@ public class PlayerInfo: MonoBehaviour
 
     public OverworldDailyGrade dailyGrade;
 
+    [SerializeField]
+    private GameObject interactStatusPanel;
+
+    [SerializeField]
+    private TMP_Text interactStatusText;
+
     public void Start()
     {
         // Check PlayerPrefs for saved data
@@ -51,6 +57,7 @@ public class PlayerInfo: MonoBehaviour
             destruction = 0;
             mechanics = 0;
         }
+        dailyGrade = new OverworldDailyGrade();
         updateStatsCoroutine = UpdateStats();
         StartCoroutine(updateStatsCoroutine);
     }
@@ -78,10 +85,15 @@ public class PlayerInfo: MonoBehaviour
             yield return new WaitForSeconds(timeInterval);
             if (!isSleeping){
                 energy -= 0.05f;
+            } else {
+                energy += 0.15f;
             }
             hunger -= 0.05f;
             if (isWorking || isDoingHomework){
                 stress += 0.2f;
+                if (isDoingHomework && dailyGrade.homeworkProgress < 100) {
+                    dailyGrade.homeworkProgress += 1f;
+                }
             }
             if (isPlaying){
                 stress -= 0.2f;
@@ -96,6 +108,8 @@ public class PlayerInfo: MonoBehaviour
 
     public void CancelActions()
     {
+        interactStatusText.text = "";
+        interactStatusPanel.SetActive(false);
         isSleeping = false;
         isDoingHomework = false;
         isWorking = false;

@@ -618,7 +618,7 @@ MonoBehaviour:
   sfxAudioSource: {fileID: 994962284}
   startGameSFX: {fileID: 8300000, guid: c89646ddedcb70541b3b4090e07c5a31, type: 3}
   fadeCanvas: {fileID: 250218264}
-  fadeDuration: 1.3
+  fadeDuration: 1
 --- !u!1 &650260087
 GameObject:
   m_ObjectHideFlags: 0
