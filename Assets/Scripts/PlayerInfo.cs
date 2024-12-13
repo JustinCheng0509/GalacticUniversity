@@ -28,6 +28,8 @@ public class PlayerInfo: MonoBehaviour
 
     IEnumerator updateStatsCoroutine;
 
+    public OverworldDailyGrade dailyGrade;
+
     public void Start()
     {
         // Check PlayerPrefs for saved data
@@ -85,5 +87,18 @@ public class PlayerInfo: MonoBehaviour
                 stress -= 0.2f;
             }
         }
+    }
+
+    public bool IsBusy()
+    {
+        return isSleeping || isDoingHomework || isWorking || isPlaying;
+    }
+
+    public void CancelActions()
+    {
+        isSleeping = false;
+        isDoingHomework = false;
+        isWorking = false;
+        isPlaying = false;
     }
 }
