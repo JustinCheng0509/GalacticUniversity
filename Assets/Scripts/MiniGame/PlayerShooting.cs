@@ -11,6 +11,12 @@ public class PlayerShooting : MonoBehaviour
 
     private float nextFireTime;
 
+    [SerializeField]
+    private AudioSource sfxSource;
+
+    [SerializeField]
+    private AudioClip shootSFX;
+
     void Update()
     {
         if (Input.GetKey(KeyCode.Space) && Time.time > nextFireTime)
@@ -38,6 +44,9 @@ public class PlayerShooting : MonoBehaviour
         // Add velocity to the bullet
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.up * bulletSpeed;
+
+        // Play shooting sound effect
+        sfxSource.PlayOneShot(shootSFX);
     }
 
 }

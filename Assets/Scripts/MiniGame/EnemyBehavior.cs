@@ -13,6 +13,12 @@ public class EnemyBehavior : MonoBehaviour
     
     [Header("UI Elements")]
     public Image healthBarImage;  // Reference to your existing UI Image
+
+    [SerializeField]
+    private AudioSource sfxSource;
+
+    [SerializeField]
+    private AudioClip enemyDestroyedSFX;
     
     private void OnEnable()
     {
@@ -53,8 +59,8 @@ public class EnemyBehavior : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            Destroy(collision.gameObject);
-            Debug.Log("Player destroyed! Game Over.");
+            // Destroy(collision.gameObject);
+            // Debug.Log("Player destroyed! Game Over.");
         }
     }
 
@@ -64,7 +70,8 @@ public class EnemyBehavior : MonoBehaviour
         UpdateHealthUI();
 
         if (currentHealth <= 0)
-        {
+        {   
+            sfxSource.PlayOneShot(enemyDestroyedSFX);
             Destroy(gameObject);
         }
     }
