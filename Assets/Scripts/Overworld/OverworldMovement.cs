@@ -28,6 +28,9 @@ public class OverworldMovement : MonoBehaviour
 
     private bool delayFootstep = false;
 
+    [SerializeField]
+    private PlayerInfo playerInfo;
+
     private void Update() {
         moveDirection = move.action.ReadValue<Vector2>();
     }
@@ -36,6 +39,9 @@ public class OverworldMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);     
         if (moveDirection != Vector2.zero) {
             PlayFootstepSound();
+            if (playerInfo.IsBusy()) {
+                playerInfo.CancelActions();
+            }
         }
     }
 
