@@ -9,6 +9,7 @@ TagManager:
   - TAG_GRASS
   - INTERACTABLE_TAG_SLEEP
   - INTERACTABLE_TAG_HOMEWORK
+  - TAG_BOSS
   layers:
   - Default
   - TransparentFX
