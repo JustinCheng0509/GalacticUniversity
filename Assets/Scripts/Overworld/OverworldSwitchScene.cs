@@ -17,6 +17,8 @@ public class OverworldSwitchScene : MonoBehaviour
     [SerializeField]
     private DialogueController dialogueController;
 
+    public GameObject gameEndPanel;
+
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
     void Awake()
     {
@@ -65,6 +67,7 @@ public class OverworldSwitchScene : MonoBehaviour
         fadeCanvas.gameObject.SetActive(true);
         // Fade out the music and fade in the black screen over fadeDuration seconds
         float time = 0.0f;
+        float fadeDuration = 3f;
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
@@ -76,5 +79,17 @@ public class OverworldSwitchScene : MonoBehaviour
         fadeCanvas.gameObject.SetActive(true);
         // Load the scene after the fade out is complete
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
+
+    public void QuitGame()
+    {
+        Time.timeScale = 1;
+        Application.Quit();
+    }
+
+    public void BackToMainMenu()
+    {
+        Time.timeScale = 1;
+        FadeOutGame(CustomString.SCENE_MAIN_MENU);
     }
 }

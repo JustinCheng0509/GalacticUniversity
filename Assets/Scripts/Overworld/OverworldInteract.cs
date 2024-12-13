@@ -35,6 +35,9 @@ public class OverworldInteract : MonoBehaviour
     [SerializeField]
     private OverworldTimeController overworldTimeController;
 
+    [SerializeField]
+    private OverworldUIController overworldUIController;
+
     void Update() {
         if (playerInfo.isSleeping) {
             interactPromptPanel.SetActive(false);
@@ -97,6 +100,8 @@ public class OverworldInteract : MonoBehaviour
                 return "(E) Sleep";
             case var value when value == CustomString.INTERACTABLE_TAG_HOMEWORK:
                 return "(E) Do homework";
+            case var value when value == CustomString.INTERACTABLE_TAG_NPC:
+                return "(E) Chat";
             default:
                 return "";
         }
@@ -115,6 +120,12 @@ public class OverworldInteract : MonoBehaviour
             case var value when value == CustomString.INTERACTABLE_TAG_HOMEWORK:
                 Debug.Log("Interacting with homework");
                 StartHomework();
+                break;
+            case var value when value == CustomString.INTERACTABLE_TAG_NPC:
+                Debug.Log("Interacting with NPC");
+                dialogueController.SetCurrentDialogues(dialogueController.npcDialogues);
+                PlayerPrefs.SetInt("introNPCTalked", 1);
+                overworldUIController.talkToNPCToggle.isOn = true;
                 break;
             default:
                 Debug.Log("No interaction found");
