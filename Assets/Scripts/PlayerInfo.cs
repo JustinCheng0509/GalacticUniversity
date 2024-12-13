@@ -41,6 +41,7 @@ public class PlayerInfo: MonoBehaviour
 
     public void Start()
     {
+        dailyGrade = new OverworldDailyGrade();
         // Check PlayerPrefs for saved data
         if (PlayerPrefs.HasKey("energy"))
         {
@@ -50,6 +51,8 @@ public class PlayerInfo: MonoBehaviour
             maneuverability = PlayerPrefs.GetFloat("maneuverability");
             destruction = PlayerPrefs.GetFloat("destruction");
             mechanics = PlayerPrefs.GetFloat("mechanics");
+            dailyGrade.attendance = PlayerPrefs.GetInt("attendance") == 1;
+            dailyGrade.homeworkProgress = PlayerPrefs.GetFloat("homeworkProgress");
         }
         else
         {
@@ -60,7 +63,6 @@ public class PlayerInfo: MonoBehaviour
             destruction = 0;
             mechanics = 0;
         }
-        dailyGrade = new OverworldDailyGrade();
         updateStatsCoroutine = UpdateStats();
         StartCoroutine(updateStatsCoroutine);
     }
@@ -78,6 +80,8 @@ public class PlayerInfo: MonoBehaviour
         PlayerPrefs.SetFloat("maneuverability", maneuverability);
         PlayerPrefs.SetFloat("destruction", destruction);
         PlayerPrefs.SetFloat("mechanics", mechanics);
+        PlayerPrefs.SetInt("attendance", dailyGrade.attendance ? 1 : 0);
+        PlayerPrefs.SetFloat("homeworkProgress", dailyGrade.homeworkProgress);
     }
 
     private IEnumerator UpdateStats()

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OverworldUIController : MonoBehaviour
 {
@@ -21,6 +22,17 @@ public class OverworldUIController : MonoBehaviour
     [SerializeField]
     private TMP_Text homeworkText;
 
+    [SerializeField]
+    private GameObject taskPanel;
+
+    public Toggle checkoutClassRoomToggle;
+    public Toggle talkToNPCToggle;
+    public Toggle checkoutShopToggle;
+    public Toggle checkoutDormToggle;
+    public Toggle attendClassToggle;
+    public Toggle doHomeworkToggle;
+
+
     public void UpdateHomeworkProgress(float homeworkProgress)
     {
         homeworkText.text = $"Homework Progress: {homeworkProgress}%";
@@ -31,10 +43,34 @@ public class OverworldUIController : MonoBehaviour
         classPanel.SetActive(!classPanel.activeSelf);
     }
 
+    public void ToggleTaskPanel()
+    {
+        taskPanel.SetActive(!taskPanel.activeSelf);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
+        // Check the toggle
+        if (PlayerPrefs.HasKey("introClassPlayed")) {
+            checkoutClassRoomToggle.isOn = true;
+        }
+        if (PlayerPrefs.HasKey("introShopPlayed")) {
+            checkoutShopToggle.isOn = true;
+        }
+        if (PlayerPrefs.HasKey("introDormPlayed")) {
+            checkoutDormToggle.isOn = true;
+        }
+        if (PlayerPrefs.HasKey("introNPCTalked")) {
+            talkToNPCToggle.isOn = true;
+        }
+        if (PlayerPrefs.HasKey("homeworkProgress") && PlayerPrefs.GetFloat("homeworkProgress") >= 100) {
+            doHomeworkToggle.isOn = true;
+        }
+        if (PlayerPrefs.HasKey("attendance") && PlayerPrefs.GetInt("attendance") == 1) {
+            attendClassToggle.isOn = true;
+        }
     }
 
     // Update is called once per frame
@@ -49,5 +85,7 @@ public class OverworldUIController : MonoBehaviour
             classNotificationPanel.SetActive(false);
         }
         attendanceText.text = "Today's attendance: " + (playerInfo.dailyGrade.attendance ? "Attended" : "Absent/Not Started");
+        attendClassToggle.isOn = playerInfo.dailyGrade.attendance;
+        doHomeworkToggle.isOn = playerInfo.dailyGrade.homeworkProgress >= 100;
     }
 }

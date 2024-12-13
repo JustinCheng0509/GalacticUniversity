@@ -5,11 +5,15 @@ TagManager:
   serializedVersion: 3
   tags:
   - Bullet
-  - INTERACTABLE_TAG_CLASS
   - TAG_GRASS
+  - TAG_BOSS
   - INTERACTABLE_TAG_SLEEP
   - INTERACTABLE_TAG_HOMEWORK
-  - TAG_BOSS
+  - INTERACTABLE_TAG_CLASS
+  - INTERACTABLE_TAG_NPC
+  - TRIGGER_TAG_CLASS
+  - TRIGGER_TAG_DORM
+  - TRIGGER_TAG_SHOP
   layers:
   - Default
   - TransparentFX
@@ -58,6 +62,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2177876831
+    locked: 0
+  - name: NPC
+    uniqueID: 3365395431
     locked: 0
   - name: FOREGROUND
     uniqueID: 28477667

@@ -9,6 +9,14 @@ public class DialogueController : MonoBehaviour
 
     public Dialogue[] alreadyAttendedDialogues;
 
+    public Dialogue[] classroomTriggerDialogues;
+
+    public Dialogue[] dormTriggerDialogues;
+
+    public Dialogue[] shopTriggerDialogues;
+
+    public Dialogue[] npcDialogues;
+
     [SerializeField]
     private GameObject dialoguePanel;
 

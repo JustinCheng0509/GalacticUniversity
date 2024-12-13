@@ -14,6 +14,9 @@ public class OverworldTimeController : MonoBehaviour
 
     IEnumerator timeCoroutine;
 
+    [SerializeField]
+    private OverworldSwitchScene overworldSwitchScene;
+
     public bool canAttendClass
     {
         get
@@ -21,9 +24,8 @@ public class OverworldTimeController : MonoBehaviour
             // between 13:45 and 14:15
             string[] time = currentTime.Split(':');
             int hour = int.Parse(time[0]);
-            int minute = int.Parse(time[1]);
 
-            return hour == 13 && minute >= 45 || hour == 14 && minute <= 15;
+            return hour >= 14 && hour < 16;
         }
     }
 
@@ -70,6 +72,8 @@ public class OverworldTimeController : MonoBehaviour
             if (hour == 24)
             {
                 hour = 0;
+                Time.timeScale = 0;
+                overworldSwitchScene.gameEndPanel.SetActive(true);
             }
         }
 
