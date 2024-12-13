@@ -1,5 +1,5 @@
 public class OverworldDailyGrade
 {
-    public bool attendance;
-    public float homeworkProgress;
+    public bool attendance = false;
+    public float homeworkProgress = 0;
 }
