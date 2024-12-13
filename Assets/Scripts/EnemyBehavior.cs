@@ -1,50 +1,79 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public float moveSpeed = 2f; // Speed at which the enemy moves downward
-    public float rotationSpeed = 100f; // Speed of rotation in degrees per second
-    public int health = 10; // Number of bullets required to destroy the enemy
+    [Header("Movement Settings")]
+    public float moveSpeed = 2f;
+    public float rotationSpeed = 100f;
+    
+    [Header("Health Settings")]
+    public int maxHealth = 10;
+    private int currentHealth;
+    
+    [Header("UI Elements")]
+    public Image healthBarImage;  // Reference to your existing UI Image
+    
+    private void OnEnable()
+    {
+        currentHealth = maxHealth;
+        if (healthBarImage != null)
+        {
+            healthBarImage.gameObject.SetActive(true);
+            healthBarImage.fillAmount = 1f;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (healthBarImage != null)
+        {
+            healthBarImage.gameObject.SetActive(false);
+        }
+    }
 
     void Update()
     {
-        // Move the enemy downward (toward the bottom of the screen)
         transform.Translate(Vector2.down * moveSpeed * Time.deltaTime, Space.World);
-
-        // Rotate the enemy around its Z-axis
         transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
 
-        // Destroy the enemy if it goes off the bottom of the screen
-        if (transform.position.y < -6f) // Adjust this value based on your screen boundaries
+        if (transform.position.y < -6f)
         {
             Destroy(gameObject);
         }
     }
-       void OnTriggerEnter2D(Collider2D collision)
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if the collision object is tagged as "Bullet"
         if (collision.CompareTag("Bullet"))
         {
-            // Decrease health by 1
-            health--;
-
-            // Destroy the bullet
+            TakeDamage(1);
             Destroy(collision.gameObject);
-
-            // Check if health reaches zero
-            if (health <= 0)
-            {
-                Destroy(gameObject); // Destroy the enemy
-            }
         }
 
-                if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            // Destroy the player
             Destroy(collision.gameObject);
-
-            // Optionally, handle game over logic here
             Debug.Log("Player destroyed! Game Over.");
+        }
+    }
+
+    private void TakeDamage(int damage)
+    {
+        currentHealth = Mathf.Max(0, currentHealth - damage);
+        UpdateHealthUI();
+
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void UpdateHealthUI()
+    {
+        if (healthBarImage != null)
+        {
+            healthBarImage.fillAmount = (float)currentHealth / maxHealth;
         }
     }
 }
