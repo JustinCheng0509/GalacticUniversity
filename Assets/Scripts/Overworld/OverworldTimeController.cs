@@ -14,8 +14,9 @@ public class OverworldTimeController : MonoBehaviour
 
     IEnumerator timeCoroutine;
 
-    [SerializeField]
-    private OverworldSwitchScene overworldSwitchScene;
+    [SerializeField] private OverworldSwitchScene overworldSwitchScene;
+
+    [SerializeField] private PlayerInfo playerInfo;
 
     public bool canAttendClass
     {
@@ -31,10 +32,7 @@ public class OverworldTimeController : MonoBehaviour
 
     void Start()
     {
-        if (PlayerPrefs.HasKey("currentTime"))
-        {
-            currentTime = PlayerPrefs.GetString("currentTime");
-        }
+        currentTime = playerInfo.gameData.currentTime;
         timeText.text = currentTime;
         timeCoroutine = TimeCoroutine(intervalBetweenMinute);
         StartCoroutine(timeCoroutine);
@@ -81,7 +79,6 @@ public class OverworldTimeController : MonoBehaviour
 
         timeText.text = currentTime;
 
-        // Save the time to PlayerPrefs
-        PlayerPrefs.SetString("currentTime", currentTime);
+        playerInfo.gameData.currentTime = currentTime;
     }
 }

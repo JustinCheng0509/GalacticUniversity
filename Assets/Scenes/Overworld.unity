@@ -9619,6 +9619,9 @@ GameObject:
   - component: {fileID: 774786378}
   - component: {fileID: 774786379}
   - component: {fileID: 774786380}
+  - component: {fileID: 774786382}
+  - component: {fileID: 774786381}
+  - component: {fileID: 774786383}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -9642,6 +9645,7 @@ MonoBehaviour:
   intervalBetweenMinute: 0.1
   timeText: {fileID: 1730128201}
   overworldSwitchScene: {fileID: 774786378}
+  playerInfo: {fileID: 774786377}
 --- !u!4 &774786376
 Transform:
   m_ObjectHideFlags: 0
@@ -9671,12 +9675,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a7799e9539b0f4886ceb48ac8bcce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energy: 0
-  hunger: 0
-  stress: 0
-  maneuverability: 0
-  destruction: 0
-  mechanics: 0
   isSleeping: 0
   isDoingHomework: 0
   isWorking: 0
@@ -9763,6 +9761,46 @@ MonoBehaviour:
   checkoutDormToggle: {fileID: 1872702322}
   attendClassToggle: {fileID: 1526531575}
   doHomeworkToggle: {fileID: 209150556}
+--- !u!114 &774786381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774786374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d85c8c360e91b4e805342f92f8899b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &774786382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774786374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 547d017eda39202439e8255a75d1097d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &774786383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774786374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e637b6ac2019e6418040b8f06f5ae15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameDataManager: {fileID: 774786382}
+  leaderboardManager: {fileID: 774786381}
+  overworldSwitchScene: {fileID: 774786378}
+  playerInfo: {fileID: 774786377}
 --- !u!1 &797339399
 GameObject:
   m_ObjectHideFlags: 0

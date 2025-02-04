@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-    public float bulletSpeed = 10f;
-    public float fireRate = 0.2f;
-    public string visibleSortingLayer = "Default"; // Layer when visible
-    public string hiddenSortingLayer = "Hidden";  // Layer when hidden
+    [SerializeField]
+    private GameObject bulletPrefab;
+
+    [SerializeField]
+    private Transform bulletSpawn;
+
+    [SerializeField]
+    private float bulletSpeed = 10f;
+
+    [SerializeField]
+    private float fireRate = 0.2f;
 
     private float nextFireTime;
 
@@ -30,16 +35,6 @@ public class PlayerShooting : MonoBehaviour
     {
         // Instantiate the bullet at the spawn point
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
-        
-        // Set the bullet's parent to the player
-        bullet.transform.parent = transform;
-        
-        // Make bullet visible
-        SpriteRenderer sr = bullet.GetComponent<SpriteRenderer>();
-        if (sr != null)
-        {
-            sr.sortingLayerName = visibleSortingLayer;
-        }
 
         // Add velocity to the bullet
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

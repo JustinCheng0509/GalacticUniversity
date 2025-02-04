@@ -5,25 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField]
-    private AudioSource musicAudioSource;
+    [SerializeField] private AudioSource musicAudioSource;
+    [SerializeField] private AudioSource sfxAudioSource;
+    [SerializeField] private AudioClip startGameSFX;
 
-    [SerializeField]
-    private AudioSource sfxAudioSource;
+    [SerializeField] private CanvasGroup fadeCanvas;
+    [SerializeField] private float fadeDuration = 2f;
 
-    [SerializeField]
-    private AudioClip startGameSFX;
+    [SerializeField] private GameDataManager gameDataManager;
+    [SerializeField] private LeaderboardManager leaderboardManager;
 
-    [SerializeField]
-    private CanvasGroup fadeCanvas;
-
-    [SerializeField]
-    private float fadeDuration = 2f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
     public void StartGame(bool isNewGame) {
         if (isNewGame) {
             PlayerPrefs.DeleteAll();
+            gameDataManager.CreateNewGameData();
+            leaderboardManager.CreateNewLeaderboard();
         }
         sfxAudioSource.PlayOneShot(startGameSFX);
         StartCoroutine(StartGameCoroutine());
@@ -45,6 +41,6 @@ public class MainMenuController : MonoBehaviour
     }
 
     private void LoadGameScene() {
-        SceneManager.LoadScene(CustomString.SCENE_OVERWORLD);
+        SceneManager.LoadScene(StaticValues.SCENE_OVERWORLD);
     }
 }
