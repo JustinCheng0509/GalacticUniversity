@@ -37,9 +37,9 @@ public class PlayerInfo: MonoBehaviour
 
     private void Update() {
         // Update the UI, Format to int
-        energyText.text = "Energy: " + Mathf.RoundToInt(gameData.energy).ToString();
-        hungerText.text = "Hunger: " + Mathf.RoundToInt(gameData.hunger).ToString();
-        moodText.text = "Stress: " + Mathf.RoundToInt(gameData.mood).ToString();
+        energyText.text = Mathf.RoundToInt(gameData.energy).ToString();
+        hungerText.text = Mathf.RoundToInt(gameData.hunger).ToString();
+        moodText.text = Mathf.RoundToInt(gameData.mood).ToString();
     }
 
     private IEnumerator UpdateStats()
@@ -59,6 +59,43 @@ public class PlayerInfo: MonoBehaviour
                 if (isDoingHomework && gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress < 100) {
                    gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress += 1f;
                     overworldUIController.UpdateHomeworkProgress(gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress);
+                    // If using skill system, add skill points here
+                    if (StaticValues.USE_SKILL_SYSTEM) {
+                        // 5% chance to increase one of the skills
+                        if (Random.Range(0, 100) < 5) {
+                            int skillToIncrease = Random.Range(0, 3);
+                            switch (skillToIncrease) {
+                                case 0:
+                                    gameData.maneuverability += 1;
+                                    break;
+                                case 1:
+                                    gameData.destruction += 1;
+                                    break;
+                                case 2:
+                                    gameData.mechanics += 1;
+                                    break;
+                            }
+                        }
+                    }
+                }
+                // if working, add money
+                if (isWorking) {
+                    gameData.money += 1;
+                    // 5% chance to increase one of the skills
+                    if (Random.Range(0, 100) < 5) {
+                        int skillToIncrease = Random.Range(0, 3);
+                        switch (skillToIncrease) {
+                            case 0:
+                                gameData.maneuverability += 1;
+                                break;
+                            case 1:
+                                gameData.destruction += 1;
+                                break;
+                            case 2:
+                                gameData.mechanics += 1;
+                                break;
+                        }
+                    }
                 }
             }
             if (isPlaying){

@@ -102,6 +102,10 @@ public class OverworldInteract : MonoBehaviour
                 return "(E) Do homework";
             case var value when value == StaticValues.INTERACTABLE_TAG_NPC:
                 return "(E) Chat";
+            case var value when value == StaticValues.INTERACTABLE_TAG_SHOP:
+                return "(E) Buy food";
+            case var value when value == StaticValues.INTERACTABLE_TAG_WORK:
+                return "(E) Work";
             default:
                 return "";
         }
@@ -120,6 +124,13 @@ public class OverworldInteract : MonoBehaviour
             case var value when value == StaticValues.INTERACTABLE_TAG_HOMEWORK:
                 Debug.Log("Interacting with homework");
                 StartHomework();
+                break;
+            case var value when value == StaticValues.INTERACTABLE_TAG_WORK:
+                Debug.Log("Interacting with work");
+                StartWorking();
+                break;
+            case var value when value == StaticValues.INTERACTABLE_TAG_SHOP:
+                BuyFood();
                 break;
             case var value when value == StaticValues.INTERACTABLE_TAG_NPC:
                 Debug.Log("Interacting with NPC");
@@ -154,6 +165,18 @@ public class OverworldInteract : MonoBehaviour
         // Open the mini-game scene
         overworldSwitchScene.FadeOutGame(StaticValues.SCENE_MINIGAME);
     }
+    
+    private void BuyFood()
+    {
+        if (playerInfo.gameData.money < 50)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.notEnoughMoneyDialogues);
+            return;
+        }
+        
+        playerInfo.gameData.money -= 50;
+        playerInfo.gameData.hunger += 30;
+    }
 
     private void StartSleep()
     {
@@ -165,5 +188,11 @@ public class OverworldInteract : MonoBehaviour
     {
         // Set the player to do homework
         playerInfo.isDoingHomework = true;
+    }
+
+    private void StartWorking()
+    {
+        // Set the player to work
+        playerInfo.isWorking = true;
     }
 }

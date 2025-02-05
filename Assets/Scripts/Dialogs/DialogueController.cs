@@ -17,6 +17,8 @@ public class DialogueController : MonoBehaviour
 
     public Dialogue[] npcDialogues;
 
+    public Dialogue[] notEnoughMoneyDialogues;
+
     [SerializeField]
     private GameObject dialoguePanel;
 

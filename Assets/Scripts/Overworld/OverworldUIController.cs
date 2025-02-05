@@ -12,6 +12,8 @@ public class OverworldUIController : MonoBehaviour
 
     [SerializeField] private TMP_Text homeworkText;
 
+    [SerializeField] private TMP_Text moneyText;
+
     // public Toggle checkoutClassRoomToggle;
     // public Toggle talkToNPCToggle;
     // public Toggle checkoutShopToggle;
@@ -60,6 +62,7 @@ public class OverworldUIController : MonoBehaviour
         {
             attendanceStatus = "Absent";
         }
-        attendanceText.text = "Today's attendance: " + attendanceStatus;
+        attendanceText.text = "Attendance: " + attendanceStatus;
+        moneyText.text = playerInfo.gameData.money.ToString();
     }
 }

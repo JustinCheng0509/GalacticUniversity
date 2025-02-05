@@ -54,6 +54,7 @@ public class GameDataManager : MonoBehaviour
             energy = 100,
             hunger = 100,
             mood = 100,
+            money = 200,
             maneuverability = 0,
             destruction = 0,
             mechanics = 0,
