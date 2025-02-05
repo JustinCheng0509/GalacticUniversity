@@ -46,7 +46,7 @@ public class OverworldInteract : MonoBehaviour
         } else if (playerInfo.isDoingHomework) {
             interactPromptPanel.SetActive(false);
             interactStatusPanel.SetActive(true);
-            interactStatusText.text = "Homework: " + playerInfo.dailyGrade.homeworkProgress + "%";
+            interactStatusText.text = "Homework: " + playerInfo.GetHomeworkProgress() + "%";
         } else if (playerInfo.isWorking) {
             interactPromptPanel.SetActive(false);
             interactStatusPanel.SetActive(true);
@@ -69,7 +69,7 @@ public class OverworldInteract : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         // Check if the layer of the object is Interactable
-        if (other.gameObject.layer == LayerMask.NameToLayer(CustomString.INTERACTABLE_LAYER) && !playerInfo.IsBusy()) {  
+        if (other.gameObject.layer == LayerMask.NameToLayer(StaticValues.INTERACTABLE_LAYER) && !playerInfo.IsBusy()) {  
             interactPromptPanel.SetActive(true);
             interactPromptText.text = GetPromptText(other.gameObject.tag);
             interactableTag = other.gameObject.tag;
@@ -77,7 +77,7 @@ public class OverworldInteract : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer(CustomString.INTERACTABLE_LAYER) && !playerInfo.IsBusy()) {
+        if (other.gameObject.layer == LayerMask.NameToLayer(StaticValues.INTERACTABLE_LAYER) && !playerInfo.IsBusy()) {
             interactPromptPanel.SetActive(true);
             interactPromptText.text = GetPromptText(other.gameObject.tag);
             interactableTag = other.gameObject.tag;
@@ -85,7 +85,7 @@ public class OverworldInteract : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer(CustomString.INTERACTABLE_LAYER)) {
+        if (other.gameObject.layer == LayerMask.NameToLayer(StaticValues.INTERACTABLE_LAYER)) {
             interactPromptPanel.SetActive(false);
             interactPromptText.text = "";
             interactableTag = "";
@@ -94,13 +94,13 @@ public class OverworldInteract : MonoBehaviour
 
     private string GetPromptText(string tag) {
         switch (tag) {
-            case var value when value == CustomString.INTERACTABLE_TAG_CLASS:
+            case var value when value == StaticValues.INTERACTABLE_TAG_CLASS:
                 return "(E) Start class";
-            case var value when value == CustomString.INTERACTABLE_TAG_SLEEP:
+            case var value when value == StaticValues.INTERACTABLE_TAG_SLEEP:
                 return "(E) Sleep";
-            case var value when value == CustomString.INTERACTABLE_TAG_HOMEWORK:
+            case var value when value == StaticValues.INTERACTABLE_TAG_HOMEWORK:
                 return "(E) Do homework";
-            case var value when value == CustomString.INTERACTABLE_TAG_NPC:
+            case var value when value == StaticValues.INTERACTABLE_TAG_NPC:
                 return "(E) Chat";
             default:
                 return "";
@@ -109,19 +109,19 @@ public class OverworldInteract : MonoBehaviour
 
     private void StartInteraction(string tag) {
         switch (tag) {
-            case var value when value == CustomString.INTERACTABLE_TAG_CLASS:
+            case var value when value == StaticValues.INTERACTABLE_TAG_CLASS:
                 Debug.Log("Interacting with class");
                 StartClass();
                 break;
-            case var value when value == CustomString.INTERACTABLE_TAG_SLEEP:
+            case var value when value == StaticValues.INTERACTABLE_TAG_SLEEP:
                 Debug.Log("Interacting with sleep");
                 StartSleep();
                 break;
-            case var value when value == CustomString.INTERACTABLE_TAG_HOMEWORK:
+            case var value when value == StaticValues.INTERACTABLE_TAG_HOMEWORK:
                 Debug.Log("Interacting with homework");
                 StartHomework();
                 break;
-            case var value when value == CustomString.INTERACTABLE_TAG_NPC:
+            case var value when value == StaticValues.INTERACTABLE_TAG_NPC:
                 Debug.Log("Interacting with NPC");
                 dialogueController.SetCurrentDialogues(dialogueController.npcDialogues);
                 PlayerPrefs.SetInt("introNPCTalked", 1);
@@ -135,7 +135,7 @@ public class OverworldInteract : MonoBehaviour
 
     private void StartClass()
     {
-        if (playerInfo.dailyGrade.attendance)
+        if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED)
         {
             dialogueController.SetCurrentDialogues(dialogueController.alreadyAttendedDialogues);
             return;
@@ -148,11 +148,11 @@ public class OverworldInteract : MonoBehaviour
         }
         
         // Set attendance to true
-        playerInfo.dailyGrade.attendance = true;
+        playerInfo.SetAttendanceStatus(AttendanceStatus.ATTENDED);
         // Play the school bell sound
         schoolBell.Play();
         // Open the mini-game scene
-        overworldSwitchScene.FadeOutGame(CustomString.SCENE_MINIGAME);
+        overworldSwitchScene.FadeOutGame(StaticValues.SCENE_MINIGAME);
     }
 
     private void StartSleep()

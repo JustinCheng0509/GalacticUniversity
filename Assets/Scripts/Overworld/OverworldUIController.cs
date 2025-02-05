@@ -65,18 +65,18 @@ public class OverworldUIController : MonoBehaviour
         if (PlayerPrefs.HasKey("introNPCTalked")) {
             talkToNPCToggle.isOn = true;
         }
-        if (PlayerPrefs.HasKey("homeworkProgress") && PlayerPrefs.GetFloat("homeworkProgress") >= 100) {
-            doHomeworkToggle.isOn = true;
-        }
-        if (PlayerPrefs.HasKey("attendance") && PlayerPrefs.GetInt("attendance") == 1) {
-            attendClassToggle.isOn = true;
-        }
+        // if (playerInfo.GetHomeworkProgress() >= 100) {
+        //     doHomeworkToggle.isOn = true;
+        // }
+        // if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED) {
+        //     attendClassToggle.isOn = true;
+        // }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (overworldTimeController.canAttendClass && !playerInfo.dailyGrade.attendance)
+        if (overworldTimeController.canAttendClass && !(playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED))
         {
             classNotificationPanel.SetActive(true);
         }
@@ -84,8 +84,16 @@ public class OverworldUIController : MonoBehaviour
         {
             classNotificationPanel.SetActive(false);
         }
-        attendanceText.text = "Today's attendance: " + (playerInfo.dailyGrade.attendance ? "Attended" : "Absent/Not Started");
-        attendClassToggle.isOn = playerInfo.dailyGrade.attendance;
-        doHomeworkToggle.isOn = playerInfo.dailyGrade.homeworkProgress >= 100;
+        string attendanceStatus = "Not Started";
+        if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED)
+        {
+            attendanceStatus = "Attended";
+        } else if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ABSENT)
+        {
+            attendanceStatus = "Absent";
+        }
+        attendanceText.text = "Today's attendance: " + attendanceStatus;
+        attendClassToggle.isOn = playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED;
+        doHomeworkToggle.isOn = playerInfo.GetHomeworkProgress() >= 100;
     }
 }

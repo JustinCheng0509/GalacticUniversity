@@ -30,10 +30,14 @@ public class OverworldSwitchScene : MonoBehaviour
     void Start()
     {
         musicVolume = musicSource.volume;
-        StartCoroutine(FadeInGame());
     }
 
-    IEnumerator FadeInGame()
+    public void FadeInGame()
+    {
+        StartCoroutine(FadeInGameCoroutine());
+    }
+
+    IEnumerator FadeInGameCoroutine()
     {
         musicSource.volume = 0.0f;
         musicSource.Play();
@@ -90,6 +94,6 @@ public class OverworldSwitchScene : MonoBehaviour
     public void BackToMainMenu()
     {
         Time.timeScale = 1;
-        FadeOutGame(CustomString.SCENE_MAIN_MENU);
+        FadeOutGame(StaticValues.SCENE_MAIN_MENU);
     }
 }
