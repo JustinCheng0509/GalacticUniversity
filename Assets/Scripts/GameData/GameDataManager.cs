@@ -12,6 +12,27 @@ public class GameDataManager : MonoBehaviour
     //     filePath = Application.persistentDataPath + StaticValues.GAME_DATA_JSON_PATH;
     // }
 
+    public List<LeaderboardEntry> GenerateLeaderboard(string playerName)
+    {
+        List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
+        leaderboard.Add(new LeaderboardEntry {
+            name = playerName,
+            totalScore = 0,
+            destructionScore = 0,
+            safetyScore = 0
+        });
+        for (int i = 1 ; i <= 19; i++) {
+            leaderboard.Add(new LeaderboardEntry {
+                name = StaticValues.ALIEN_NAMES[i],
+                totalScore = 0,
+                destructionScore = 0,
+                safetyScore = 0
+            });
+        }
+
+        return leaderboard;
+    }
+
     
     public GameData CreateNewGameData() {
         int totalNumberOfDays = StaticValues.TOTAL_NUMBER_OF_DAYS;
@@ -27,12 +48,6 @@ public class GameDataManager : MonoBehaviour
             };
             dailyGameDataList.Add(dailyGameData);
         }
-
-        Leaderboard newLeaderboard = new Leaderboard {
-            totalScore = new List<LeaderboardEntry>(),
-            destruction = new List<LeaderboardEntry>(),
-            safety = new List<LeaderboardEntry>()
-        };
         
         GameData newGameData = new GameData {
             playerName = "Player",
@@ -50,7 +65,7 @@ public class GameDataManager : MonoBehaviour
             totalDestructionScore = 0,
             totalSafetyScore = 0,
             dailyGameDataList = dailyGameDataList,
-            leaderboard = newLeaderboard
+            leaderboard = GenerateLeaderboard("Player")
         };
 
         SaveGameData(newGameData);

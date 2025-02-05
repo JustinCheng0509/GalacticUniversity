@@ -27,13 +27,13 @@ public class ScorePanelController : MonoBehaviour
         timesDeadScoreText.text = "- " + timesDeadScore.ToString();
         playerShipInfo.gameData.totalSafetyScore = playerShipInfo.gameData.totalSafetyScore + damageTakenScore + timesDeadScore;
 
-        int todayScore = baseScore + damageDealtScore + dangersDestroyedScore - damageTakenScore - timesDeadScore;
+        int todayScore = damageDealtScore + dangersDestroyedScore - damageTakenScore - timesDeadScore;
         todayScoreText.text = todayScore.ToString();
         
         int previousTotalScore = playerShipInfo.gameData.totalScore;
         previousTotalScoreText.text = previousTotalScore.ToString();
 
-        int newTotalScore = previousTotalScore + todayScore;
+        int newTotalScore = baseScore + previousTotalScore + todayScore;
         playerShipInfo.gameData.totalScore = newTotalScore;
         newTotalScoreText.text = newTotalScore.ToString();
     }

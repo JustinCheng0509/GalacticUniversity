@@ -17,18 +17,12 @@ public class DailyGameData
 }
 
 [System.Serializable]
-public class Leaderboard
-{
-    public List<LeaderboardEntry> totalScore = new List<LeaderboardEntry>();
-    public List<LeaderboardEntry> destruction = new List<LeaderboardEntry>();
-    public List<LeaderboardEntry> safety = new List<LeaderboardEntry>();
-}
-
-[System.Serializable]
 public class LeaderboardEntry
 {
     public string name = "name";
-    public int score = 0;
+    public int totalScore = 0;
+    public int destructionScore = 0;
+    public int safetyScore = 0;
 }
 
 
@@ -56,5 +50,5 @@ public class GameData
 
     public List<DailyGameData> dailyGameDataList = new List<DailyGameData>();
 
-    public Leaderboard leaderboard = new Leaderboard();
+    public List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
 }

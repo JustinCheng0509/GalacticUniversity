@@ -81,7 +81,7 @@ public class MiniGameController : MonoBehaviour
         if (timeRemaining <= 0)
         {
             PauseGame(); // Pause the game
-            scorePanelController.UpdateScorePanel((int) playerShipInfo.score, (int) playerShipInfo.damageDealt, (int) playerShipInfo.dangersDestroyed, (int) playerShipInfo.damageTaken, (int) playerShipInfo.timesDead);
+            scorePanelController.UpdateScorePanel((int) playerShipInfo.baseScore, (int) playerShipInfo.damageDealt, (int) playerShipInfo.dangersDestroyed, (int) playerShipInfo.damageTaken, (int) playerShipInfo.timesDead);
             gameEndPanel.SetActive(true); // Show the game end panel
         }
     }

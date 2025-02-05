@@ -624,7 +624,6 @@ GameObject:
   - component: {fileID: 300412188}
   - component: {fileID: 300412189}
   - component: {fileID: 300412191}
-  - component: {fileID: 300412190}
   m_Layer: 0
   m_Name: MainMenuController
   m_TagString: Untagged
@@ -667,19 +666,6 @@ MonoBehaviour:
   fadeCanvas: {fileID: 250218264}
   fadeDuration: 1
   gameDataManager: {fileID: 300412191}
-  leaderboardManager: {fileID: 300412190}
---- !u!114 &300412190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 300412187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90d85c8c360e91b4e805342f92f8899b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &300412191
 MonoBehaviour:
   m_ObjectHideFlags: 0

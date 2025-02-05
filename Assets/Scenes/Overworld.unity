@@ -9620,7 +9620,6 @@ GameObject:
   - component: {fileID: 774786379}
   - component: {fileID: 774786380}
   - component: {fileID: 774786382}
-  - component: {fileID: 774786381}
   - component: {fileID: 774786383}
   m_Layer: 0
   m_Name: GameController
@@ -9675,6 +9674,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a7799e9539b0f4886ceb48ac8bcce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData:
+    playerName: Player
+    energy: 100
+    hunger: 100
+    stress: 0
+    maneuverability: 0
+    destruction: 0
+    mechanics: 0
+    currentTime: 08:00
+    currentDay: 1
+    totalNumberOfDays: 10
+    isTutorialEnabled: 1
+    totalScore: 0
+    totalDestructionScore: 0
+    totalSafetyScore: 0
+    dailyGameDataList: []
+    leaderboard:
+      totalScore: []
+      destruction: []
+      safety: []
   isSleeping: 0
   isDoingHomework: 0
   isWorking: 0
@@ -9761,18 +9780,6 @@ MonoBehaviour:
   checkoutDormToggle: {fileID: 1872702322}
   attendClassToggle: {fileID: 1526531575}
   doHomeworkToggle: {fileID: 209150556}
---- !u!114 &774786381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 774786374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90d85c8c360e91b4e805342f92f8899b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &774786382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9798,7 +9805,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDataManager: {fileID: 774786382}
-  leaderboardManager: {fileID: 774786381}
   overworldSwitchScene: {fileID: 774786378}
   playerInfo: {fileID: 774786377}
 --- !u!1 &797339399
