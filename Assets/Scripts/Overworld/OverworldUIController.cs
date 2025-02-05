@@ -65,12 +65,12 @@ public class OverworldUIController : MonoBehaviour
         if (PlayerPrefs.HasKey("introNPCTalked")) {
             talkToNPCToggle.isOn = true;
         }
-        if (playerInfo.GetHomeworkProgress() >= 100) {
-            doHomeworkToggle.isOn = true;
-        }
-        if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED) {
-            attendClassToggle.isOn = true;
-        }
+        // if (playerInfo.GetHomeworkProgress() >= 100) {
+        //     doHomeworkToggle.isOn = true;
+        // }
+        // if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED) {
+        //     attendClassToggle.isOn = true;
+        // }
     }
 
     // Update is called once per frame

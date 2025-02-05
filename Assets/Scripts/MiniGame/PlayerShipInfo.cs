@@ -5,14 +5,15 @@ using UnityEngine;
 public class PlayerShipInfo : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreText;
-    public float score;
-    public float baseScoreEverySecond = 50f;
+    public float score = 3000f;
+
+    public float damageDealt = 0f;
+    public float damageTaken = 0f;
+    public float dangersDestroyed = 0f; 
+    public float timesDead = 0f;
 
     float currentHealth = 100;
     float maxHealth = 100;
-    public float maneuverability;
-    public float destruction;
-    public float mechanics;
 
     public float damage = 20f;
 
@@ -28,28 +29,15 @@ public class PlayerShipInfo : MonoBehaviour
 
     [SerializeField] private GameObject explosionEffect;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        // Check PlayerPrefs for saved data
-        if (PlayerPrefs.HasKey("maneuverability"))
-        {
-            maneuverability = PlayerPrefs.GetFloat("maneuverability");
-            destruction = PlayerPrefs.GetFloat("destruction");
-            mechanics = PlayerPrefs.GetFloat("mechanics");
+    public GameData gameData {
+        get {
+            return gameData;
         }
-        else
-        {
-            maneuverability = 0;
-            destruction = 0;
-            mechanics = 0;
-        }
-
-        // Apply skill system
-        if (StaticValues.USE_SKILL_SYSTEM)
-        {
-            damage *= Mathf.Lerp(1f, 3f, destruction / 100f);
+        set {
+            if (StaticValues.USE_SKILL_SYSTEM)
+            {
+                damage *= Mathf.Lerp(1f, 3f, gameData.destruction / 100f);
+            }
         }
     }
 
@@ -78,6 +66,7 @@ public class PlayerShipInfo : MonoBehaviour
     {
         // Deduct score for dying
         AddScore(-500f);
+        timesDead += 500f;
 
         playerShip.SetActive(false);
         Instantiate(explosionEffect, playerShip.transform.position, Quaternion.identity);
@@ -99,7 +88,7 @@ public class PlayerShipInfo : MonoBehaviour
         // Apply skill system
         if (StaticValues.USE_SKILL_SYSTEM)
 {
-            damageAmount *= Mathf.Lerp(1f, 1f / 3f, mechanics / 100f);
+            damageAmount *= Mathf.Lerp(1f, 1f / 3f, gameData.mechanics / 100f);
         }
 
         if (damageAmount >= currentHealth)
@@ -108,6 +97,7 @@ public class PlayerShipInfo : MonoBehaviour
         }
         // Deduct score for taking damage
         AddScore(-damageAmount);
+        damageTaken += damageAmount;
 
         currentHealth = Mathf.Max(0f, currentHealth - damageAmount);
         healthBar.SetHealth(currentHealth / maxHealth);

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public enum AttendanceStatus
 {
     NOT_STARTED,
@@ -14,6 +15,22 @@ public class DailyGameData
     public float homeworkProgress = 0;
     public AttendanceStatus attendance = AttendanceStatus.NOT_STARTED;
 }
+
+[System.Serializable]
+public class Leaderboard
+{
+    public List<LeaderboardEntry> totalScore = new List<LeaderboardEntry>();
+    public List<LeaderboardEntry> destruction = new List<LeaderboardEntry>();
+    public List<LeaderboardEntry> safety = new List<LeaderboardEntry>();
+}
+
+[System.Serializable]
+public class LeaderboardEntry
+{
+    public string name = "name";
+    public int score = 0;
+}
+
 
 [System.Serializable]
 public class GameData
@@ -33,5 +50,11 @@ public class GameData
 
     public bool isTutorialEnabled = true;
 
+    public int totalScore = 0;
+    public int totalDestructionScore = 0;
+    public int totalSafetyScore = 0;
+
     public List<DailyGameData> dailyGameDataList = new List<DailyGameData>();
+
+    public Leaderboard leaderboard = new Leaderboard();
 }

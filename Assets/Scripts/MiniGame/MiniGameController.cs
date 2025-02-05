@@ -22,11 +22,16 @@ public class MiniGameController : MonoBehaviour
 
     [SerializeField] private GameObject tutorialPanel;
 
+    [SerializeField] private GameDataManager gameDataManager;
+
+    [SerializeField] private ScorePanelController scorePanelController;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         timeRemaining = gameDuration;
         Time.timeScale = 0f;
+        playerShipInfo.gameData = gameDataManager.LoadGameData();
         // if it is the first time playing the minigame, show the tutorial
         if (!PlayerPrefs.HasKey("playedMiniGame") && tutorialPanel != null)
         {
@@ -71,13 +76,12 @@ public class MiniGameController : MonoBehaviour
 
         // Update the timer UI
         timerText.text = $"{timeRemaining:F1}s";
-
-        playerShipInfo.AddScore(playerShipInfo.baseScoreEverySecond * Time.deltaTime);
         
         // Check if total time is up
         if (timeRemaining <= 0)
         {
             PauseGame(); // Pause the game
+            scorePanelController.UpdateScorePanel((int) playerShipInfo.score, (int) playerShipInfo.damageDealt, (int) playerShipInfo.dangersDestroyed, (int) playerShipInfo.damageTaken, (int) playerShipInfo.timesDead);
             gameEndPanel.SetActive(true); // Show the game end panel
         }
     }
@@ -100,7 +104,11 @@ public class MiniGameController : MonoBehaviour
         Time.timeScale = 1; // Ensure time is running normally
         Debug.Log("Time's up! Game Over.");
         // Set currentTime to 16:00
-        PlayerPrefs.SetString("currentTime", StaticValues.CLASS_END_TIME);
+        playerShipInfo.gameData.currentTime = StaticValues.CLASS_END_TIME;
+
+        // Save the game data
+        gameDataManager.SaveGameData(playerShipInfo.gameData);
+
         miniGameSwitchScene.FadeOutGame(StaticValues.SCENE_OVERWORLD);
     }
 }

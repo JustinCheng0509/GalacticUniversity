@@ -6,7 +6,6 @@ public class PlayerInfo: MonoBehaviour
 {
     
     public GameData gameData = new GameData();
-    public Leaderboard leaderboard = new Leaderboard();
 
     public bool isSleeping;
     public bool isDoingHomework;
@@ -70,7 +69,6 @@ public class PlayerInfo: MonoBehaviour
 
     public float GetHomeworkProgress()
     {
-        // Debug.Log(gameData.dailyGameDataList.Count);
         return gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress;
     }
 

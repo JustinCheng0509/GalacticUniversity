@@ -13,13 +13,11 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private float fadeDuration = 2f;
 
     [SerializeField] private GameDataManager gameDataManager;
-    [SerializeField] private LeaderboardManager leaderboardManager;
 
     public void StartGame(bool isNewGame) {
         if (isNewGame) {
             PlayerPrefs.DeleteAll();
             gameDataManager.CreateNewGameData();
-            leaderboardManager.CreateNewLeaderboard();
         }
         sfxAudioSource.PlayOneShot(startGameSFX);
         StartCoroutine(StartGameCoroutine());

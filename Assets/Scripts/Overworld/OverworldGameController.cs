@@ -3,7 +3,6 @@ using UnityEngine;
 public class OverworldGameController : MonoBehaviour
 {
     [SerializeField] private GameDataManager gameDataManager;
-    [SerializeField] private LeaderboardManager leaderboardManager;
     [SerializeField] private OverworldSwitchScene overworldSwitchScene;
     [SerializeField] private PlayerInfo playerInfo;
 
@@ -15,8 +14,6 @@ public class OverworldGameController : MonoBehaviour
         Time.timeScale = 0;
         // Load game data
         playerInfo.gameData = gameDataManager.LoadGameData();
-        // Load leaderboard
-        playerInfo.leaderboard = leaderboardManager.LoadLeaderboard();
         // Set time scale to 1
         Time.timeScale = 1;
 

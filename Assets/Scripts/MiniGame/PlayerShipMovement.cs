@@ -42,7 +42,7 @@ public class PlayerShipMovement : MonoBehaviour
         } else {
             // Calculate acceleration/deceleration based on maneuverability
             // float speedFactor = playerShipInfo.maneuverability/ 100f;
-            float speedFactor = Mathf.Lerp(minSpeedFactor, maxSpeedFactor, playerShipInfo.maneuverability / 100f);
+            float speedFactor = Mathf.Lerp(minSpeedFactor, maxSpeedFactor, playerShipInfo.gameData.maneuverability / 100f);
 
             // Calculate the desired velocity (direction multiplied by speed)
             Vector2 desiredVelocity = new Vector2(horizontalInput, Input.GetAxis("Vertical")) * speed;

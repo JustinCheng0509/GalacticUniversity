@@ -50,4 +50,21 @@ public class StaticValues
         "Twerpix", "Blizzbit", "Flimpo", "Skizzle", "Dribblo", "Whibbit", "Znozz", "Ploob", "Quibbix", "Snorbo",
         "Fizzbin", "Wibber", "Jimblo", "Gabblo", "Zibbit", "Norb", "Sklarp", "Glibber", "Boffo", "Twizzle"
     };
+
+    public static readonly string GAME_DATA_KEY = "GameData";
+
+    // public static readonly string PLAYER_NAME_KEY = "PlayerName";
+    // public static readonly string ENERGY_KEY = "Energy";
+    // public static readonly string HUNGER_KEY = "Hunger";
+    // public static readonly string STRESS_KEY = "Stress";
+    // public static readonly string MANEUVERABILITY_KEY = "Maneuverability";
+    // public static readonly string DESTRUCTION_KEY = "Destruction";
+    // public static readonly string MECHANICS_KEY = "Mechanics";
+    // public static readonly string CURRENT_TIME_KEY = "CurrentTime";
+    // public static readonly string CURRENT_DAY_KEY = "CurrentDay";
+    // public static readonly string TOTAL_DAYS_KEY = "TotalNumberOfDays";
+    // public static readonly string TUTORIAL_KEY = "IsTutorialEnabled";
+    // public static readonly string DAILY_GAME_DATA_LIST_KEY = "DaoilyGameDataList";
+    // public static readonly string LEADERBOARD_KEY = "Leaderboard";
+
 }

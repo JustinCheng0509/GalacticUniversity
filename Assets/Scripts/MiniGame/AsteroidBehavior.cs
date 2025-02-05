@@ -22,6 +22,8 @@ public class AsteroidBehavior : MonoBehaviour
     private float currentHealth;
     private float damage = 20;
 
+    private float baseScore = 100f;
+
     [SerializeField] private GameObject destructionEffect;
 
     void Start()
@@ -52,6 +54,7 @@ public class AsteroidBehavior : MonoBehaviour
         {
             TakeDamage(playerShipInfo.damage);
             playerShipInfo.AddScore(playerShipInfo.damage);
+            playerShipInfo.damageDealt += playerShipInfo.damage;
             Destroy(collision.gameObject);
         }
 
@@ -76,9 +79,14 @@ public class AsteroidBehavior : MonoBehaviour
 
     private void DestroyWithEffects()
     {
+        // Add score to player
+        playerShipInfo.AddScore(baseScore * scale);
+        playerShipInfo.dangersDestroyed += baseScore * scale;
+        // Instantiate the destruction effect
         Instantiate(destructionEffect, transform.position, Quaternion.identity);
         // Change the scale of the destruction effect
         destructionEffect.transform.localScale = new Vector3(scale, scale, scale);
+        
         sfxSource.PlayOneShot(enemyDestroyedSFX);
         Destroy(gameObject);
     }
