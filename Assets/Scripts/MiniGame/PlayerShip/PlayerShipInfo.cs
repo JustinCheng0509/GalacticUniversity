@@ -55,6 +55,7 @@ public class PlayerShipInfo : MonoBehaviour
     public void SpawnPlayerShip()
     {
         currentHealth = maxHealth;
+        healthBar.SetHealth(1f);
         playerShip.transform.position = playerShipSpawnPoint.position;
         playerShip.SetActive(true);
         PlayerShipMovement playerShipMovement = playerShip.GetComponent<PlayerShipMovement>();

@@ -33,6 +33,7 @@ public class GameData
     public float energy = 100;
     public float hunger = 100;
     public float mood = 100;
+    public float money = 200;
 
     public float maneuverability = 0;
     public float destruction = 0;

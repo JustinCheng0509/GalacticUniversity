@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2008eece822dcc7458169ec19c2cef92, type: 3}
-  m_Name: ShopIntro
+  m_Name: HomeworkDone
   m_EditorClassIdentifier: 
   isLeft: 0
-  text: This is the shop. I can buy food here when I am hungry
+  text: I already finished homework today
   isSelfDialogue: 1

@@ -1,7 +1,7 @@
 public class StaticValues
 {
     public static readonly int TOTAL_NUMBER_OF_DAYS = 10;
-    public static readonly bool USE_SKILL_SYSTEM = true;
+    public static readonly bool USE_SKILL_SYSTEM = false;
     public static readonly string LEADERBOARD_JSON_PATH = "/leaderboard.json";
     public static readonly string GAME_DATA_JSON_PATH = "/gamedata.json";
     public static readonly string NEW_GAME_START_TIME = "08:00";
@@ -13,6 +13,7 @@ public class StaticValues
     public static readonly string INTERACTABLE_TAG_PLAY = "INTERACTABLE_TAG_PLAY";
     public static readonly string INTERACTABLE_TAG_SLEEP = "INTERACTABLE_TAG_SLEEP";
     public static readonly string INTERACTABLE_TAG_HOMEWORK = "INTERACTABLE_TAG_HOMEWORK";
+    public static readonly string INTERACTABLE_TAG_JOB = "INTERACTABLE_TAG_JOB";
     public static readonly string INTERACTABLE_TAG_SHOP = "INTERACTABLE_TAG_SHOP";
     public static readonly string INTERACTABLE_TAG_NPC = "INTERACTABLE_TAG_NPC";
     public static readonly string TRIGGER_TAG_CLASS = "TRIGGER_TAG_CLASS";

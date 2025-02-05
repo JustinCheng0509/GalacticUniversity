@@ -69,7 +69,7 @@ public class AsteroidBehavior : MonoBehaviour
             if (!playerShipInfo.isShieldActive) {
                 playerShipInfo.TakeDamage(damage);
             }
-            DestroyWithEffects();
+            DestroyWithEffects(false);
         }
     }
 

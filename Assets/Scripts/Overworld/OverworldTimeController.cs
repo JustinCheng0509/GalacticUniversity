@@ -18,6 +18,8 @@ public class OverworldTimeController : MonoBehaviour
 
     [SerializeField] private PlayerInfo playerInfo;
 
+    [SerializeField] private GameDataManager gameDataManager;
+
     public bool canAttendClass
     {
         get
@@ -69,9 +71,15 @@ public class OverworldTimeController : MonoBehaviour
             hour++;
             if (hour == 24)
             {
+
                 hour = 0;
-                Time.timeScale = 0;
-                overworldSwitchScene.gameEndPanel.SetActive(true);
+                if (playerInfo.gameData.currentDay == 5)
+                {
+                    Time.timeScale = 0;
+                    overworldSwitchScene.gameEndPanel.SetActive(true);
+                }
+                playerInfo.gameData.currentDay++;
+                gameDataManager.SaveGameData(playerInfo.gameData);
             }
         }
 
