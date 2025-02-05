@@ -32,7 +32,7 @@ public class GameData
     public string playerName = "Player";
     public float energy = 100;
     public float hunger = 100;
-    public float stress = 0;
+    public float mood = 100;
 
     public float maneuverability = 0;
     public float destruction = 0;

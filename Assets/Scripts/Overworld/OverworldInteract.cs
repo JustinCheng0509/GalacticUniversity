@@ -125,7 +125,7 @@ public class OverworldInteract : MonoBehaviour
                 Debug.Log("Interacting with NPC");
                 dialogueController.SetCurrentDialogues(dialogueController.npcDialogues);
                 PlayerPrefs.SetInt("introNPCTalked", 1);
-                overworldUIController.talkToNPCToggle.isOn = true;
+                // overworldUIController.talkToNPCToggle.isOn = true;
                 break;
             default:
                 Debug.Log("No interaction found");

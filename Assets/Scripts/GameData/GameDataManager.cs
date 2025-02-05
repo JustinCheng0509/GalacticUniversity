@@ -53,7 +53,7 @@ public class GameDataManager : MonoBehaviour
             playerName = "Player",
             energy = 100,
             hunger = 100,
-            stress = 0,
+            mood = 100,
             maneuverability = 0,
             destruction = 0,
             mechanics = 0,
