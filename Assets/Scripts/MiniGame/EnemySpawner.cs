@@ -4,6 +4,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject asteroidPrefab;
     public float spawnRate = 0.4f;
+    public float maxScale = 2f;
 
     [SerializeField]
     private AudioSource sfxSource;
@@ -16,6 +17,11 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        // Adjust spawn rate based on day
+        spawnRate -= 0.05f * (playerShipInfo.gameData.currentDay - 1);
+        // Adjust scale based on day
+        maxScale += 0.4f * (playerShipInfo.gameData.currentDay - 1);
+
         InvokeRepeating(nameof(SpawnAsteroid), 1f, spawnRate);
     }
 
@@ -40,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // Randomize the scale of the asteroid
-        float scale = Random.Range(1f, 2f);
+        float scale = Random.Range(1f, maxScale);
 
         Instantiate(asteroidPrefab, spawnPosition, Quaternion.identity);
 

@@ -4,39 +4,31 @@ using UnityEngine.InputSystem;
 
 public class OverworldInteract : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject interactPromptPanel;
+    [SerializeField] private GameObject interactPromptPanel;
 
-    [SerializeField]
-    private TMP_Text interactPromptText;
+    [SerializeField] private TMP_Text interactPromptText;
 
-    [SerializeField]
-    private GameObject interactStatusPanel;
+    [SerializeField] private GameObject interactStatusPanel;
 
-    [SerializeField]
-    private TMP_Text interactStatusText;
+    [SerializeField] private TMP_Text interactStatusText;
     
     public InputActionReference interact;
 
     private string interactableTag = "";
 
-    [SerializeField]
-    private PlayerInfo playerInfo;
+    [SerializeField] private PlayerInfo playerInfo;
 
-    [SerializeField]
-    private AudioSource schoolBell;
+    [SerializeField] private AudioSource schoolBell;
 
-    [SerializeField]
-    private OverworldSwitchScene overworldSwitchScene;
+    [SerializeField] private OverworldSwitchScene overworldSwitchScene;
 
-    [SerializeField]
-    private DialogueController dialogueController;
+    [SerializeField] private DialogueController dialogueController;
 
-    [SerializeField]
-    private OverworldTimeController overworldTimeController;
+    [SerializeField] private OverworldTimeController overworldTimeController;
 
-    [SerializeField]
-    private OverworldUIController overworldUIController;
+    [SerializeField] private OverworldUIController overworldUIController;
+
+    [SerializeField] private GameDataManager gameDataManager;
 
     void Update() {
         if (playerInfo.isSleeping) {
@@ -104,6 +96,8 @@ public class OverworldInteract : MonoBehaviour
                 return "(E) Chat";
             case var value when value == StaticValues.INTERACTABLE_TAG_SHOP:
                 return "(E) Buy food";
+            case var value when value == StaticValues.INTERACTABLE_TAG_PLAY:
+                return "(E) Play";
             case var value when value == StaticValues.INTERACTABLE_TAG_WORK:
                 return "(E) Work";
             default:
@@ -132,6 +126,10 @@ public class OverworldInteract : MonoBehaviour
             case var value when value == StaticValues.INTERACTABLE_TAG_SHOP:
                 BuyFood();
                 break;
+            case var value when value == StaticValues.INTERACTABLE_TAG_PLAY:
+                Debug.Log("Interacting with play");
+                StartPlay();
+                break;
             case var value when value == StaticValues.INTERACTABLE_TAG_NPC:
                 Debug.Log("Interacting with NPC");
                 dialogueController.SetCurrentDialogues(dialogueController.npcDialogues);
@@ -142,6 +140,11 @@ public class OverworldInteract : MonoBehaviour
                 Debug.Log("No interaction found");
                 break;
         }
+    }
+
+    private void StartPlay()
+    {
+        playerInfo.isPlaying = true;
     }
 
     private void StartClass()
@@ -162,6 +165,8 @@ public class OverworldInteract : MonoBehaviour
         playerInfo.SetAttendanceStatus(AttendanceStatus.ATTENDED);
         // Play the school bell sound
         schoolBell.Play();
+        // Save the game data
+        gameDataManager.SaveGameData(playerInfo.gameData);
         // Open the mini-game scene
         overworldSwitchScene.FadeOutGame(StaticValues.SCENE_MINIGAME);
     }
@@ -173,9 +178,19 @@ public class OverworldInteract : MonoBehaviour
             dialogueController.SetCurrentDialogues(dialogueController.notEnoughMoneyDialogues);
             return;
         }
+
+        if (playerInfo.gameData.hunger >= 90)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.alreadyFull);
+            return;
+        }
         
         playerInfo.gameData.money -= 50;
         playerInfo.gameData.hunger += 30;
+        if (playerInfo.gameData.hunger > 100)
+        {
+            playerInfo.gameData.hunger = 100;
+        }
     }
 
     private void StartSleep()
@@ -186,12 +201,47 @@ public class OverworldInteract : MonoBehaviour
 
     private void StartHomework()
     {
+        if (playerInfo.GetHomeworkProgress() >= 100)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.homeworkDone);
+            return;
+        }
+        if (playerInfo.gameData.hunger < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooHungry);
+            return;
+        }
+        if (playerInfo.gameData.energy < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooTiredDialogues);
+            return;
+        }
+        if (playerInfo.gameData.mood < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooStressed);
+            return;
+        }
         // Set the player to do homework
         playerInfo.isDoingHomework = true;
     }
 
     private void StartWorking()
     {
+        if (playerInfo.gameData.hunger < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooHungry);
+            return;
+        }
+        if (playerInfo.gameData.energy < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooTiredDialogues);
+            return;
+        }
+        if (playerInfo.gameData.mood < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooStressed);
+            return;
+        }
         // Set the player to work
         playerInfo.isWorking = true;
     }

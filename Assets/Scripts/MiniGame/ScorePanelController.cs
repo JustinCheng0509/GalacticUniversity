@@ -60,8 +60,8 @@ public class ScorePanelController : MonoBehaviour
                 leaderboard[i].safetyScore = playerShipInfo.gameData.totalSafetyScore;
             } else {
                 int newScore = baseScore;
-                int destructionScore = (int)(damageDealtScore*Random.Range(0.6f, 1.2f)) + (int)(dangersDestroyedScore*Random.Range(0.6f, 1.2f));
-                int safetyScore = (int)(damageTakenScore*Random.Range(0.6f, 1.2f)) + (int)(timesDeadScore*Random.Range(0.6f, 1.2f));
+                int destructionScore = (int)((damageDealtScore + 500)*Random.Range(0.6f, 1.2f)) + (int)((dangersDestroyedScore + 200)*Random.Range(0.6f, 1.2f));
+                int safetyScore = (int)((damageTakenScore + 100)*Random.Range(0.6f, 1.2f)) + (int)(timesDeadScore*Random.Range(0.6f, 1.2f));
                 Debug.Log("New Score: " + newScore);
                 Debug.Log("Destruction Score: " + destructionScore);
                 Debug.Log("Safety Score: " + safetyScore);

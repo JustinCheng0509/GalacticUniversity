@@ -49,16 +49,15 @@ public class PlayerInfo: MonoBehaviour
             float timeInterval = overworldTimeController.intervalBetweenMinute;
             yield return new WaitForSeconds(timeInterval);
             if (!isSleeping){
-                gameData.energy -= 0.05f;
+                gameData.energy -= 0.06f;
             } else {
-                gameData.energy += 0.15f;
+                gameData.energy += 0.16f;
             }
-            gameData.hunger -= 0.05f;
+            gameData.hunger -= 0.06f;
             if (isWorking || isDoingHomework){
-                gameData.mood -= 0.2f;
+                gameData.mood -= 0.24f;
                 if (isDoingHomework && gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress < 100) {
                    gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress += 1f;
-                    overworldUIController.UpdateHomeworkProgress(gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress);
                     // If using skill system, add skill points here
                     if (StaticValues.USE_SKILL_SYSTEM) {
                         // 5% chance to increase one of the skills
@@ -99,7 +98,32 @@ public class PlayerInfo: MonoBehaviour
                 }
             }
             if (isPlaying){
-                gameData.mood += 0.2f;
+                gameData.mood += 0.3f;
+            }
+            // Keep all values between 0 and 100
+            if (gameData.energy < 0) gameData.energy = 0;
+            if (gameData.energy > 100) gameData.energy = 100;
+            if (gameData.hunger < 0) gameData.hunger = 0;
+            if (gameData.hunger > 100) gameData.hunger = 100;
+            if (gameData.mood < 0) gameData.mood = 0;
+            if (gameData.mood > 100) gameData.mood = 100;
+
+            if (gameData.hunger < 20)
+            {
+                CancelWorkActions();
+            }
+            if (gameData.energy < 20)
+            {
+                CancelWorkActions();
+            }
+            if (gameData.mood < 20)
+            {
+                CancelWorkActions();
+            }
+
+            if (gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress >= 100)
+            {
+                CancelHomeWorkActions();
             }
         }
     }
@@ -122,6 +146,27 @@ public class PlayerInfo: MonoBehaviour
     public bool IsBusy()
     {
         return isSleeping || isDoingHomework || isWorking || isPlaying;
+    }
+
+    public void CancelHomeWorkActions()
+    {
+        if (isDoingHomework)
+        {
+            interactStatusText.text = "";
+            interactStatusPanel.SetActive(false);
+            isDoingHomework = false;
+        }
+    }
+
+    public void CancelWorkActions()
+    {
+        if (isDoingHomework || isWorking)
+        {
+            interactStatusText.text = "";
+            interactStatusPanel.SetActive(false);
+            isDoingHomework = false;
+            isWorking = false;
+        }
     }
 
     public void CancelActions()

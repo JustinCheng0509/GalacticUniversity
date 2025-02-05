@@ -12,7 +12,7 @@ public class OverworldSwitchScene : MonoBehaviour
     [SerializeField]
     private float fadeDuration = 1.0f;
 
-    private float musicVolume;
+    private float musicVolume = 0.5f;
 
     [SerializeField]
     private DialogueController dialogueController;
@@ -25,13 +25,6 @@ public class OverworldSwitchScene : MonoBehaviour
         fadeCanvas.alpha = 1.0f;
         fadeCanvas.gameObject.SetActive(true);
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        musicVolume = musicSource.volume;
-    }
-
     public void FadeInGame()
     {
         StartCoroutine(FadeInGameCoroutine());
