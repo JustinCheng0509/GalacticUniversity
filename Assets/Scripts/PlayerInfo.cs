@@ -14,7 +14,7 @@ public class PlayerInfo: MonoBehaviour
 
     [SerializeField] private TMP_Text energyText;
     [SerializeField] private TMP_Text hungerText;
-    [SerializeField] private TMP_Text stressText;
+    [SerializeField] private TMP_Text moodText;
 
     [SerializeField] private OverworldTimeController overworldTimeController;
 
@@ -39,7 +39,7 @@ public class PlayerInfo: MonoBehaviour
         // Update the UI, Format to int
         energyText.text = "Energy: " + Mathf.RoundToInt(gameData.energy).ToString();
         hungerText.text = "Hunger: " + Mathf.RoundToInt(gameData.hunger).ToString();
-        stressText.text = "Stress: " + Mathf.RoundToInt(gameData.stress).ToString();
+        moodText.text = "Stress: " + Mathf.RoundToInt(gameData.mood).ToString();
     }
 
     private IEnumerator UpdateStats()
@@ -55,14 +55,14 @@ public class PlayerInfo: MonoBehaviour
             }
             gameData.hunger -= 0.05f;
             if (isWorking || isDoingHomework){
-                gameData.stress += 0.2f;
+                gameData.mood -= 0.2f;
                 if (isDoingHomework && gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress < 100) {
                    gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress += 1f;
                     overworldUIController.UpdateHomeworkProgress(gameData.dailyGameDataList[gameData.currentDay-1].homeworkProgress);
                 }
             }
             if (isPlaying){
-                gameData.stress -= 0.2f;
+                gameData.mood += 0.2f;
             }
         }
     }

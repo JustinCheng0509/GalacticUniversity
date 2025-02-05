@@ -56,7 +56,7 @@ public class StaticValues
     // public static readonly string PLAYER_NAME_KEY = "PlayerName";
     // public static readonly string ENERGY_KEY = "Energy";
     // public static readonly string HUNGER_KEY = "Hunger";
-    // public static readonly string STRESS_KEY = "Stress";
+    // public static readonly string MOOD = "Mood";
     // public static readonly string MANEUVERABILITY_KEY = "Maneuverability";
     // public static readonly string DESTRUCTION_KEY = "Destruction";
     // public static readonly string MECHANICS_KEY = "Mechanics";
