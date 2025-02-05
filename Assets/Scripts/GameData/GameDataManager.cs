@@ -89,7 +89,7 @@ public class GameDataManager : MonoBehaviour
         if (PlayerPrefs.HasKey(StaticValues.GAME_DATA_KEY)) {
             GameData gameData = JsonUtility.FromJson<GameData>(PlayerPrefs.GetString(StaticValues.GAME_DATA_KEY));
 
-            Debug.Log("Game data " + gameData.dailyGameDataList.Count + " loaded from PlayerPrefs");
+            // Debug.Log("Game data " + gameData.dailyGameDataList.Count + " loaded from PlayerPrefs");
 
             return JsonUtility.FromJson<GameData>(PlayerPrefs.GetString(StaticValues.GAME_DATA_KEY));
         }

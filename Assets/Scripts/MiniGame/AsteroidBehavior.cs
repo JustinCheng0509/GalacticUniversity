@@ -52,6 +52,9 @@ public class AsteroidBehavior : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
+            if (playerShipInfo == null) {
+                return;
+            }
             TakeDamage(playerShipInfo.damage);
             playerShipInfo.AddScore(playerShipInfo.damage);
             playerShipInfo.damageDealt += playerShipInfo.damage;
@@ -60,6 +63,9 @@ public class AsteroidBehavior : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
+            if (playerShipInfo == null) {
+                return;
+            }
             if (!playerShipInfo.isShieldActive) {
                 playerShipInfo.TakeDamage(damage);
             }
@@ -77,11 +83,14 @@ public class AsteroidBehavior : MonoBehaviour
         }
     }
 
-    private void DestroyWithEffects()
+    private void DestroyWithEffects(bool isScored = true)
     {
-        // Add score to player
-        playerShipInfo.AddScore(baseScore * scale);
-        playerShipInfo.dangersDestroyed += baseScore * scale;
+        if (isScored) {
+            // Add score to player
+            playerShipInfo.AddScore(baseScore * scale);
+            playerShipInfo.dangersDestroyed += baseScore * scale;
+        }
+        
         // Instantiate the destruction effect
         Instantiate(destructionEffect, transform.position, Quaternion.identity);
         // Change the scale of the destruction effect
