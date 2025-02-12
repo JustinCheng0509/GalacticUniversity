@@ -117,10 +117,17 @@ public class OverworldTimeController : MonoBehaviour
             playerInfo.SetAttendanceStatus(AttendanceStatus.ABSENT);
         }
 
-        if (isAfterClass && playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED && PlayerPrefs.GetInt("ShipControlTutorial", 0) == 0)
+        if (isAfterClass && playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED)
         {
-            PlayerPrefs.SetInt("ShipControlTutorial", 1);
-            tutorialController.ShowTutorial(tutorialController.shipControlTutorial);
+            if (StaticValues.USE_SKILL_SYSTEM && PlayerPrefs.GetInt("ShipControlTutorial", 0) == 0)
+            {
+                PlayerPrefs.SetInt("ShipControlTutorial", 1);
+                tutorialController.ShowTutorial(tutorialController.shipControlTutorial);
+            } else if (!StaticValues.USE_SKILL_SYSTEM && PlayerPrefs.GetInt("LeaderboardTutorial", 0) == 0)
+            {
+                PlayerPrefs.SetInt("LeaderboardTutorial", 1);
+                tutorialController.ShowTutorial(tutorialController.leaderboardTutorial);
+            }
         }
 
         string[] time = currentTime.Split(':');
