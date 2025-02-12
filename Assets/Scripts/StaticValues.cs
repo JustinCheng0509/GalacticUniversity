@@ -19,6 +19,8 @@ public class StaticValues
     public static readonly string TRIGGER_TAG_CLASS = "TRIGGER_TAG_CLASS";
     public static readonly string TRIGGER_TAG_DORM = "TRIGGER_TAG_DORM";
     public static readonly string TRIGGER_TAG_SHOP = "TRIGGER_TAG_SHOP";
+    public static readonly string TRIGGER_TAG_PLAYROOM = "TRIGGER_TAG_PLAYROOM";
+    public static readonly string TRIGGER_TAG_WORK = "TRIGGER_TAG_WORK";
     public static readonly string LAYER_GROUND = "LAYER_GROUND";
     public static readonly string TAG_GRASS = "TAG_GRASS";
     public static readonly string SCENE_OVERWORLD = "Overworld";

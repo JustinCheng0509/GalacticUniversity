@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 991f26351e03560438a2916ceeb7c866, type: 3}
+  m_Name: NeedTutorial
+  m_EditorClassIdentifier: 
+  title: Your Needs
+  description: 'As a student, you have to take care of your wellbeing: energy, hunger,
+    and mood.\n\nLetting them fall too low will prevent you from being able to do
+    your work.\n\nYou can see the status of your needs on the top right.'

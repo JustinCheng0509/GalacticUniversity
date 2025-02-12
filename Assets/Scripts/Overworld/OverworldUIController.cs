@@ -10,6 +10,8 @@ public class OverworldUIController : MonoBehaviour
 
     [SerializeField] private TMP_Text attendanceText;
 
+    [SerializeField] private GameObject classStartWarningPanel;
+
     [SerializeField] private TMP_Text homeworkText;
 
     [SerializeField] private TMP_Text moneyText;
@@ -24,13 +26,6 @@ public class OverworldUIController : MonoBehaviour
 
     [SerializeField] private TMP_Text mechanicsText;
 
-    // public Toggle checkoutClassRoomToggle;
-    // public Toggle talkToNPCToggle;
-    // public Toggle checkoutShopToggle;
-    // public Toggle checkoutDormToggle;
-    // public Toggle attendClassToggle;
-    // public Toggle doHomeworkToggle;
-
 
     public void UpdateHomeworkProgress(float homeworkProgress)
     {
@@ -44,26 +39,6 @@ public class OverworldUIController : MonoBehaviour
         {
             bottomRightPanel.gameObject.SetActive(false);
         }
-        
-        // Check the toggle
-        // if (PlayerPrefs.HasKey("introClassPlayed")) {
-        //     checkoutClassRoomToggle.isOn = true;
-        // }
-        // if (PlayerPrefs.HasKey("introShopPlayed")) {
-        //     checkoutShopToggle.isOn = true;
-        // }
-        // if (PlayerPrefs.HasKey("introDormPlayed")) {
-        //     checkoutDormToggle.isOn = true;
-        // }
-        // if (PlayerPrefs.HasKey("introNPCTalked")) {
-        //     talkToNPCToggle.isOn = true;
-        // }
-        // if (playerInfo.GetHomeworkProgress() >= 100) {
-        //     doHomeworkToggle.isOn = true;
-        // }
-        // if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED) {
-        //     attendClassToggle.isOn = true;
-        // }
     }
 
     // Update is called once per frame
@@ -73,6 +48,15 @@ public class OverworldUIController : MonoBehaviour
             maneuverabilityText.text = playerInfo.gameData.maneuverability.ToString();
             destructionText.text = playerInfo.gameData.destruction.ToString();
             mechanicsText.text = playerInfo.gameData.mechanics.ToString();
+        }
+
+        if (overworldTimeController.canAttendClass && playerInfo.GetAttendanceStatus() != AttendanceStatus.ATTENDED)
+        {
+            classStartWarningPanel.SetActive(true);
+        }
+        else
+        {
+            classStartWarningPanel.SetActive(false);
         }
 
         dayText.text = "Day " + playerInfo.gameData.currentDay;

@@ -17,6 +17,8 @@ TagManager:
   - TRIGGER_TAG_CLASS
   - TRIGGER_TAG_DORM
   - TRIGGER_TAG_SHOP
+  - TRIGGER_TAG_PLAYROOM
+  - TRIGGER_TAG_WORK
   layers:
   - Default
   - TransparentFX

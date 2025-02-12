@@ -38,7 +38,7 @@ public class OverworldSwitchScene : MonoBehaviour
         float time = 0.0f;
         while (time < fadeDuration)
         {
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             fadeCanvas.alpha = 1.0f - time / fadeDuration;
             musicSource.volume = time / fadeDuration * musicVolume;
             yield return null;
@@ -67,7 +67,7 @@ public class OverworldSwitchScene : MonoBehaviour
         float fadeDuration = 3f;
         while (time < fadeDuration)
         {
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             fadeCanvas.alpha = time / fadeDuration;
             musicSource.volume = (1.0f - time / fadeDuration) * musicVolume;
             yield return null;
