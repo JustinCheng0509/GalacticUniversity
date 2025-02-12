@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2008eece822dcc7458169ec19c2cef92, type: 3}
-  m_Name: Intro 5
+  m_Name: WorkIntro
   m_EditorClassIdentifier: 
   isLeft: 0
-  text: Use WASD to move. E to interact. Space to shoot (in mini-game).
-  isSelfDialogue: 0
+  text: This is the workshop. I can work here to gain money.
+  isSelfDialogue: 1

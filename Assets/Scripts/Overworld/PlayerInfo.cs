@@ -47,11 +47,15 @@ public class PlayerInfo: MonoBehaviour
         while (true)
         {
             float timeInterval = overworldTimeController.intervalBetweenMinute;
+            if (overworldTimeController.canAttendClass && GetAttendanceStatus() != AttendanceStatus.ATTENDED)
+            {
+                timeInterval *= 15;
+            }
             yield return new WaitForSeconds(timeInterval);
             if (!isSleeping){
                 gameData.energy -= 0.06f;
             } else {
-                gameData.energy += 0.16f;
+                gameData.energy += 0.18f;
             }
             gameData.hunger -= 0.06f;
             if (isWorking || isDoingHomework){
@@ -98,7 +102,7 @@ public class PlayerInfo: MonoBehaviour
                 }
             }
             if (isPlaying){
-                gameData.mood += 0.3f;
+                gameData.mood += 0.4f;
             }
             // Keep all values between 0 and 100
             if (gameData.energy < 0) gameData.energy = 0;

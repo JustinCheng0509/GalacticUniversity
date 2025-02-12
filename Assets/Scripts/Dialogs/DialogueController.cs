@@ -13,6 +13,10 @@ public class DialogueController : MonoBehaviour
 
     public Dialogue[] dormTriggerDialogues;
 
+    public Dialogue[] playRoomTriggerDialogues;
+
+    public Dialogue[] workTriggerDialogues;
+
     public Dialogue[] shopTriggerDialogues;
 
     public Dialogue[] npcDialogues;
@@ -37,6 +41,8 @@ public class DialogueController : MonoBehaviour
 
     private Dialogue[] currentDialogues;
     private int currentDialogueIndex = 0;
+
+    [SerializeField] private TutorialController tutorialController;
 
     public void AdvanceDialogue()
     {
@@ -76,6 +82,19 @@ public class DialogueController : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
         Time.timeScale = 1;
+        if (CompareDialogs(currentDialogues, introDialogues)) {
+            tutorialController.ShowTutorial(tutorialController.startTutorial);
+        } else if (CompareDialogs(currentDialogues, classroomTriggerDialogues)) {
+            tutorialController.ShowTutorial(tutorialController.classTutorial);
+        } else if (CompareDialogs(currentDialogues, shopTriggerDialogues)) {
+            tutorialController.ShowTutorial(tutorialController.shopTutorial);
+        } else if (CompareDialogs(currentDialogues, dormTriggerDialogues)) {
+            tutorialController.ShowTutorial(tutorialController.homeworkTutorial);
+        } else if (CompareDialogs(currentDialogues, workTriggerDialogues)) {
+            tutorialController.ShowTutorial(tutorialController.workTutorial);
+        } else if (CompareDialogs(currentDialogues, playRoomTriggerDialogues) && PlayerPrefs.GetInt("NeedTutorial", 0) == 0) {
+            tutorialController.ShowTutorial(tutorialController.needTutorial);
+        }
     }
     
 

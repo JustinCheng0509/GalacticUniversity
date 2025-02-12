@@ -20,15 +20,56 @@ public class OverworldTimeController : MonoBehaviour
 
     [SerializeField] private GameDataManager gameDataManager;
 
+    [SerializeField] private TutorialController tutorialController;
+
     public bool canAttendClass
     {
         get
         {
-            // between 13:45 and 14:15
+            // between 14:00 and 14:30
             string[] time = currentTime.Split(':');
             int hour = int.Parse(time[0]);
+            int minute = int.Parse(time[1]);
+            if (hour == 14 && minute >= 0 && minute <= 30)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 
-            return hour >= 14 && hour < 16;
+    public bool isAbsent
+    {
+        get
+        {
+            // after 14:30 and status is not attended
+            string[] time = currentTime.Split(':');
+            int hour = int.Parse(time[0]);
+            int minute = int.Parse(time[1]);
+            if (hour == 14 && minute > 30)
+            {
+                if (playerInfo.GetAttendanceStatus() != AttendanceStatus.ATTENDED)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public bool isAfterClass
+    {
+        get
+        {
+            // after 16:00
+            string[] time = currentTime.Split(':');
+            int hour = int.Parse(time[0]);
+            int minute = int.Parse(time[1]);
+            if (hour == 16 && minute > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 
@@ -53,13 +94,42 @@ public class OverworldTimeController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(interval);
+            if (canAttendClass)
+            {
+                if (PlayerPrefs.GetInt("tutorialAttendClass") == 0)
+                {
+                    PlayerPrefs.SetInt("tutorialAttendClass", 1);
+                    tutorialController.ShowTutorial(tutorialController.classTimeTutorial);
+                }
+                // slow down the interval
+                yield return new WaitForSeconds(interval * 15);
+            } else {
+                yield return new WaitForSeconds(interval);
+            }
             UpdateTime();
         }
     }
 
     void UpdateTime()
     {
+        if (isAbsent)
+        {
+            playerInfo.SetAttendanceStatus(AttendanceStatus.ABSENT);
+        }
+
+        if (isAfterClass && playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED)
+        {
+            if (StaticValues.USE_SKILL_SYSTEM && PlayerPrefs.GetInt("ShipControlTutorial", 0) == 0)
+            {
+                PlayerPrefs.SetInt("ShipControlTutorial", 1);
+                tutorialController.ShowTutorial(tutorialController.shipControlTutorial);
+            } else if (!StaticValues.USE_SKILL_SYSTEM && PlayerPrefs.GetInt("LeaderboardTutorial", 0) == 0)
+            {
+                PlayerPrefs.SetInt("LeaderboardTutorial", 1);
+                tutorialController.ShowTutorial(tutorialController.leaderboardTutorial);
+            }
+        }
+
         string[] time = currentTime.Split(':');
         int hour = int.Parse(time[0]);
         int minute = int.Parse(time[1]);

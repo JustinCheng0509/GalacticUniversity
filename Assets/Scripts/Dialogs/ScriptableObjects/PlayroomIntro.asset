@@ -10,10 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2008eece822dcc7458169ec19c2cef92, type: 3}
-  m_Name: Intro 4
+  m_Name: PlayroomIntro
   m_EditorClassIdentifier: 
   isLeft: 0
-  text: Welcome to the demo tech build! For today, you can explore the game world
-    and follow the tasks given. Check out the "Tasks" button on the top bar to see
-    your tasks for today. Remember to attend the first class
-  isSelfDialogue: 0
+  text: This is the recreational hall. I can play games here to reduce my stress.
+  isSelfDialogue: 1
