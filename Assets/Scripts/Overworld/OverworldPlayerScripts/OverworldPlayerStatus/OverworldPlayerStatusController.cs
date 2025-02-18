@@ -39,7 +39,8 @@ public class OverworldPlayerStatusController : MonoBehaviour
     public event Action<OverworldPlayerStatus> OnStatusChanged;
 
     public event Action<AttendanceStatus> OnAttendanceUpdated;
-    public event Action OnHomeworkUpdated;
+    public event Action<float> OnHomeworkProgressUpdated;
+    public event Action<float, float, float> OnNeedsUpdated;
 
     private void Start()
     {
@@ -53,7 +54,7 @@ public class OverworldPlayerStatusController : MonoBehaviour
     private void HandleNewDayStarted()
     {
         OnAttendanceUpdated?.Invoke(_gameDataManager.Attendance);
-        OnHomeworkUpdated?.Invoke();
+        OnHomeworkProgressUpdated?.Invoke(_gameDataManager.HomeworkProgress);
     }
 
     private void HandleLateClassTime()
@@ -85,6 +86,8 @@ public class OverworldPlayerStatusController : MonoBehaviour
             UpdateWork();
 
             ClampStats();
+            OnNeedsUpdated?.Invoke(_gameDataManager.Energy, _gameDataManager.Hunger, _gameDataManager.Mood);
+
             CheckForLowStats();
 
             yield return new WaitForSeconds(_overworldTimeController.IntervalBetweenMinute);
@@ -117,7 +120,7 @@ public class OverworldPlayerStatusController : MonoBehaviour
         if (_currentStatus == OverworldPlayerStatus.DoingHomework && _gameDataManager.HomeworkProgress < 100)
         {
             _gameDataManager.HomeworkProgress += 1f;
-            OnHomeworkUpdated?.Invoke();
+            OnHomeworkProgressUpdated?.Invoke(_gameDataManager.HomeworkProgress);
 
             if (GameConstants.USE_SKILL_SYSTEM)
             {

@@ -44,15 +44,15 @@ public class OverworldInteractionController : MonoBehaviour
     }
     
     public void StartInteraction(string tag) {
-        switch (tag) {
-            case var value when value == GameConstants.INTERACTABLE_TAG_CLASS: StartClass(); break;
-            case var value when value == GameConstants.INTERACTABLE_TAG_SLEEP: StartSleep(); break;
-            case var value when value == GameConstants.INTERACTABLE_TAG_HOMEWORK: StartHomework(); break;
-            case var value when value == GameConstants.INTERACTABLE_TAG_WORK: StartWork(); break;
-            case var value when value == GameConstants.INTERACTABLE_TAG_PLAY: StartPlay(); break;
-            // case var value when value == GameConstants.INTERACTABLE_TAG_NPC: StartChat(); break;
-            // case var value when value == GameConstants.INTERACTABLE_TAG_SHOP: StartShop(); break;
-            default: Debug.Log("No interaction found"); break;
-        }
+        // switch (tag) {
+        //     case var value when value == GameConstants.INTERACTABLE_TAG_CLASS: StartClass(); break;
+        //     case var value when value == GameConstants.INTERACTABLE_TAG_SLEEP: StartSleep(); break;
+        //     case var value when value == GameConstants.INTERACTABLE_TAG_HOMEWORK: StartHomework(); break;
+        //     case var value when value == GameConstants.INTERACTABLE_TAG_WORK: StartWork(); break;
+        //     case var value when value == GameConstants.INTERACTABLE_TAG_PLAY: StartPlay(); break;
+        //     // case var value when value == GameConstants.INTERACTABLE_TAG_NPC: StartChat(); break;
+        //     // case var value when value == GameConstants.INTERACTABLE_TAG_SHOP: StartShop(); break;
+        //     default: Debug.Log("No interaction found"); break;
+        // }
     }
 }
