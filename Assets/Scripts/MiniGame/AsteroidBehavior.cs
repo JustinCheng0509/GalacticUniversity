@@ -3,43 +3,68 @@ using UnityEngine.UI;
 
 public class AsteroidBehavior : MonoBehaviour
 {
-    // To be changed after instantiation
-    [Header("Adjustment Settings")]
-    public float scale = 1f;
-    public AudioSource sfxSource;
-    public AudioClip enemyDestroyedSFX;
-    public PlayerShipInfo playerShipInfo;
-    public float minMoveSpeed = 3f;
-    public float maxMoveSpeed = 8f;
-    public Vector2 moveDirection = Vector2.down;
+    private float _scale = 1f;
+    private Vector2 _moveDirection = Vector2.down;
 
     // Movement
-    private float rotationSpeed = 100f;
-    private float moveSpeed = 6f;
+    private readonly float _rotationSpeed = 100f;
+    private float _moveSpeed = 6f;
 
     // Health and Damage
-    private float maxHealth = 100;
-    private float currentHealth;
-    private float damage = 20;
+    private float _maxHealth = 100;
+    private float _currentHealth;
+    private float _damage = 20;
 
-    private float baseScore = 100f;
+    private float _score = GameConstants.MINIGAME_ENEMY_BASE_SCORE;
 
-    [SerializeField] private GameObject destructionEffect;
+    [SerializeField] private GameObject _destructionEffect;
+    [SerializeField] private AudioClip _enemyDestroyedSFX;
+    
+    private AudioSource _sfxSource;
+    private GameDataManager _gameDataManager;
+    private MinigamePlayerShooting _playerShooting;
+    private MinigameScoreController _minigameScoreController;
+    private MinigamePlayerShieldController _playerShieldController;
+    private MinigamePlayerHealthController _playerHealthController;
+
+    private bool _canMove = false;
 
     void Start()
     {
+        GameObject sfxSourceObject = GameObject.Find(GameConstants.ENEMY_DESTROYED_SFX_AUDIO_SOURCE);
+        if (sfxSourceObject != null) {
+            _sfxSource = sfxSourceObject.GetComponent<AudioSource>();
+        }
+
+        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _playerShooting = FindFirstObjectByType<MinigamePlayerShooting>();
+        _minigameScoreController = FindFirstObjectByType<MinigameScoreController>();
+        _playerShieldController = FindFirstObjectByType<MinigamePlayerShieldController>();
+        _playerHealthController = FindFirstObjectByType<MinigamePlayerHealthController>();
+
+        _currentHealth = _maxHealth;
+    }
+
+    public void SetAttributes(float scale, float minMoveSpeed, float maxMoveSpeed, Vector2 moveDirection)
+    {
+        _scale = scale;
         transform.localScale = new Vector3(scale, scale, scale);
-        maxHealth *= scale;
-        currentHealth = maxHealth;
-        damage *= scale;
-        moveSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);
+        _maxHealth *= scale;
+        _currentHealth = _maxHealth;
+        _damage *= scale;
+        _moveDirection = moveDirection;
+        _moveSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);
+        _score *= scale;
+        _canMove = true;
     }
 
     void Update()
     {
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
+        if (!_canMove) return;
 
-        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+        transform.Translate(_moveDirection * _moveSpeed * Time.deltaTime, Space.World);
+
+        transform.Rotate(0, 0, _rotationSpeed * Time.deltaTime);
 
         // Check if the enemy is out of the screen
         if (Camera.main.WorldToViewportPoint(transform.position).y < -2f)
@@ -52,22 +77,17 @@ public class AsteroidBehavior : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
-            if (playerShipInfo == null) {
-                return;
-            }
-            TakeDamage(playerShipInfo.damage);
-            playerShipInfo.AddScore(playerShipInfo.damage);
-            playerShipInfo.damageDealt += playerShipInfo.damage;
+            TakeDamage(_playerShooting.Damage);
+            _minigameScoreController.Score += _playerShooting.Damage;
+            _minigameScoreController.DamageDealt += _playerShooting.Damage;
+
             Destroy(collision.gameObject);
         }
 
         if (collision.CompareTag("Player"))
         {
-            if (playerShipInfo == null) {
-                return;
-            }
-            if (!playerShipInfo.isShieldActive) {
-                playerShipInfo.TakeDamage(damage);
+            if (!_playerShieldController.IsShieldActive) {
+                _playerHealthController.TakeDamage(_damage);
             }
             DestroyWithEffects(false);
         }
@@ -75,9 +95,9 @@ public class AsteroidBehavior : MonoBehaviour
 
     private void TakeDamage(float damage)
     {
-        currentHealth = Mathf.Max(0, currentHealth - damage);
+        _currentHealth = Mathf.Max(0, _currentHealth - damage);
 
-        if (currentHealth <= 0)
+        if (_currentHealth <= 0)
         {   
             DestroyWithEffects();
         }
@@ -87,16 +107,16 @@ public class AsteroidBehavior : MonoBehaviour
     {
         if (isScored) {
             // Add score to player
-            playerShipInfo.AddScore(baseScore * scale);
-            playerShipInfo.dangersDestroyed += baseScore * scale;
+            _minigameScoreController.Score += _score;
+            _minigameScoreController.DangersDestroyedScore += _score;
         }
         
         // Instantiate the destruction effect
-        Instantiate(destructionEffect, transform.position, Quaternion.identity);
+        Instantiate(_destructionEffect, transform.position, Quaternion.identity);
         // Change the scale of the destruction effect
-        destructionEffect.transform.localScale = new Vector3(scale, scale, scale);
+        _destructionEffect.transform.localScale = new Vector3(_scale, _scale, _scale);
         
-        sfxSource.PlayOneShot(enemyDestroyedSFX);
+        _sfxSource.PlayOneShot(_enemyDestroyedSFX);
         Destroy(gameObject);
     }
 }

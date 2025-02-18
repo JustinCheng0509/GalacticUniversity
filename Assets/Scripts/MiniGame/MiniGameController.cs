@@ -1,114 +1,144 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class MiniGameController : MonoBehaviour
+public enum MinigameState
+{
+    Countdown,
+    Playing,
+    Paused,
+    Ended
+}
+
+public class MinigameController : MonoBehaviour
 {
     [Header("Game Settings")]
     [SerializeField] private float gameDuration = 60f; // 1 minute total gameplay
 
-    private float timeRemaining;
-    private bool isGameActive = false;
+    private MinigameState _minigameState = MinigameState.Countdown;
+
+    public MinigameState MinigameState => _minigameState;
 
     [SerializeField] private GameObject gameEndPanel;
 
-    [SerializeField] private MiniGameSwitchScene miniGameSwitchScene;
+    [SerializeField] private MinigameSwitchScene miniGameSwitchScene;
 
     [SerializeField] private TMP_Text timerText;
 
     [SerializeField] private TMP_Text countdownText;
+    
+    private MinigameScoreController _minigameScoreController;
+    private GameDataManager _gameDataManager;
+    private TutorialController _tutorialController;
+    private MinigameCountdownController _minigameCountdownController;
+    private MinigameTimerController _minigameTimerController;
 
-    [SerializeField] private PlayerShipInfo playerShipInfo;
-
-    [SerializeField] private GameObject tutorialPanel;
-
-    [SerializeField] private GameDataManager gameDataManager;
-
-    [SerializeField] private ScorePanelController scorePanelController;
+    public event Action OnMinigameStart;
+    public event Action OnMinigameEnd;
+    public event Action OnMinigamePause;
+    public event Action OnMinigameResume;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        timeRemaining = gameDuration;
-        Time.timeScale = 0f;
-        playerShipInfo.gameData = gameDataManager.LoadGameData();
-        // if it is the first time playing the minigame, show the tutorial
-        if (!PlayerPrefs.HasKey("playedMiniGame") && tutorialPanel != null)
+        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager.OnGameDataLoaded += GameDataLoadedHandler;
+
+        _tutorialController = FindFirstObjectByType<TutorialController>();
+        _tutorialController.OnTutorialCompleted += _minigameCountdownController.StartCountdown;
+
+        _minigameCountdownController = FindFirstObjectByType<MinigameCountdownController>();
+        _minigameCountdownController.OnCountdownFinished += StartMinigame;
+
+        _minigameTimerController = FindFirstObjectByType<MinigameTimerController>();
+        _minigameTimerController.OnTimerFinished += EndMinigame;
+
+        _minigameScoreController = FindFirstObjectByType<MinigameScoreController>();
+        OnMinigameEnd += MinigameEndHandler;
+
+        OnMinigameStart += MinigameStartHandler;
+    }
+
+    private void GameDataLoadedHandler()
+    {
+        if (!_gameDataManager.IsTutorialCompleted(TutorialIDs.MINIGAME_TUTORIAL))
         {
-            PlayerPrefs.SetInt("playedMiniGame", 1);
-            tutorialPanel.SetActive(true);
+            _tutorialController.ShowTutorial(TutorialIDs.MINIGAME_TUTORIAL);
         } else
         {
-            StartCoroutine(CountDownToStartCoroutine());
+            _minigameCountdownController.StartCountdown();
         }
     }
 
-    public void CountDownToStart()
+    private void StartMinigame()
     {
-        StartCoroutine(CountDownToStartCoroutine());
+        OnMinigameStart?.Invoke();
     }
 
-    private IEnumerator CountDownToStartCoroutine()
+    private void EndMinigame()
     {
-        countdownText.gameObject.SetActive(true);
-        int count = 3;
-        while (count > 0)
-        {
-            countdownText.text = count.ToString();
-            yield return new WaitForSecondsRealtime(1f);
-            count--;
-        }
-        countdownText.text = "GO!";
-        yield return new WaitForSecondsRealtime(1f);
-        countdownText.gameObject.SetActive(false);
-        Time.timeScale = 1f;
-        isGameActive = true;
-        playerShipInfo.SpawnPlayerShip();
+        OnMinigameEnd?.Invoke();
+    }
+
+    private void MinigameStartHandler()
+    {
+        _minigameState = MinigameState.Playing;
+        _minigameTimerController.StartTimer(gameDuration);
+    }
+
+    private void MinigameEndHandler()
+    {
+        _minigameState = MinigameState.Ended;
+        Time.timeScale = 0f;
+        _minigameScoreController.CalculateFinalScore();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isGameActive) return;
+        // if (!isGameActive) return;
 
-        // Decrement time remaining
-        timeRemaining -= Time.deltaTime;
+        // // Decrement time remaining
+        // timeRemaining -= Time.deltaTime;
 
-        // Update the timer UI
-        timerText.text = $"{timeRemaining:F1}s";
+        // // Update the timer UI
+        // timerText.text = $"{timeRemaining:F1}s";
         
-        // Check if total time is up
-        if (timeRemaining <= 0)
-        {
-            PauseGame(); // Pause the game
-            scorePanelController.UpdateScorePanel((int) playerShipInfo.baseScore, (int) playerShipInfo.damageDealt, (int) playerShipInfo.dangersDestroyed, (int) playerShipInfo.damageTaken, (int) playerShipInfo.timesDead);
-            gameEndPanel.SetActive(true); // Show the game end panel
-        }
+        // // Check if total time is up
+        // if (timeRemaining <= 0)
+        // {
+        //     PauseGame(); // Pause the game
+        //     scorePanelController.UpdateScorePanel((int) playerShipInfo.baseScore, (int) playerShipInfo.damageDealt, (int) playerShipInfo.dangersDestroyed, (int) playerShipInfo.damageTaken, (int) playerShipInfo.timesDead);
+        //     gameEndPanel.SetActive(true); // Show the game end panel
+        // }
     }
 
     // Public methods for game control
     public void PauseGame()
     {
-        isGameActive = false;
+        _minigameState = MinigameState.Paused;
         Time.timeScale = 0f;
+        OnMinigamePause?.Invoke();
     }
 
     public void ResumeGame()
     {
-        isGameActive = true;
+        _minigameState = MinigameState.Playing;
         Time.timeScale = 1f;
+        OnMinigameResume?.Invoke();
     }
 
-    public void EndGame()
-    {
-        Time.timeScale = 1; // Ensure time is running normally
-        Debug.Log("Time's up! Game Over.");
-        // Set currentTime to 16:00
-        playerShipInfo.gameData.currentTime = StaticValues.CLASS_END_TIME;
+    // public void EndGame()
+    // {
+    //     Time.timeScale = 1; // Ensure time is running normally
+    //     Debug.Log("Time's up! Game Over.");
+    //     // Set currentTime to 16:00
+    //     playerShipInfo.gameData.currentTime = GameConstants.CLASS_END_TIME;
 
-        // Save the game data
-        gameDataManager.SaveGameData(playerShipInfo.gameData);
+    //     // Save the game data
+    //     gameDataManager.SaveGameData(playerShipInfo.gameData);
 
-        miniGameSwitchScene.FadeOutGame(StaticValues.SCENE_OVERWORLD);
-    }
+    //     miniGameSwitchScene.FadeOutGame(GameConstants.SCENE_OVERWORLD);
+    // }
 }

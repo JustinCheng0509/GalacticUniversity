@@ -1,138 +1,138 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class OverworldTimeController : MonoBehaviour
 {
-    public string currentTime = "07:00";
+    private string _currentTime = GameConstants.NEW_GAME_START_TIME; // 08:00
+
+    public string CurrentTime
+    {
+        get { return _currentTime; }
+        set { _currentTime = value; }
+    }
 
     // 1 means a minute in the game is 1 second in real life
-    public float intervalBetweenMinute = 0.01f;
+    private const float BASE_INTERVAL_BETWEEN_MINUTES = 0.01f;
 
-    [SerializeField]
-    private TMP_Text timeText;
+    public float IntervalBetweenMinute => CanAttendClass ? BASE_INTERVAL_BETWEEN_MINUTES * 15 : BASE_INTERVAL_BETWEEN_MINUTES;
+    public bool CanAttendClass => IsWithinTimeRange(GameConstants.CLASS_START_TIME, GameConstants.CLASS_LATE_TIME);
+    public bool IsPastLateTime => IsAfterTime(GameConstants.CLASS_LATE_TIME);
+    public bool IsAfterClass => IsAfterTime(GameConstants.CLASS_END_TIME);
 
-    IEnumerator timeCoroutine;
+    [SerializeField] private TMP_Text _timeText;
 
-    [SerializeField] private OverworldSwitchScene overworldSwitchScene;
+    private IEnumerator _timeCoroutine;
 
-    [SerializeField] private PlayerInfo playerInfo;
+    private GameDataManager _gameDataManager;
 
-    [SerializeField] private GameDataManager gameDataManager;
+    public event Action OnNewDayStarted;
+    public event Action OnTimeAdvanced;
+    public event Action OnPastClassTime;
+    public event Action OnPastClassLateTime;
+    public event Action OnAfterClass;
+    public event Action OnLastDayEnded;
 
-    [SerializeField] private TutorialController tutorialController;
-
-    public bool canAttendClass
+    private bool IsWithinTimeRange(string startTime, string endTime)
     {
-        get
+        if (!TryParseTime(CurrentTime, out int hour, out int minute) ||
+            !TryParseTime(startTime, out int startHour, out int startMinute) ||
+            !TryParseTime(endTime, out int endHour, out int endMinute))
         {
-            // between 14:00 and 14:30
-            string[] time = currentTime.Split(':');
-            int hour = int.Parse(time[0]);
-            int minute = int.Parse(time[1]);
-            if (hour == 14 && minute >= 0 && minute <= 30)
-            {
-                return true;
-            }
             return false;
         }
+
+        return (hour > startHour || (hour == startHour && minute >= startMinute)) &&
+               (hour < endHour || (hour == endHour && minute <= endMinute));
     }
 
-    public bool isAbsent
+    private bool IsAfterTime(string compareTime)
     {
-        get
+        if (!TryParseTime(CurrentTime, out int hour, out int minute) ||
+            !TryParseTime(compareTime, out int compareHour, out int compareMinute))
         {
-            // after 14:30 and status is not attended
-            string[] time = currentTime.Split(':');
-            int hour = int.Parse(time[0]);
-            int minute = int.Parse(time[1]);
-            if (hour == 14 && minute > 30)
-            {
-                if (playerInfo.GetAttendanceStatus() != AttendanceStatus.ATTENDED)
-                {
-                    return true;
-                }
-            }
             return false;
         }
+
+        return hour > compareHour || (hour == compareHour && minute > compareMinute);
     }
 
-    public bool isAfterClass
+    private static bool TryParseTime(string time, out int hour, out int minute)
     {
-        get
-        {
-            // after 16:00
-            string[] time = currentTime.Split(':');
-            int hour = int.Parse(time[0]);
-            int minute = int.Parse(time[1]);
-            if (hour == 16 && minute > 0)
-            {
-                return true;
-            }
-            return false;
-        }
+        string[] parts = time.Split(':');
+        hour = 0;
+        minute = 0;
+        return parts.Length == 2 && int.TryParse(parts[0], out hour) && int.TryParse(parts[1], out minute);
     }
 
     void Start()
     {
-        currentTime = playerInfo.gameData.currentTime;
-        timeText.text = currentTime;
-        timeCoroutine = TimeCoroutine(intervalBetweenMinute);
-        StartCoroutine(timeCoroutine);
+        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
+
+        _timeText.text = CurrentTime;
+        _timeCoroutine = TimeCoroutine();
+    }
+
+    private void OnGameDataLoaded()
+    {
+        CurrentTime = _gameDataManager.CurrentTime;
+        _timeText.text = CurrentTime;
+        StartCoroutine(_timeCoroutine);
     }
 
     public float GetTimePercentage()
     {
-        string[] time = currentTime.Split(':');
+        string[] time = _currentTime.Split(':');
         int hour = int.Parse(time[0]);
         int minute = int.Parse(time[1]);
 
         return (hour * 60 + minute) / 1440f;
     }
 
-    IEnumerator TimeCoroutine(float interval)
+    IEnumerator TimeCoroutine()
     {
         while (true)
         {
-            if (canAttendClass)
-            {
-                if (PlayerPrefs.GetInt("tutorialAttendClass") == 0)
-                {
-                    PlayerPrefs.SetInt("tutorialAttendClass", 1);
-                    tutorialController.ShowTutorial(tutorialController.classTimeTutorial);
-                }
-                // slow down the interval
-                yield return new WaitForSeconds(interval * 15);
-            } else {
-                yield return new WaitForSeconds(interval);
-            }
             UpdateTime();
+            if (CanAttendClass)
+            {
+                // if (PlayerPrefs.GetInt("tutorialAttendClass") == 0)
+                // {
+                //     PlayerPrefs.SetInt("tutorialAttendClass", 1);
+                //     tutorialController.ShowTutorial(tutorialController.classTimeTutorial);
+                // }
+            }
+            yield return new WaitForSeconds(IntervalBetweenMinute);
         }
     }
 
     void UpdateTime()
     {
-        if (isAbsent)
-        {
-            playerInfo.SetAttendanceStatus(AttendanceStatus.ABSENT);
-        }
 
-        if (isAfterClass && playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED)
-        {
-            if (StaticValues.USE_SKILL_SYSTEM && PlayerPrefs.GetInt("ShipControlTutorial", 0) == 0)
-            {
-                PlayerPrefs.SetInt("ShipControlTutorial", 1);
-                tutorialController.ShowTutorial(tutorialController.shipControlTutorial);
-            } else if (!StaticValues.USE_SKILL_SYSTEM && PlayerPrefs.GetInt("LeaderboardTutorial", 0) == 0)
-            {
-                PlayerPrefs.SetInt("LeaderboardTutorial", 1);
-                tutorialController.ShowTutorial(tutorialController.leaderboardTutorial);
-            }
-        }
+        // if (isAfterClass && playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED)
+        // {
+        //     if (GameConstants.USE_SKILL_SYSTEM && PlayerPrefs.GetInt("ShipControlTutorial", 0) == 0)
+        //     {
+        //         PlayerPrefs.SetInt("ShipControlTutorial", 1);
+        //         tutorialController.ShowTutorial(tutorialController.shipControlTutorial);
+        //     } else if (!GameConstants.USE_SKILL_SYSTEM && PlayerPrefs.GetInt("LeaderboardTutorial", 0) == 0)
+        //     {
+        //         PlayerPrefs.SetInt("LeaderboardTutorial", 1);
+        //         tutorialController.ShowTutorial(tutorialController.leaderboardTutorial);
+        //     }
+        // }
 
-        string[] time = currentTime.Split(':');
-        int hour = int.Parse(time[0]);
-        int minute = int.Parse(time[1]);
+        AdvanceTime();
+
+        _timeText.text = _currentTime;
+        _gameDataManager.CurrentTime = _currentTime;
+    }
+
+    private void AdvanceTime()
+    {
+        if (!TryParseTime(_currentTime, out int hour, out int minute)) return;
 
         minute++;
         if (minute == 60)
@@ -141,22 +141,32 @@ public class OverworldTimeController : MonoBehaviour
             hour++;
             if (hour == 24)
             {
-
                 hour = 0;
-                if (playerInfo.gameData.currentDay == 5)
+                if (_gameDataManager.CurrentDay == GameConstants.TOTAL_NUMBER_OF_DAYS)
                 {
-                    Time.timeScale = 0;
-                    overworldSwitchScene.gameEndPanel.SetActive(true);
+                    OnLastDayEnded?.Invoke();
+                } else {
+                    _gameDataManager.CurrentDay++;
+                    SavedDataManager.SaveGameData(_gameDataManager.GameData);
+                    OnNewDayStarted?.Invoke();
                 }
-                playerInfo.gameData.currentDay++;
-                gameDataManager.SaveGameData(playerInfo.gameData);
+                // if (playerInfo.gameData.currentDay == 5)
+                // {
+                //     Time.timeScale = 0;
+                //     overworldSwitchScene.gameEndPanel.SetActive(true);
+                // }
+                // playerInfo.gameData.currentDay++;
+                // SavedDataManager.SaveGameData(playerInfo.gameData);
             }
         }
+        _currentTime = $"{hour:00}:{minute:00}";
 
-        currentTime = hour.ToString("00") + ":" + minute.ToString("00");
+        // Trigger the general time event
+        OnTimeAdvanced?.Invoke();
 
-        timeText.text = currentTime;
-
-        playerInfo.gameData.currentTime = currentTime;
+        // Trigger specific time-based events
+        if (IsPastLateTime) OnPastClassLateTime?.Invoke();
+        if (IsAfterClass) OnAfterClass?.Invoke();
+        if (CanAttendClass) OnPastClassTime?.Invoke();
     }
 }

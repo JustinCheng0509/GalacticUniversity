@@ -39,6 +39,6 @@ public class MainMenuController : MonoBehaviour
     }
 
     private void LoadGameScene() {
-        SceneManager.LoadScene(StaticValues.SCENE_OVERWORLD);
+        SceneManager.LoadScene(GameConstants.SCENE_OVERWORLD);
     }
 }

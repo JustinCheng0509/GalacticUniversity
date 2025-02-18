@@ -39,7 +39,7 @@ public class GameData
     public float destruction = 0;
     public float mechanics = 0;
 
-    public string currentTime = StaticValues.NEW_GAME_START_TIME;
+    public string currentTime = GameConstants.NEW_GAME_START_TIME;
     public int currentDay = 1;
     public int totalNumberOfDays = 10;
 
@@ -48,6 +48,9 @@ public class GameData
     public int totalScore = 0;
     public int totalDestructionScore = 0;
     public int totalSafetyScore = 0;
+
+    public List<int> activeQuests = new List<int>();
+    public List<string> tutorialsCompleted = new List<string>();
 
     public List<DailyGameData> dailyGameDataList = new List<DailyGameData>();
 

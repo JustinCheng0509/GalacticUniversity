@@ -1,4 +1,4 @@
-public class StaticValues
+public class GameConstants
 {
     public static readonly int TOTAL_NUMBER_OF_DAYS = 10;
     public static readonly bool USE_SKILL_SYSTEM = false;
@@ -6,6 +6,7 @@ public class StaticValues
     public static readonly string GAME_DATA_JSON_PATH = "/gamedata.json";
     public static readonly string NEW_GAME_START_TIME = "08:00";
     public static readonly string CLASS_START_TIME = "14:00";
+    public static readonly string CLASS_LATE_TIME = "14:30";
     public static readonly string CLASS_END_TIME = "16:00";
     public static readonly string INTERACTABLE_LAYER = "INTERACTABLE_LAYER";
     public static readonly string INTERACTABLE_TAG_CLASS = "INTERACTABLE_TAG_CLASS";
@@ -25,7 +26,7 @@ public class StaticValues
     public static readonly string TAG_GRASS = "TAG_GRASS";
     public static readonly string SCENE_OVERWORLD = "Overworld";
     public static readonly string SCENE_MAIN_MENU = "MainMenu";
-    public static readonly string SCENE_MINIGAME = "MiniGame";
+    public static readonly string SCENE_MINIGAME = "Minigame";
     public static readonly string TAG_BOSS = "TAG_BOSS";
 
     public static readonly string[] ALIEN_NAMES = new string[] {
@@ -70,4 +71,10 @@ public class StaticValues
     // public static readonly string DAILY_GAME_DATA_LIST_KEY = "DaoilyGameDataList";
     // public static readonly string LEADERBOARD_KEY = "Leaderboard";
 
+    public static readonly string ENEMY_DESTROYED_SFX_AUDIO_SOURCE = "EnemyDestroyedSFXAudioSource";
+
+    public static readonly int MINIGAME_BASE_DAMAGE = 10;
+    public static readonly int MINIGAME_ENEMY_BASE_SCORE = 100;
+
+    public static readonly string PLAYER_NAME_PLACEHOLDER = "[PlayerName]";
 }

@@ -2,27 +2,28 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject asteroidPrefab;
-    public float spawnRate = 0.4f;
-    public float maxScale = 2f;
+    [SerializeField] private GameObject _asteroidPrefab;
+    [SerializeField] private float _spawnRate = 0.4f;
+    [SerializeField] private float _maxScale = 2f;
+    [SerializeField] private float _minMoveSpeed = 6f;
+    [SerializeField] private float _maxMoveSpeed = 10f;
 
-    [SerializeField]
-    private AudioSource sfxSource;
-
-    [SerializeField]
-    private AudioClip enemyDestroyedSFX;
-
-    [SerializeField]
-    private PlayerShipInfo playerShipInfo;
+    private GameDataManager _gameDataManager;
 
     void Start()
     {
-        // Adjust spawn rate based on day
-        spawnRate -= 0.05f * (playerShipInfo.gameData.currentDay - 1);
-        // Adjust scale based on day
-        maxScale += 0.4f * (playerShipInfo.gameData.currentDay - 1);
+        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
 
-        InvokeRepeating(nameof(SpawnAsteroid), 1f, spawnRate);
+        InvokeRepeating(nameof(SpawnAsteroid), 1f, _spawnRate);
+    }
+
+    private void OnGameDataLoaded()
+    {
+        // Adjust spawn rate based on day
+        _spawnRate -= 0.05f * (_gameDataManager.CurrentDay - 1);
+        // Adjust scale based on day
+        _maxScale += 0.4f * (_gameDataManager.CurrentDay - 1);
     }
 
     void SpawnAsteroid()
@@ -44,20 +45,17 @@ public class EnemySpawner : MonoBehaviour
         {
             moveDirection = new Vector2(Random.Range(-0.6f, 0f), moveDirection.y);
         }
+        // Normalize the movement direction
+        moveDirection.Normalize();
 
         // Randomize the scale of the asteroid
-        float scale = Random.Range(1f, maxScale);
+        float scale = Random.Range(1f, _maxScale);
 
-        Instantiate(asteroidPrefab, spawnPosition, Quaternion.identity);
+        Instantiate(_asteroidPrefab, spawnPosition, Quaternion.identity);
 
         // Get the asteroid's script component
-        AsteroidBehavior asteroid = asteroidPrefab.GetComponent<AsteroidBehavior>();
+        AsteroidBehavior asteroidBehavior = _asteroidPrefab.GetComponent<AsteroidBehavior>();
 
-        // Set the asteroid's properties
-        asteroid.scale = scale;
-        asteroid.sfxSource = sfxSource;
-        asteroid.enemyDestroyedSFX = enemyDestroyedSFX;
-        asteroid.playerShipInfo = playerShipInfo;
-        asteroid.moveDirection = moveDirection;
+        asteroidBehavior.SetAttributes(scale, _minMoveSpeed, _maxMoveSpeed, moveDirection);
     }
 }

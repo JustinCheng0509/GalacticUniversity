@@ -5,72 +5,73 @@ using UnityEngine.Tilemaps;
 
 public class OverworldMovement : MonoBehaviour
 {
-    public Rigidbody2D rb;
-    public float moveSpeed = 5f;
-    private Vector2 moveDirection;
+    private Rigidbody2D _rb;
+    [SerializeField] private float _moveSpeed = 5f;
+    private Vector2 _moveDirection;
 
-    public InputActionReference move;
+    [SerializeField] private InputActionReference _moveAction;
 
-    public AudioClip[] footstepGrass;
-    public AudioClip[] footstepConcrete;
+    [SerializeField] private AudioClip[] _footstepGrass;
+    [SerializeField] private AudioClip[] _footstepConcrete;
 
-    [SerializeField]
-    private Transform footstepPosition;
+    [SerializeField] private Transform _footstepPosition;
 
-    [SerializeField]
-    private GridLayout gridLayout;
+    [SerializeField] private GridLayout _gridLayout;
 
-    [SerializeField]
-    private Tilemap[] groundTilemaps;
+    [SerializeField] private Tilemap[] _groundTilemaps;
 
-    [SerializeField]
-    private AudioSource footstepAudioSource;
+    [SerializeField] private AudioSource _footstepAudioSource;
 
-    private bool delayFootstep = false;
+    private bool _delayFootstep = false;
 
-    [SerializeField]
-    private PlayerInfo playerInfo;
+    private OverworldPlayerStatusController _overworldPlayerStatusController;
+
+    void Start()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        _overworldPlayerStatusController = FindFirstObjectByType<OverworldPlayerStatusController>();
+    }
 
     private void Update() {
-        moveDirection = move.action.ReadValue<Vector2>();
+        _moveDirection = _moveAction.action.ReadValue<Vector2>();
     }
 
     private void FixedUpdate() {
-        rb.linearVelocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);     
-        if (moveDirection != Vector2.zero) {
+        _rb.linearVelocity = new Vector2(_moveDirection.x * _moveSpeed, _moveDirection.y * _moveSpeed);     
+        if (_moveDirection != Vector2.zero) {
             PlayFootstepSound();
-            if (playerInfo.IsBusy()) {
-                playerInfo.CancelActions();
-            }
+            _overworldPlayerStatusController.CurrentStatus = OverworldPlayerStatus.Walking;
+        } else if (_overworldPlayerStatusController.CurrentStatus == OverworldPlayerStatus.Walking) {
+            _overworldPlayerStatusController.CurrentStatus = OverworldPlayerStatus.Idle;
         }
     }
 
     private void PlayFootstepSound() {
-        if (footstepAudioSource.isPlaying || delayFootstep) {
+        if (_footstepAudioSource.isPlaying || _delayFootstep) {
             return;
         }
 
-        AudioClip[] footstepSounds = footstepConcrete;
+        AudioClip[] footstepSounds = _footstepConcrete;
 
-        string tileTag = GetTileTag(footstepPosition.position);
+        string tileTag = GetTileTag(_footstepPosition.position);
 
-        if (tileTag == StaticValues.TAG_GRASS) {
-            footstepSounds = footstepGrass;
+        if (tileTag == GameConstants.TAG_GRASS) {
+            footstepSounds = _footstepGrass;
         }
         
-        footstepAudioSource.clip = footstepSounds[Random.Range(0, footstepSounds.Length)];
-        footstepAudioSource.volume = Random.Range(0.25f, 0.3f);
-        footstepAudioSource.pitch = Random.Range(0.9f, 1.05f);
-        footstepAudioSource.Play();
+        _footstepAudioSource.clip = footstepSounds[Random.Range(0, footstepSounds.Length)];
+        _footstepAudioSource.volume = Random.Range(0.25f, 0.3f);
+        _footstepAudioSource.pitch = Random.Range(0.9f, 1.05f);
+        _footstepAudioSource.Play();
 
-        delayFootstep = true;
+        _delayFootstep = true;
         Invoke("ResetFootstepDelay", 0.3f);
     }
 
     private string GetTileTag(Vector2 footstepPosition) {
-        Vector3Int cellPosition = gridLayout.WorldToCell(footstepPosition);
+        Vector3Int cellPosition = _gridLayout.WorldToCell(footstepPosition);
         // Check each tilemap for the tile at the given position
-        foreach (Tilemap tilemap in groundTilemaps) {
+        foreach (Tilemap tilemap in _groundTilemaps) {
             TileBase tile = tilemap.GetTile(cellPosition);
             if (tile != null) {
                 return tilemap.tag;

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MiniGameSwitchScene : MonoBehaviour
+public class MinigameSwitchScene : MonoBehaviour
 {
     [SerializeField]
     private CanvasGroup fadeCanvas;

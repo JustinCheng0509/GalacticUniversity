@@ -35,7 +35,7 @@ public class OverworldUIController : MonoBehaviour
     void Start()
     {
         // If not using skill system, remove this
-        if (!StaticValues.USE_SKILL_SYSTEM)
+        if (!GameConstants.USE_SKILL_SYSTEM)
         {
             bottomRightPanel.gameObject.SetActive(false);
         }
@@ -44,7 +44,7 @@ public class OverworldUIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StaticValues.USE_SKILL_SYSTEM) {
+        if (GameConstants.USE_SKILL_SYSTEM) {
             maneuverabilityText.text = playerInfo.gameData.maneuverability.ToString();
             destructionText.text = playerInfo.gameData.destruction.ToString();
             mechanicsText.text = playerInfo.gameData.mechanics.ToString();

@@ -1,61 +1,131 @@
+using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TutorialController : MonoBehaviour
 {
-    public Tutorial startTutorial;
+    private GameDataManager _gameDataManager;
 
-    public Tutorial classTutorial;
+    private List<Tutorial> _tutorials = new List<Tutorial>();
 
-    public Tutorial classTimeTutorial;
-
-    public Tutorial needTutorial;
-
-    public Tutorial skillTutorial;
-
-    public Tutorial homeworkTutorial;
-
-    public Tutorial workTutorial;
-
-    public Tutorial leaderboardTutorial;
-
-    public Tutorial shopTutorial;
-
-    public Tutorial shipControlTutorial;
-
-    private Tutorial currentTutorial;
+    private List<Tutorial> _currentTutorials = new List<Tutorial>();
+    private int _currentTutorialIndex = 0;
 
     [SerializeField] private GameObject tutorialPanel;
+    [SerializeField] private TMP_Text buttonText;
+
+    public event Action OnTutorialCompleted;
+
+    void Start()
+    {
+        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        // Add all tutorials from the resources folder to the list
+        _tutorials.AddRange(Resources.LoadAll<Tutorial>("Tutorials")); 
+    }
 
     public void ShowTutorial(Tutorial tutorial)
     {
-        currentTutorial = tutorial;
+        // if the tutorial is already completed, do not show it again
+        if (_gameDataManager.IsTutorialCompleted(tutorial.id)) return;
+
+        _gameDataManager.CompleteTutorial(tutorial.id);
+        _currentTutorials.Add(tutorial);
+        _currentTutorialIndex = 0;
         Time.timeScale = 0;
         // Find the Title child of the tutorialPanel
         tutorialPanel.transform.Find("Title").GetComponent<TMPro.TextMeshProUGUI>().text = tutorial.title;
         // Find the Description child of the tutorialPanel
         tutorialPanel.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = tutorial.description;
-        tutorialPanel.SetActive(true);
+
+        buttonText.text = "OK";
+        
+        ShowTutorialUI();
     }
+
+    // Overload for showing a list of tutorials
+    public void ShowTutorial(List<Tutorial> tutorials)
+    {
+        // Remove all tutorials that are already completed from the list
+        tutorials.RemoveAll(tutorial => _gameDataManager.IsTutorialCompleted(tutorial.id));
+        
+        // If there are no tutorials left, return
+        if (tutorials.Count == 0) return;
+
+        // Add all tutorials to the completed list
+        foreach (var tutorial in tutorials)
+        {
+            _gameDataManager.CompleteTutorial(tutorial.id);
+        }
+        _currentTutorials = tutorials;
+        _currentTutorialIndex = 0;
+        Time.timeScale = 0;
+
+        // Find the Title child of the tutorialPanel
+        tutorialPanel.transform.Find("Title").GetComponent<TMPro.TextMeshProUGUI>().text = tutorials[0].title;
+        // Find the Description child of the tutorialPanel
+        tutorialPanel.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = tutorials[0].description;
+
+        ShowTutorialUI();
+
+        // If there is only one tutorial, set the button text to OK, otherwise set it to Next
+        buttonText.text = tutorials.Count == 1 ? "OK" : "Next";
+    }
+
+    // Overload for showing a tutorial by ID
+    public void ShowTutorial(string tutorialID)
+    {
+        var tutorial = _tutorials.Find(t => t.id == tutorialID);
+        if (tutorial != null)
+        {
+            ShowTutorial(tutorial);
+        }
+    }
+
+    // Overload for showing a list of tutorials by ID
+    public void ShowTutorial(List<string> tutorialIDs)
+    {
+        var tutorials = _tutorials.FindAll(t => tutorialIDs.Contains(t.tutorialID));
+        ShowTutorial(tutorials);
+    }
+    
+    public void NextTutorial()
+    {
+        _currentTutorialIndex++;
+        if (_currentTutorialIndex >= _currentTutorials.Count)
+        {
+            HideTutorial();
+            return;
+        }
+        // Find the Title child of the tutorialPanel
+        tutorialPanel.transform.Find("Title").GetComponent<TMPro.TextMeshProUGUI>().text = _currentTutorials[_currentTutorialIndex].title;
+        // Find the Description child of the tutorialPanel
+        tutorialPanel.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = _currentTutorials[_currentTutorialIndex].description;
+
+        buttonText.text = _currentTutorialIndex == _currentTutorials.Count - 1 ? "OK" : "Next";
+    }
+
     
     public void HideTutorial()
     {
         Time.timeScale = 1;
-        tutorialPanel.SetActive(false);
-        if ((currentTutorial == shopTutorial || currentTutorial == skillTutorial) && PlayerPrefs.GetInt("NeedTutorial", 0) == 0)
-        {
-            PlayerPrefs.SetInt("NeedTutorial", 1);
-            ShowTutorial(needTutorial);
-        } else if ((currentTutorial == homeworkTutorial || currentTutorial == workTutorial || currentTutorial == leaderboardTutorial) && PlayerPrefs.GetInt("SkillTutorial", 0) == 0 && StaticValues.USE_SKILL_SYSTEM)
-        {
-            PlayerPrefs.SetInt("SkillTutorial", 1);
-            ShowTutorial(skillTutorial);        
-        } else if (currentTutorial == shipControlTutorial && PlayerPrefs.GetInt("LeaderboardTutorial", 0) == 0)
-        {
-            PlayerPrefs.SetInt("LeaderboardTutorial", 1);
-            ShowTutorial(leaderboardTutorial);
+        OnTutorialCompleted?.Invoke();
+        HideTutorialUI();
+        _currentTutorials.Clear();
+        _currentTutorialIndex = 0;
+    }
 
-        } else {
-            currentTutorial = null;
-        }
+    public void ShowTutorialUI()
+    {
+        tutorialPanel.GetComponent<CanvasGroup>().alpha = 1; 
+        tutorialPanel.GetComponent<CanvasGroup>().interactable = true; 
+        tutorialPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
+    public void HideTutorialUI()
+    {
+        tutorialPanel.GetComponent<CanvasGroup>().alpha = 0; 
+        tutorialPanel.GetComponent<CanvasGroup>().interactable = false; 
+        tutorialPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 }

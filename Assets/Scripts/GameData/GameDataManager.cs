@@ -1,100 +1,152 @@
+using System;
 using System.Collections.Generic;
-using System.IO;
-using Defective.JSON;
 using UnityEngine;
 
 public class GameDataManager : MonoBehaviour
 {
-    // private string filePath;
-    // // Start is called once before the first execution of Update after the MonoBehaviour is created
-    // void Start()
-    // {   
-    //     filePath = Application.persistentDataPath + StaticValues.GAME_DATA_JSON_PATH;
-    // }
+    private GameData _gameData;
 
-    public List<LeaderboardEntry> GenerateLeaderboard(string playerName)
-    {
-        List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
-        leaderboard.Add(new LeaderboardEntry {
-            name = playerName,
-            totalScore = 0,
-            destructionScore = 0,
-            safetyScore = 0
-        });
-        for (int i = 1 ; i <= 19; i++) {
-            leaderboard.Add(new LeaderboardEntry {
-                name = StaticValues.ALIEN_NAMES[i],
-                totalScore = 0,
-                destructionScore = 0,
-                safetyScore = 0
-            });
-        }
+    public event Action OnGameDataLoaded;
 
-        return leaderboard;
-    }
-
+    // Getters and Setters for GameData properties
+    public GameData GameData => _gameData;
     
-    public GameData CreateNewGameData() {
-        int totalNumberOfDays = StaticValues.TOTAL_NUMBER_OF_DAYS;
-        if (StaticValues.USE_SKILL_SYSTEM) {
-            totalNumberOfDays = (int) (totalNumberOfDays / 2);
-        }
-        List<DailyGameData> dailyGameDataList = new List<DailyGameData>();
-        // Add daily game data
-        for (int i = 0; i < totalNumberOfDays; i++) {
-            DailyGameData dailyGameData = new DailyGameData {
-                homeworkProgress = 0,
-                attendance = AttendanceStatus.NOT_STARTED,
-            };
-            dailyGameDataList.Add(dailyGameData);
-        }
-        
-        GameData newGameData = new GameData {
-            playerName = "Player",
-            energy = 100,
-            hunger = 100,
-            mood = 100,
-            money = 200,
-            maneuverability = 0,
-            destruction = 0,
-            mechanics = 0,
-            currentTime = StaticValues.NEW_GAME_START_TIME,
-            currentDay = 1,
-            totalNumberOfDays = totalNumberOfDays,
-            isTutorialEnabled = true,
-            totalScore = 0,
-            totalDestructionScore = 0,
-            totalSafetyScore = 0,
-            dailyGameDataList = dailyGameDataList,
-            leaderboard = GenerateLeaderboard("Player")
-        };
-
-        SaveGameData(newGameData);
-        return newGameData;
+    public string PlayerName
+    {
+        get => _gameData.playerName;
+        set => _gameData.playerName = value;
     }
 
-    public void SaveGameData(GameData gameData) {
-        // string json = JsonUtility.ToJson(gameData, true);
-        // File.WriteAllText(filePath, json);
-        // Debug.Log("Game data saved: " + filePath);
-
-        PlayerPrefs.SetString(StaticValues.GAME_DATA_KEY, JsonUtility.ToJson(gameData));
+    public float Energy
+    {
+        get => _gameData.energy;
+        set => _gameData.energy = value;
     }
 
-    public GameData LoadGameData() {
-        // if (File.Exists(filePath)) {
-        //     string json = File.ReadAllText(filePath);
-        //     return JsonUtility.FromJson<GameData>(json);
-        // } 
+    public float Hunger
+    {
+        get => _gameData.hunger;
+        set => _gameData.hunger = value;
+    }
 
-        if (PlayerPrefs.HasKey(StaticValues.GAME_DATA_KEY)) {
-            GameData gameData = JsonUtility.FromJson<GameData>(PlayerPrefs.GetString(StaticValues.GAME_DATA_KEY));
+    public float Mood
+    {
+        get => _gameData.mood;
+        set => _gameData.mood = value;
+    }
 
-            // Debug.Log("Game data " + gameData.dailyGameDataList.Count + " loaded from PlayerPrefs");
+    public float Money
+    {
+        get => _gameData.money;
+        set => _gameData.money = value;
+    }
 
-            return JsonUtility.FromJson<GameData>(PlayerPrefs.GetString(StaticValues.GAME_DATA_KEY));
+    public float Maneuverability
+    {
+        get => _gameData.maneuverability;
+        set => _gameData.maneuverability = value;
+    }
+
+    public float Destruction
+    {
+        get => _gameData.destruction;
+        set => _gameData.destruction = value;
+    }
+
+    public float Mechanics
+    {
+        get => _gameData.mechanics;
+        set => _gameData.mechanics = value;
+    }
+
+    public string CurrentTime
+    {
+        get => _gameData.currentTime;
+        set => _gameData.currentTime = value;
+    }
+
+    public int CurrentDay
+    {
+        get => _gameData.currentDay;
+        set => _gameData.currentDay = value;
+    }
+
+    public int TotalNumberOfDays
+    {
+        get => _gameData.totalNumberOfDays;
+        set => _gameData.totalNumberOfDays = value;
+    }
+
+    public bool IsTutorialEnabled
+    {
+        get => _gameData.isTutorialEnabled;
+        set => _gameData.isTutorialEnabled = value;
+    }
+
+    public int TotalScore
+    {
+        get => _gameData.totalScore;
+        set => _gameData.totalScore = value;
+    }
+
+    public int TotalDestructionScore
+    {
+        get => _gameData.totalDestructionScore;
+        set => _gameData.totalDestructionScore = value;
+    }
+
+    public int TotalSafetyScore
+    {
+        get => _gameData.totalSafetyScore;
+        set => _gameData.totalSafetyScore = value;
+    }
+
+    public List<int> ActiveQuests
+    {
+        get => _gameData.activeQuests;
+        set => _gameData.activeQuests = value;
+    }
+
+    public List<DailyGameData> DailyGameDataList
+    {
+        get => _gameData.dailyGameDataList;
+        set => _gameData.dailyGameDataList = value;
+    }
+
+    public List<LeaderboardEntry> Leaderboard
+    {
+        get => _gameData.leaderboard;
+        set => _gameData.leaderboard = value;
+    }
+
+    public AttendanceStatus Attendance
+    {
+        get => _gameData.dailyGameDataList[_gameData.currentDay - 1].attendance;
+        set => _gameData.dailyGameDataList[_gameData.currentDay - 1].attendance = value;
+    }
+
+    public float HomeworkProgress
+    {
+        get => _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress;
+        set => _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress = value;
+    }
+
+    public bool IsTutorialCompleted(string tutorialId)
+    {
+        return _gameData.tutorialsCompleted.Contains(tutorialId);
+    }
+
+    public void CompleteTutorial(string tutorialId)
+    {
+        if (!_gameData.tutorialsCompleted.Contains(tutorialId))
+        {
+            _gameData.tutorialsCompleted.Add(tutorialId);
         }
+    }
 
-        return CreateNewGameData();
+    void Start()
+    {
+        _gameData = SavedDataManager.LoadGameData();
+        OnGameDataLoaded?.Invoke();
     }
 }

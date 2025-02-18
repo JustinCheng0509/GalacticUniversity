@@ -15,7 +15,7 @@ public class OverworldSwitchScene : MonoBehaviour
     private float musicVolume = 0.5f;
 
     [SerializeField]
-    private DialogueController dialogueController;
+    private DialogController dialogController;
 
     public GameObject gameEndPanel;
 
@@ -45,11 +45,11 @@ public class OverworldSwitchScene : MonoBehaviour
         }
         fadeCanvas.alpha = 0.0f;
         fadeCanvas.gameObject.SetActive(false);
-        // check PlayerPrefs to see if the the intro dialogues have been played
-        if (!PlayerPrefs.HasKey("introDialoguesPlayed"))
+        // check PlayerPrefs to see if the the intro dialogs have been played
+        if (!PlayerPrefs.HasKey("introDialogsPlayed"))
         {
-            dialogueController.SetCurrentDialogues(dialogueController.introDialogues);
-            PlayerPrefs.SetInt("introDialoguesPlayed", 1);
+            dialogController.SetCurrentDialogs(dialogController.introDialogs);
+            PlayerPrefs.SetInt("introDialogsPlayed", 1);
         }
     }
 
@@ -87,6 +87,6 @@ public class OverworldSwitchScene : MonoBehaviour
     public void BackToMainMenu()
     {
         Time.timeScale = 1;
-        FadeOutGame(StaticValues.SCENE_MAIN_MENU);
+        FadeOutGame(GameConstants.SCENE_MAIN_MENU);
     }
 }
