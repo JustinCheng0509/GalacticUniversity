@@ -14,7 +14,7 @@ public class MinigamePlayerHealthController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
     }
 
     public void TakeDamage(float damage)

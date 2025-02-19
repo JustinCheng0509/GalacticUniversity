@@ -36,11 +36,11 @@ public class AsteroidBehavior : MonoBehaviour
             _sfxSource = sfxSourceObject.GetComponent<AudioSource>();
         }
 
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
-        _playerShooting = FindFirstObjectByType<MinigamePlayerShooting>();
-        _minigameScoreController = FindFirstObjectByType<MinigameScoreController>();
-        _playerShieldController = FindFirstObjectByType<MinigamePlayerShieldController>();
-        _playerHealthController = FindFirstObjectByType<MinigamePlayerHealthController>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _playerShooting = FindAnyObjectByType<MinigamePlayerShooting>();
+        _minigameScoreController = FindAnyObjectByType<MinigameScoreController>();
+        _playerShieldController = FindAnyObjectByType<MinigamePlayerShieldController>();
+        _playerHealthController = FindAnyObjectByType<MinigamePlayerHealthController>();
 
         _currentHealth = _maxHealth;
     }

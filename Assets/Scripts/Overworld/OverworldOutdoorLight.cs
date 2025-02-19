@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class OverworldOutdoorLight : MonoBehaviour
 {
-    [SerializeField]
     private OverworldTimeController timeController;
 
     [SerializeField]
@@ -14,13 +13,17 @@ public class OverworldOutdoorLight : MonoBehaviour
     [SerializeField]
     private GameObject[] lights;
 
+    private void Start() {
+        timeController = FindAnyObjectByType<OverworldTimeController>();
+    }
+
     private void Update() {
-        if (timeController.currentTime == turnOnTime) {
+        if (timeController.CurrentTime == turnOnTime) {
             // Turn on the lights
             foreach (GameObject light in lights) {
                 light.SetActive(true);
             }
-        } else if (timeController.currentTime == turnOffTime) {
+        } else if (timeController.CurrentTime == turnOffTime) {
             // Turn off the lights
             foreach (GameObject light in lights) {
                 light.SetActive(false);

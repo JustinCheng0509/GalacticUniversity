@@ -5,7 +5,7 @@ public class OverworldInteractionTrigger : MonoBehaviour
     private OverworldInteractionController _interactionController;
 
     private void Start() {
-        _interactionController = FindFirstObjectByType<OverworldInteractionController>();
+        _interactionController = FindAnyObjectByType<OverworldInteractionController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

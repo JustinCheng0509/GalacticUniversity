@@ -20,7 +20,7 @@ public class MinigameScoreController : MonoBehaviour
     
     void Start()
     {
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
     }
 
     public float Score

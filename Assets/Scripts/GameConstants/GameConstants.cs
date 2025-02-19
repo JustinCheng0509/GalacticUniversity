@@ -73,6 +73,8 @@ public class GameConstants
 
     public static readonly string ENEMY_DESTROYED_SFX_AUDIO_SOURCE = "EnemyDestroyedSFXAudioSource";
 
+    public static readonly string BGM_AUDIO_SOURCE = "BGMAudioSource";
+
     public static readonly int MINIGAME_BASE_DAMAGE = 10;
     public static readonly int MINIGAME_ENEMY_BASE_SCORE = 100;
 

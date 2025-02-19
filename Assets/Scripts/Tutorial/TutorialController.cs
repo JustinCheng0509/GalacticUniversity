@@ -19,7 +19,7 @@ public class TutorialController : MonoBehaviour
 
     void Start()
     {
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
         // Add all tutorials from the resources folder to the list
         _tutorials.AddRange(Resources.LoadAll<Tutorial>("Tutorials")); 
     }
@@ -27,9 +27,9 @@ public class TutorialController : MonoBehaviour
     public void ShowTutorial(Tutorial tutorial)
     {
         // if the tutorial is already completed, do not show it again
-        if (_gameDataManager.IsTutorialCompleted(tutorial.id)) return;
+        if (_gameDataManager.IsTutorialCompleted(tutorial.tutorialID)) return;
 
-        _gameDataManager.CompleteTutorial(tutorial.id);
+        _gameDataManager.CompleteTutorial(tutorial.tutorialID);
         _currentTutorials.Add(tutorial);
         _currentTutorialIndex = 0;
         Time.timeScale = 0;
@@ -47,7 +47,7 @@ public class TutorialController : MonoBehaviour
     public void ShowTutorial(List<Tutorial> tutorials)
     {
         // Remove all tutorials that are already completed from the list
-        tutorials.RemoveAll(tutorial => _gameDataManager.IsTutorialCompleted(tutorial.id));
+        tutorials.RemoveAll(tutorial => _gameDataManager.IsTutorialCompleted(tutorial.tutorialID));
         
         // If there are no tutorials left, return
         if (tutorials.Count == 0) return;
@@ -55,7 +55,7 @@ public class TutorialController : MonoBehaviour
         // Add all tutorials to the completed list
         foreach (var tutorial in tutorials)
         {
-            _gameDataManager.CompleteTutorial(tutorial.id);
+            _gameDataManager.CompleteTutorial(tutorial.tutorialID);
         }
         _currentTutorials = tutorials;
         _currentTutorialIndex = 0;
@@ -75,7 +75,7 @@ public class TutorialController : MonoBehaviour
     // Overload for showing a tutorial by ID
     public void ShowTutorial(string tutorialID)
     {
-        var tutorial = _tutorials.Find(t => t.id == tutorialID);
+        var tutorial = _tutorials.Find(t => t.tutorialID == tutorialID);
         if (tutorial != null)
         {
             ShowTutorial(tutorial);

@@ -13,7 +13,7 @@ public class MinigameUIPlayerHealth : MonoBehaviour
     {
         healthBarRect = GetComponent<RectTransform>();
         originalWidth = healthBarRect.sizeDelta.x;
-        _playerHealth = FindFirstObjectByType<MinigamePlayerHealthController>();
+        _playerHealth = FindAnyObjectByType<MinigamePlayerHealthController>();
         _playerHealth.OnHealthChanged += UpdateHealthUI;
     }
 

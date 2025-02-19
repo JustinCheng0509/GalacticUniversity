@@ -26,13 +26,13 @@ public class MinigamePlayerShooting : MonoBehaviour
 
     void Start()
     {
-        _minigameController = FindFirstObjectByType<MinigameController>();
+        _minigameController = FindAnyObjectByType<MinigameController>();
         _minigameController.OnMinigameStart += () => _canFire = true;
         _minigameController.OnMinigamePause += () => _canFire = false;
         _minigameController.OnMinigameResume += () => _canFire = true;
         _minigameController.OnMinigameEnd += () => _canFire = false;
 
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
         _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
     }
 

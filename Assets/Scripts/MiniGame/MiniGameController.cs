@@ -21,18 +21,13 @@ public class MinigameController : MonoBehaviour
     public MinigameState MinigameState => _minigameState;
 
     [SerializeField] private GameObject gameEndPanel;
-
-    [SerializeField] private MinigameSwitchScene miniGameSwitchScene;
-
-    [SerializeField] private TMP_Text timerText;
-
-    [SerializeField] private TMP_Text countdownText;
     
     private MinigameScoreController _minigameScoreController;
     private GameDataManager _gameDataManager;
     private TutorialController _tutorialController;
     private MinigameCountdownController _minigameCountdownController;
     private MinigameTimerController _minigameTimerController;
+    private SwitchScene _switchScene;
 
     public event Action OnMinigameStart;
     public event Action OnMinigameEnd;
@@ -42,21 +37,23 @@ public class MinigameController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
         _gameDataManager.OnGameDataLoaded += GameDataLoadedHandler;
+        
+        _switchScene = FindAnyObjectByType<SwitchScene>();
+        _switchScene.OnFadeInComplete += OnFadeInComplete;
 
-        _tutorialController = FindFirstObjectByType<TutorialController>();
+        _tutorialController = FindAnyObjectByType<TutorialController>();
         _tutorialController.OnTutorialCompleted += _minigameCountdownController.StartCountdown;
 
-        _minigameCountdownController = FindFirstObjectByType<MinigameCountdownController>();
+        _minigameCountdownController = FindAnyObjectByType<MinigameCountdownController>();
         _minigameCountdownController.OnCountdownFinished += StartMinigame;
 
-        _minigameTimerController = FindFirstObjectByType<MinigameTimerController>();
+        _minigameTimerController = FindAnyObjectByType<MinigameTimerController>();
         _minigameTimerController.OnTimerFinished += EndMinigame;
 
-        _minigameScoreController = FindFirstObjectByType<MinigameScoreController>();
+        _minigameScoreController = FindAnyObjectByType<MinigameScoreController>();
         OnMinigameEnd += MinigameEndHandler;
-
         OnMinigameStart += MinigameStartHandler;
     }
 
@@ -67,8 +64,13 @@ public class MinigameController : MonoBehaviour
             _tutorialController.ShowTutorial(TutorialIDs.MINIGAME_TUTORIAL);
         } else
         {
-            _minigameCountdownController.StartCountdown();
+            _switchScene.FadeInScene();
         }
+    }
+
+    private void OnFadeInComplete()
+    {
+        _minigameCountdownController.StartCountdown();
     }
 
     private void StartMinigame()
@@ -139,6 +141,6 @@ public class MinigameController : MonoBehaviour
     //     // Save the game data
     //     gameDataManager.SaveGameData(playerShipInfo.gameData);
 
-    //     miniGameSwitchScene.FadeOutGame(GameConstants.SCENE_OVERWORLD);
+    //     miniGameSwitchScene.FadeOutScene(GameConstants.SCENE_OVERWORLD);
     // }
 }

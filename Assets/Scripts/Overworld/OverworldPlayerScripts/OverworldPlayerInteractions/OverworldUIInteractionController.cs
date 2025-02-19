@@ -14,9 +14,9 @@ public class OverworldUIInteractionController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _overworldPlayerStatusController = FindFirstObjectByType<OverworldPlayerStatusController>();
+        _overworldPlayerStatusController = FindAnyObjectByType<OverworldPlayerStatusController>();
         _overworldPlayerStatusController.OnStatusChanged += HandlePlayerStatusChanged;
-        _overworldInteractionController = FindFirstObjectByType<OverworldInteractionController>();
+        _overworldInteractionController = FindAnyObjectByType<OverworldInteractionController>();
         _overworldInteractionController.OnInteractableTagChanged += HandleInteractableTagChanged;
     }
 

@@ -168,7 +168,7 @@
 //         // Save the game data
 //         gameDataManager.SaveGameData(playerInfo.gameData);
 //         // Open the mini-game scene
-//         overworldSwitchScene.FadeOutGame(GameConstants.SCENE_MINIGAME);
+//         overworldSwitchScene.FadeOutScene(GameConstants.SCENE_MINIGAME);
 //     }
     
 //     private void BuyFood()

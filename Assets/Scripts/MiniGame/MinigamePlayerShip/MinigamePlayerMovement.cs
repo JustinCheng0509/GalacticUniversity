@@ -20,13 +20,13 @@ public class MinigamePlayerMovement : MonoBehaviour
 
     void Start()
     {
-        _minigameController = FindFirstObjectByType<MinigameController>();
+        _minigameController = FindAnyObjectByType<MinigameController>();
         _minigameController.OnMinigameStart += () => _canMove = true;
         _minigameController.OnMinigamePause += () => _canMove = false;
         _minigameController.OnMinigameResume += () => _canMove = true;
         _minigameController.OnMinigameEnd += () => _canMove = false;
 
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
         
         _screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         _rb = GetComponent<Rigidbody2D>();

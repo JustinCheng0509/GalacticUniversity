@@ -21,7 +21,7 @@ public class DialogController : MonoBehaviour
 
     void Start()
     {
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
         // Load all dialogs from resources
         _dialogList.AddRange(Resources.LoadAll<Dialog>("Dialogs"));
     }

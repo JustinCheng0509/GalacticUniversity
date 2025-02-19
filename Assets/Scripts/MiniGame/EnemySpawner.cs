@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
         _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
 
         InvokeRepeating(nameof(SpawnAsteroid), 1f, _spawnRate);

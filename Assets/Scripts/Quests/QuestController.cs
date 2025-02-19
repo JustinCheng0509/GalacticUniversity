@@ -28,8 +28,8 @@ public class QuestController : MonoBehaviour
         // Check if the current scene is the mini-game scene
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == GameConstants.SCENE_MINIGAME)
         {
-            _minigameScoreController = FindFirstObjectByType<MinigameScoreController>();
-            MinigameScoreController.OnScoreUpdated += CheckQuests;
+            _minigameScoreController = FindAnyObjectByType<MinigameScoreController>();
+            // MinigameScoreController.OnScoreUpdated += CheckQuests;
         }
         
     }

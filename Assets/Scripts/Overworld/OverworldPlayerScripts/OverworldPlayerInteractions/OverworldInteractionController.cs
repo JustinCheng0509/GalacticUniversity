@@ -22,7 +22,7 @@ public class OverworldInteractionController : MonoBehaviour
 
     void Start()
     {
-        _overworldPlayerStatusController = FindFirstObjectByType<OverworldPlayerStatusController>();
+        _overworldPlayerStatusController = FindAnyObjectByType<OverworldPlayerStatusController>();
     }
 
     void FixedUpdate()

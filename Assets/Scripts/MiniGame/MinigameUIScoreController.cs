@@ -24,7 +24,7 @@ public class MinigameUIScoreController : MonoBehaviour
 
     void Start()
     {
-        _minigameScoreController = FindFirstObjectByType<MinigameScoreController>();
+        _minigameScoreController = FindAnyObjectByType<MinigameScoreController>();
         _minigameScoreController.OnMinigameEndScoreCalculated += UpdateScorePanel;
     }
 

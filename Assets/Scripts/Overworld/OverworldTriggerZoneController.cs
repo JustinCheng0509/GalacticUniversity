@@ -1,42 +1,43 @@
 using UnityEngine;
 
-public class TriggerZone : MonoBehaviour
+public class OverworldTriggerZoneController : MonoBehaviour
 {
-    [SerializeField]
-    private DialogController dialogController;
+    private DialogController _dialogController;
 
-    [SerializeField]
-    private OverworldUIController overworldUIController;
+    private void Start()
+    {
+        _dialogController = FindAnyObjectByType<DialogController>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && gameObject.tag == GameConstants.TRIGGER_TAG_CLASS && !PlayerPrefs.HasKey("introClassPlayed"))
         {
-            dialogController.SetCurrentDialogs(dialogController.classroomTriggerDialogs);
+            _dialogController.SetDialog(DialogIDs.CLASSROOM_TRIGGER_DIALOGS);
             PlayerPrefs.SetInt("introClassPlayed", 1);
         }
 
         if (collision.CompareTag("Player") && gameObject.tag == GameConstants.TRIGGER_TAG_SHOP && !PlayerPrefs.HasKey("introShopPlayed"))
         {
-            dialogController.SetCurrentDialogs(dialogController.shopTriggerDialogs);
+            _dialogController.SetDialog(DialogIDs.SHOP_TRIGGER_DIALOGS);
             PlayerPrefs.SetInt("introShopPlayed", 1);
         }
 
         if (collision.CompareTag("Player") && gameObject.tag == GameConstants.TRIGGER_TAG_DORM && !PlayerPrefs.HasKey("introDormPlayed"))
         {
-            dialogController.SetCurrentDialogs(dialogController.dormTriggerDialogs);
+            _dialogController.SetDialog(DialogIDs.DORM_TRIGGER_DIALOGS);
             PlayerPrefs.SetInt("introDormPlayed", 1);
         }
 
         if (collision.CompareTag("Player") && gameObject.tag == GameConstants.TRIGGER_TAG_PLAYROOM && !PlayerPrefs.HasKey("introPlayRoomPlayed"))
         {
-            dialogController.SetCurrentDialogs(dialogController.playRoomTriggerDialogs);
+            _dialogController.SetDialog(DialogIDs.PLAY_ROOM_TRIGGER_DIALOGS);
             PlayerPrefs.SetInt("introPlayRoomPlayed", 1);
         }
 
         if (collision.CompareTag("Player") && gameObject.tag == GameConstants.TRIGGER_TAG_WORK && !PlayerPrefs.HasKey("introWorkPlayed"))
         {
-            dialogController.SetCurrentDialogs(dialogController.workTriggerDialogs);
+            _dialogController.SetDialog(DialogIDs.WORK_TRIGGER_DIALOGS);
             PlayerPrefs.SetInt("introWorkPlayed", 1);
         }
     }

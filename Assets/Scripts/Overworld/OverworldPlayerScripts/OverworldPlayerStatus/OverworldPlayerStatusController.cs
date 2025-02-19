@@ -41,11 +41,12 @@ public class OverworldPlayerStatusController : MonoBehaviour
     public event Action<AttendanceStatus> OnAttendanceUpdated;
     public event Action<float> OnHomeworkProgressUpdated;
     public event Action<float, float, float> OnNeedsUpdated;
+    public event Action<float, float, float> OnSkillUpdated;
 
     private void Start()
     {
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
-        _overworldTimeController = FindFirstObjectByType<OverworldTimeController>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _overworldTimeController = FindAnyObjectByType<OverworldTimeController>();
 
         _overworldTimeController.OnPastClassLateTime += HandleLateClassTime;
         _overworldTimeController.OnNewDayStarted += HandleNewDayStarted;
@@ -163,6 +164,7 @@ public class OverworldPlayerStatusController : MonoBehaviour
                     _gameDataManager.Mechanics += 1;
                     break;
             }
+            OnSkillUpdated?.Invoke(_gameDataManager.Maneuverability, _gameDataManager.Destruction, _gameDataManager.Mechanics);
         }
     }
 

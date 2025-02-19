@@ -29,7 +29,7 @@ public class OverworldMovement : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _overworldPlayerStatusController = FindFirstObjectByType<OverworldPlayerStatusController>();
+        _overworldPlayerStatusController = FindAnyObjectByType<OverworldPlayerStatusController>();
     }
 
     private void Update() {
@@ -81,6 +81,6 @@ public class OverworldMovement : MonoBehaviour
     }
 
     private void ResetFootstepDelay() {
-        delayFootstep = false;
+        _delayFootstep = false;
     }
 }

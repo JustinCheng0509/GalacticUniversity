@@ -11,8 +11,8 @@ public class OverworldUINeedsController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _overworldPlayerStatusController = FindFirstObjectByType<OverworldPlayerStatusController>();
-        // _overworldPlayerStatusController.OnStatusChanged += HandleStatusChange;
+        _overworldPlayerStatusController = FindAnyObjectByType<OverworldPlayerStatusController>();
+        _overworldPlayerStatusController.OnNeedsUpdated += HandleNeedsUpdate;
     }
 
     void HandleNeedsUpdate (float energy, float hunger, float mood)

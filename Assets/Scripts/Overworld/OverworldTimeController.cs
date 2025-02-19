@@ -22,6 +22,7 @@ public class OverworldTimeController : MonoBehaviour
     public bool IsAfterClass => IsAfterTime(GameConstants.CLASS_END_TIME);
 
     [SerializeField] private TMP_Text _timeText;
+    [SerializeField] private TMP_Text _dayText;
 
     private IEnumerator _timeCoroutine;
 
@@ -68,7 +69,7 @@ public class OverworldTimeController : MonoBehaviour
 
     void Start()
     {
-        _gameDataManager = FindFirstObjectByType<GameDataManager>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
         _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
 
         _timeText.text = CurrentTime;
@@ -79,6 +80,7 @@ public class OverworldTimeController : MonoBehaviour
     {
         CurrentTime = _gameDataManager.CurrentTime;
         _timeText.text = CurrentTime;
+        _dayText.text = $"Day {_gameDataManager.CurrentDay}";
         StartCoroutine(_timeCoroutine);
     }
 
@@ -150,6 +152,7 @@ public class OverworldTimeController : MonoBehaviour
                     SavedDataManager.SaveGameData(_gameDataManager.GameData);
                     OnNewDayStarted?.Invoke();
                 }
+                _dayText.text = $"Day {_gameDataManager.CurrentDay}";
                 // if (playerInfo.gameData.currentDay == 5)
                 // {
                 //     Time.timeScale = 0;
