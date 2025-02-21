@@ -14,13 +14,16 @@ public class SavedDataManager : MonoBehaviour
 
     public static List<LeaderboardEntry> GenerateLeaderboard(string playerName)
     {
-        List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
-        leaderboard.Add(new LeaderboardEntry {
-            name = playerName,
-            totalScore = 0,
-            destructionScore = 0,
-            safetyScore = 0
-        });
+        List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>
+        {
+            new LeaderboardEntry
+            {
+                name = playerName,
+                totalScore = 0,
+                destructionScore = 0,
+                safetyScore = 0
+            }
+        };
         for (int i = 1 ; i <= 19; i++) {
             leaderboard.Add(new LeaderboardEntry {
                 name = GameConstants.ALIEN_NAMES[i],
@@ -66,6 +69,7 @@ public class SavedDataManager : MonoBehaviour
             activeQuests = new List<int>(),
             tutorialsCompleted = new List<string>(),
             dailyGameDataList = dailyGameDataList,
+            inventory = new List<Item>(),
             leaderboard = GenerateLeaderboard("Player")
         };
 

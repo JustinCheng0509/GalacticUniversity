@@ -52,6 +52,8 @@ public class GameData
     public List<int> activeQuests = new List<int>();
     public List<string> tutorialsCompleted = new List<string>();
 
+    public List<Item> inventory = new List<Item>();
+
     public List<DailyGameData> dailyGameDataList = new List<DailyGameData>();
 
     public List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
