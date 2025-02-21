@@ -6,7 +6,7 @@ public class Item : ScriptableObject
     public string itemID;
     public string itemName;
     public string itemDescription;
-    public Sprite itemIcon;
+    public Sprite itemSprite;
     public int itemValue;
 
     [Header("Consumable")]
