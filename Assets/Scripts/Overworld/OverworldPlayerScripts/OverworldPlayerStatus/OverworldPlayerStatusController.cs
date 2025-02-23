@@ -38,24 +38,13 @@ public class OverworldPlayerStatusController : MonoBehaviour
     private Coroutine _updateStatusCoroutine;
     public event Action<OverworldPlayerStatus> OnStatusChanged;
 
-    public event Action<AttendanceStatus> OnAttendanceUpdated;
-    public event Action<float> OnHomeworkProgressUpdated;
-    public event Action<float, float, float> OnNeedsUpdated;
-    public event Action<float, float, float> OnSkillUpdated;
-
     private void Start()
     {
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
+
         _overworldTimeController = FindAnyObjectByType<OverworldTimeController>();
-
         _overworldTimeController.OnPastClassLateTime += HandleLateClassTime;
-        _overworldTimeController.OnNewDayStarted += HandleNewDayStarted;
-    }
-
-    private void HandleNewDayStarted()
-    {
-        OnAttendanceUpdated?.Invoke(_gameDataManager.Attendance);
-        OnHomeworkProgressUpdated?.Invoke(_gameDataManager.HomeworkProgress);
     }
 
     private void HandleLateClassTime()
@@ -63,8 +52,12 @@ public class OverworldPlayerStatusController : MonoBehaviour
         if (_gameDataManager.Attendance != AttendanceStatus.ATTENDED)
         {
             _gameDataManager.Attendance = AttendanceStatus.ABSENT;
-            OnAttendanceUpdated?.Invoke(_gameDataManager.Attendance);
         }
+    }
+
+    private void OnGameDataLoaded()
+    {
+        UpdateStatus();
     }
 
     public void UpdateStatus()
@@ -87,7 +80,6 @@ public class OverworldPlayerStatusController : MonoBehaviour
             UpdateWork();
 
             ClampStats();
-            OnNeedsUpdated?.Invoke(_gameDataManager.Energy, _gameDataManager.Hunger, _gameDataManager.Mood);
 
             CheckForLowStats();
 
@@ -121,7 +113,6 @@ public class OverworldPlayerStatusController : MonoBehaviour
         if (_currentStatus == OverworldPlayerStatus.DoingHomework && _gameDataManager.HomeworkProgress < 100)
         {
             _gameDataManager.HomeworkProgress += 1f;
-            OnHomeworkProgressUpdated?.Invoke(_gameDataManager.HomeworkProgress);
 
             if (GameConstants.USE_SKILL_SYSTEM)
             {
@@ -164,7 +155,6 @@ public class OverworldPlayerStatusController : MonoBehaviour
                     _gameDataManager.Mechanics += 1;
                     break;
             }
-            OnSkillUpdated?.Invoke(_gameDataManager.Maneuverability, _gameDataManager.Destruction, _gameDataManager.Mechanics);
         }
     }
 

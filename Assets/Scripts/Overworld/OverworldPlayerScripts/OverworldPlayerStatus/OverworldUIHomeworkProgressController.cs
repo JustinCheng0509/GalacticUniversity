@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class OverworldUIHomeworkProgressController : MonoBehaviour
 {
-    private OverworldPlayerStatusController _overworldPlayerStatusController;
+    private GameDataManager _gameDataManager;
 
     [SerializeField] private TMP_Text _homeworkProgressText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _overworldPlayerStatusController = FindAnyObjectByType<OverworldPlayerStatusController>();
-        _overworldPlayerStatusController.OnHomeworkProgressUpdated += HandleHomeworkProgressUpdate;
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _gameDataManager.OnHomeworkProgressUpdated += HandleHomeworkProgressUpdate;
     }
 
     private void HandleHomeworkProgressUpdate(float homeworkProgress)

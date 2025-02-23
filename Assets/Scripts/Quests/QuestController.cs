@@ -9,6 +9,8 @@ public class QuestController : MonoBehaviour
 
     public event System.Action<List<Quest>> OnQuestsUpdated;
 
+    public event System.Action<Quest> OnQuestsCompleted;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,9 +46,42 @@ public class QuestController : MonoBehaviour
         }
     }   
 
+    public void AddQuests(List<Quest> quests)
+    {
+        foreach (Quest quest in quests)
+        {
+            AddQuest(quest);
+        }
+    }
+
     public void UpdateQuests()
     {
         OnQuestsUpdated?.Invoke(_gameDataManager.ActiveQuests);
+    }
+
+    public void TryReturnQuest(Quest quest)
+    {
+        // Switch statement to check the quest type
+        switch (quest.questType)
+        {
+            default:
+                CompleteQuest(quest);
+                break;
+        }
+    }
+
+    private void CompleteQuest(Quest quest)
+    {
+        _gameDataManager.ActiveQuests.Remove(quest);
+        OnQuestsCompleted?.Invoke(quest);
+        // Handle quest rewards
+        // _gameDataManager.Money += quest.rewardMoney;
+        // if (quest.rewardItem != null)
+        // {
+        //     _gameDataManager.AddItem(quest.rewardItem);
+        // }
+
+        UpdateQuests();
     }
 
     // private void CheckQuests()

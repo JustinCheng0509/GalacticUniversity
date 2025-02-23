@@ -2,32 +2,38 @@ using UnityEngine;
 
 public class OverworldOutdoorLight : MonoBehaviour
 {
-    private OverworldTimeController timeController;
+    private GameDataManager _gameDataManager;
 
-    [SerializeField]
-    private string turnOnTime = "19:00";
+    private string _turnOnTime = "19:00";
 
-    [SerializeField]
-    private string turnOffTime = "05:30";
+    private string _turnOffTime = "05:30";
 
-    [SerializeField]
-    private GameObject[] lights;
+    private bool _isLightOn = false;
+
+    [SerializeField] private GameObject[] lights;
 
     private void Start() {
-        timeController = FindAnyObjectByType<OverworldTimeController>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _gameDataManager.OnTimeUpdated += CheckOutdoorLightTime;
     }
 
-    private void Update() {
-        if (timeController.CurrentTime == turnOnTime) {
-            // Turn on the lights
-            foreach (GameObject light in lights) {
-                light.SetActive(true);
+    private void CheckOutdoorLightTime(string time) {
+        if (OverworldTimeController.IsWithinTimeRange(_gameDataManager.CurrentTime, _turnOnTime, _turnOffTime)) {
+            if (!_isLightOn) {
+                _isLightOn = true;
+                ToggleLights(true);
             }
-        } else if (timeController.CurrentTime == turnOffTime) {
-            // Turn off the lights
-            foreach (GameObject light in lights) {
-                light.SetActive(false);
+        } else {
+            if (_isLightOn) {
+                _isLightOn = false;
+                ToggleLights(false);
             }
+        }
+    }
+
+    private void ToggleLights(bool isOn) {
+        foreach (GameObject light in lights) {
+            light.SetActive(isOn);
         }
     }
 }

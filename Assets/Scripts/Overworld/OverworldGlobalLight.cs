@@ -3,28 +3,22 @@ using UnityEngine.Rendering.Universal;
 
 public class OverworldGlobalLight : MonoBehaviour
 {
-    [SerializeField]
-    private Gradient gradient;
+    [SerializeField] private Gradient _gradient;
 
-    [SerializeField]
-    private OverworldTimeController timeController;
+    private GameDataManager _gameDataManager;
 
-    private Light2D overworldLight;
+    private Light2D _overworldLight;
 
-
-
-    // Awake is called when the script instance is being loaded
-    private void Awake()
+    void Start()
     {
-        overworldLight = GetComponent<Light2D>();
-        float percentage = timeController.GetTimePercentage();
-        overworldLight.color = gradient.Evaluate(percentage);
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _gameDataManager.OnTimeUpdated += UpdateGlobalLight;
+        _overworldLight = GetComponent<Light2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateGlobalLight(string time)
     {
-        float percentage = timeController.GetTimePercentage();
-        overworldLight.color = gradient.Evaluate(percentage);
+        float percentage = OverworldTimeController.GetTimePercentage(time);
+        _overworldLight.color = _gradient.Evaluate(percentage);
     }
 }

@@ -24,6 +24,7 @@ public class GameConstants
     public static readonly string TRIGGER_TAG_WORK = "TRIGGER_TAG_WORK";
     public static readonly string LAYER_GROUND = "LAYER_GROUND";
     public static readonly string TAG_GRASS = "TAG_GRASS";
+    public static readonly string TAG_INDOOR = "TAG_INDOOR";
     public static readonly string SCENE_OVERWORLD = "Overworld";
     public static readonly string SCENE_MAIN_MENU = "MainMenu";
     public static readonly string SCENE_MINIGAME = "Minigame";

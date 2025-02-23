@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: quest_work_intro
   m_EditorClassIdentifier: 
   questID: work_intro
-  questName: Check out the recreational hall
+  questName: Check out the workshop
   questDescription: To see the rooms you need to visit, look for the quest (?) icons
     in the minimap. You can click on the minimap to expand it.
-  startDialog: {fileID: 0}
   questType: 0
   targetValue: 0
   itemID: 0
   npcID: 0
   isCompleted: 0
+  incompleteDialog: {fileID: 0}
   completeDialog: {fileID: 0}
   rewardMoney: 0
   rewardItem: {fileID: 0}

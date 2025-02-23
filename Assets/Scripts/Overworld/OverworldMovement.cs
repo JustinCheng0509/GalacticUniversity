@@ -13,6 +13,7 @@ public class OverworldMovement : MonoBehaviour
 
     [SerializeField] private AudioClip[] _footstepGrass;
     [SerializeField] private AudioClip[] _footstepConcrete;
+    [SerializeField] private AudioClip[] _footstepIndoor;
 
     [SerializeField] private Transform _footstepPosition;
 
@@ -47,7 +48,7 @@ public class OverworldMovement : MonoBehaviour
     }
 
     private void PlayFootstepSound() {
-        if (_footstepAudioSource.isPlaying || _delayFootstep) {
+        if (_delayFootstep) {
             return;
         }
 
@@ -57,10 +58,12 @@ public class OverworldMovement : MonoBehaviour
 
         if (tileTag == GameConstants.TAG_GRASS) {
             footstepSounds = _footstepGrass;
+        } else if (tileTag == GameConstants.TAG_INDOOR) {
+            footstepSounds = _footstepIndoor;
         }
         
         _footstepAudioSource.clip = footstepSounds[Random.Range(0, footstepSounds.Length)];
-        _footstepAudioSource.volume = Random.Range(0.25f, 0.3f);
+        _footstepAudioSource.volume = Random.Range(0.7f, 1f);
         _footstepAudioSource.pitch = Random.Range(0.9f, 1.05f);
         _footstepAudioSource.Play();
 

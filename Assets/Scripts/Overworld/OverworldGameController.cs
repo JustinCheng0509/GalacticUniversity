@@ -4,9 +4,10 @@ public class OverworldGameController : MonoBehaviour
 {
     private GameDataManager _gameDataManager;
     private SwitchScene _switchScene;
+
     private DialogController _dialogController;
-    private TutorialController _tutorialController;
     private QuestController _questController;
+    private TutorialController _tutorialController;
     
     private OverworldUILayoutController _overworldUILayoutController;
 
@@ -20,10 +21,10 @@ public class OverworldGameController : MonoBehaviour
         _switchScene.OnFadeInComplete += HandleFadeInComplete;
 
         _dialogController = FindAnyObjectByType<DialogController>();
-        _tutorialController = FindAnyObjectByType<TutorialController>();
-
+        _dialogController.OnDialogEnd += HandleDialogEnd;
+        
         _questController = FindAnyObjectByType<QuestController>();
-
+        _tutorialController = FindAnyObjectByType<TutorialController>();
         _overworldUILayoutController = FindAnyObjectByType<OverworldUILayoutController>();
     }
 
@@ -38,19 +39,28 @@ public class OverworldGameController : MonoBehaviour
         if (_gameDataManager.CurrentDay == 1 && !_gameDataManager.IntroDialogPlayed)
         {
             _gameDataManager.IntroDialogPlayed = true;
-            _dialogController.OnDialogEnd += HandleIntroDialogEnd;
-            _dialogController.SetDialog(DialogIDs.INTRO_DIALOGS);
+            _dialogController.SetDialog(DialogIDs.DIALOG_INTRO);
         }
     }
 
-    private void HandleIntroDialogEnd()
+    private void HandleDialogEnd(Dialog dialog)
     {
-        _dialogController.OnDialogEnd -= HandleIntroDialogEnd;
-        _questController.AddQuest(QuestIDs.QUEST_CLASSROOM_INTRO);
-        _questController.AddQuest(QuestIDs.QUEST_DORM_INTRO);
-        _questController.AddQuest(QuestIDs.QUEST_SHOP_INTRO);
-        _questController.AddQuest(QuestIDs.QUEST_WORK_INTRO);
-        _questController.AddQuest(QuestIDs.QUEST_PLAY_ROOM_INTRO);
-        _tutorialController.ShowTutorial(TutorialIDs.TUTORIAL_START);
+        if (dialog.associatedTutorials != null) {
+            _tutorialController.ShowTutorial(dialog.associatedTutorials);
+        }
+        if (dialog.associatedQuests != null) {
+            _questController.AddQuests(dialog.associatedQuests);
+        }
     }
+
+    // private void HandleIntroDialogEnd()
+    // {
+    //     _dialogController.OnDialogEnd -= HandleIntroDialogEnd;
+    //     _questController.AddQuest(QuestIDs.QUEST_CLASSROOM_INTRO);
+    //     _questController.AddQuest(QuestIDs.QUEST_DORM_INTRO);
+    //     _questController.AddQuest(QuestIDs.QUEST_SHOP_INTRO);
+    //     _questController.AddQuest(QuestIDs.QUEST_WORK_INTRO);
+    //     _questController.AddQuest(QuestIDs.QUEST_PLAY_ROOM_INTRO);
+    //     _tutorialController.ShowTutorial(TutorialIDs.TUTORIAL_START);
+    // }
 }

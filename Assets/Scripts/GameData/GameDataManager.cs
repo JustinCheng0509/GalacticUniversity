@@ -10,6 +10,18 @@ public class GameDataManager : MonoBehaviour
 
     // Getters and Setters for GameData properties
     public GameData GameData => _gameData;
+
+    public event Action<AttendanceStatus> OnAttendanceUpdated;
+    public event Action<float> OnHomeworkProgressUpdated;
+    public event Action<float> OnEnergyUpdated;
+    public event Action<float> OnHungerUpdated;
+    public event Action<float> OnMoodUpdated;
+    public event Action<float> OnManeuverabilityUpdated;
+    public event Action<float> OnDestructionUpdated;
+    public event Action<float> OnMechanicsUpdated;
+    public event Action<float> OnMoneyUpdated;
+    public event Action<string> OnTimeUpdated;
+    public event Action<int> OnDayUpdated;
     
     public string PlayerName
     {
@@ -20,55 +32,85 @@ public class GameDataManager : MonoBehaviour
     public float Energy
     {
         get => _gameData.energy;
-        set => _gameData.energy = value;
+        set {
+            _gameData.energy = value;
+            OnEnergyUpdated?.Invoke(_gameData.energy);
+        }
+        
     }
 
     public float Hunger
     {
         get => _gameData.hunger;
-        set => _gameData.hunger = value;
+        set {
+            _gameData.hunger = value;
+            OnHungerUpdated?.Invoke(_gameData.hunger);
+        }
     }
 
     public float Mood
     {
         get => _gameData.mood;
-        set => _gameData.mood = value;
+        set {
+            _gameData.mood = value;
+            OnMoodUpdated?.Invoke(_gameData.mood);
+        }
     }
 
     public float Money
     {
         get => _gameData.money;
-        set => _gameData.money = value;
+        set {
+            _gameData.money = value;
+            OnMoneyUpdated?.Invoke(_gameData.money);
+        }
     }
 
     public float Maneuverability
     {
         get => _gameData.maneuverability;
-        set => _gameData.maneuverability = value;
+        set {
+            _gameData.maneuverability = value;
+            OnManeuverabilityUpdated?.Invoke(_gameData.maneuverability);
+        }
     }
 
     public float Destruction
     {
         get => _gameData.destruction;
-        set => _gameData.destruction = value;
+        set {
+            _gameData.destruction = value;
+            OnDestructionUpdated?.Invoke(_gameData.destruction);
+        }
     }
 
     public float Mechanics
     {
         get => _gameData.mechanics;
-        set => _gameData.mechanics = value;
+        set {
+            _gameData.mechanics = value;
+            OnMechanicsUpdated?.Invoke(_gameData.mechanics);
+        }
     }
 
     public string CurrentTime
     {
         get => _gameData.currentTime;
-        set => _gameData.currentTime = value;
+        set {
+            _gameData.currentTime = value;
+            OnTimeUpdated?.Invoke(_gameData.currentTime);
+        }
     }
 
     public int CurrentDay
     {
         get => _gameData.currentDay;
-        set => _gameData.currentDay = value;
+        set {
+            _gameData.currentDay = value;
+            OnDayUpdated?.Invoke(_gameData.currentDay);
+            OnAttendanceUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].attendance);
+            OnHomeworkProgressUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress);
+        }
     }
 
     public int TotalNumberOfDays
@@ -199,5 +241,17 @@ public class GameDataManager : MonoBehaviour
     {
         _gameData = SavedDataManager.LoadGameData();
         OnGameDataLoaded?.Invoke();
+        // Fire all events to update UI
+        OnAttendanceUpdated?.Invoke(Attendance);
+        OnHomeworkProgressUpdated?.Invoke(HomeworkProgress);
+        OnEnergyUpdated?.Invoke(Energy);
+        OnHungerUpdated?.Invoke(Hunger);
+        OnMoodUpdated?.Invoke(Mood);
+        OnManeuverabilityUpdated?.Invoke(Maneuverability);
+        OnDestructionUpdated?.Invoke(Destruction);
+        OnMechanicsUpdated?.Invoke(Mechanics);
+        OnMoneyUpdated?.Invoke(Money);
+        OnTimeUpdated?.Invoke(CurrentTime);
+        OnDayUpdated?.Invoke(CurrentDay);
     }
 }

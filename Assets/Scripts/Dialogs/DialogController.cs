@@ -15,7 +15,7 @@ public class DialogController : MonoBehaviour
 
     private Dialog _currentDialog;
 
-    public event Action OnDialogEnd;
+    public event Action<Dialog> OnDialogEnd;
 
     private GameDataManager _gameDataManager;
 
@@ -39,7 +39,8 @@ public class DialogController : MonoBehaviour
     {
         _dialogPanel.SetActive(false);
         Time.timeScale = 1;
-        OnDialogEnd?.Invoke();
+        OnDialogEnd?.Invoke(_currentDialog);
+        _currentDialog = null;
         // if (CompareDialogs(currentDialogs, introDialogs)) {
         //     tutorialController.ShowTutorial(tutorialController.startTutorial);
         // } else if (CompareDialogs(currentDialogs, classroomTriggerDialogs)) {
