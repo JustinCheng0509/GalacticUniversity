@@ -59,9 +59,9 @@ public class GameData
     // Intros and tutorials
     public bool isTutorialEnabled = true;
     public bool introDialogPlayed = false;
-    public bool introClassPlayed = false;
-    public bool introShopPlayed = false;
-    public bool introDormPlayed = false;
-    public bool introPlayRoomPlayed = false;
-    public bool introWorkPlayed = false;
+    // public bool introClassPlayed = false;
+    // public bool introShopPlayed = false;
+    // public bool introDormPlayed = false;
+    // public bool introPlayRoomPlayed = false;
+    // public bool introWorkPlayed = false;
 }

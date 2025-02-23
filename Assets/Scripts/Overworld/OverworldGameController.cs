@@ -18,12 +18,14 @@ public class OverworldGameController : MonoBehaviour
         _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
 
         _switchScene = FindAnyObjectByType<SwitchScene>();
-        _switchScene.OnFadeInComplete += HandleFadeInComplete;
+        _switchScene.OnFadeInCompleted += HandleFadeInComplete;
 
         _dialogController = FindAnyObjectByType<DialogController>();
-        _dialogController.OnDialogEnd += HandleDialogEnd;
+        _dialogController.OnDialogEnded += HandleDialogEnd;
         
         _questController = FindAnyObjectByType<QuestController>();
+        _questController.OnQuestCompleted += HandleQuestComplete;
+
         _tutorialController = FindAnyObjectByType<TutorialController>();
         _overworldUILayoutController = FindAnyObjectByType<OverworldUILayoutController>();
     }
@@ -53,14 +55,10 @@ public class OverworldGameController : MonoBehaviour
         }
     }
 
-    // private void HandleIntroDialogEnd()
-    // {
-    //     _dialogController.OnDialogEnd -= HandleIntroDialogEnd;
-    //     _questController.AddQuest(QuestIDs.QUEST_CLASSROOM_INTRO);
-    //     _questController.AddQuest(QuestIDs.QUEST_DORM_INTRO);
-    //     _questController.AddQuest(QuestIDs.QUEST_SHOP_INTRO);
-    //     _questController.AddQuest(QuestIDs.QUEST_WORK_INTRO);
-    //     _questController.AddQuest(QuestIDs.QUEST_PLAY_ROOM_INTRO);
-    //     _tutorialController.ShowTutorial(TutorialIDs.TUTORIAL_START);
-    // }
+    private void HandleQuestComplete(Quest quest)
+    {
+        if (quest.completeDialog != null) {
+            _dialogController.SetDialog(quest.completeDialog);
+        }
+    }
 }

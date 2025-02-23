@@ -10,7 +10,7 @@ public class SwitchScene : MonoBehaviour
 
     private float _targetVolume = 0.5f;
 
-    public event Action OnFadeInComplete;
+    public event Action OnFadeInCompleted;
 
     // [SerializeField]
     // private DialogController dialogController;
@@ -54,7 +54,7 @@ public class SwitchScene : MonoBehaviour
         //     dialogController.SetCurrentDialogs(dialogController.introDialogs);
         //     PlayerPrefs.SetInt("introDialogsPlayed", 1);
         // }
-        OnFadeInComplete?.Invoke();
+        OnFadeInCompleted?.Invoke();
     }
 
     public void FadeOutScene(string sceneName)

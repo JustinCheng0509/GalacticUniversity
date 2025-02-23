@@ -22,6 +22,7 @@ public class GameDataManager : MonoBehaviour
     public event Action<float> OnMoneyUpdated;
     public event Action<string> OnTimeUpdated;
     public event Action<int> OnDayUpdated;
+    public event Action<List<Quest>> OnActiveQuestsUpdated;
     
     public string PlayerName
     {
@@ -125,6 +126,12 @@ public class GameDataManager : MonoBehaviour
         set => _gameData.isTutorialEnabled = value;
     }
 
+    public bool IntroDialogPlayed
+    {
+        get => _gameData.introDialogPlayed;
+        set => _gameData.introDialogPlayed = value;
+    }
+
     public int TotalScore
     {
         get => _gameData.totalScore;
@@ -157,11 +164,13 @@ public class GameDataManager : MonoBehaviour
             return;
         }
         _gameData.activeQuests.Add(quest);
+        OnActiveQuestsUpdated?.Invoke(_gameData.activeQuests);
     }
 
     public void RemoveQuest(Quest quest)
     {
         _gameData.activeQuests.Remove(quest);
+        OnActiveQuestsUpdated?.Invoke(_gameData.activeQuests);
     }
 
     public List<DailyGameData> DailyGameDataList
@@ -188,42 +197,6 @@ public class GameDataManager : MonoBehaviour
         set => _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress = value;
     }
 
-    public bool IntroDialogPlayed
-    {
-        get => _gameData.introDialogPlayed;
-        set => _gameData.introDialogPlayed = value;
-    }
-
-    public bool IntroClassPlayed
-    {
-        get => _gameData.introClassPlayed;
-        set => _gameData.introClassPlayed = value;
-    }
-
-    public bool IntroShopPlayed
-    {
-        get => _gameData.introShopPlayed;
-        set => _gameData.introShopPlayed = value;
-    }
-
-    public bool IntroDormPlayed
-    {
-        get => _gameData.introDormPlayed;
-        set => _gameData.introDormPlayed = value;
-    }
-
-    public bool IntroWorkPlayed
-    {
-        get => _gameData.introWorkPlayed;
-        set => _gameData.introWorkPlayed = value;
-    }
-
-    public bool IntroPlayRoomPlayed
-    {
-        get => _gameData.introPlayRoomPlayed;
-        set => _gameData.introPlayRoomPlayed = value;
-    }
-
     public bool IsTutorialCompleted(string tutorialId)
     {
         return _gameData.tutorialsCompleted.Contains(tutorialId);
@@ -240,8 +213,6 @@ public class GameDataManager : MonoBehaviour
     void Start()
     {
         _gameData = SavedDataManager.LoadGameData();
-        OnGameDataLoaded?.Invoke();
-        // Fire all events to update UI
         OnAttendanceUpdated?.Invoke(Attendance);
         OnHomeworkProgressUpdated?.Invoke(HomeworkProgress);
         OnEnergyUpdated?.Invoke(Energy);
@@ -253,5 +224,7 @@ public class GameDataManager : MonoBehaviour
         OnMoneyUpdated?.Invoke(Money);
         OnTimeUpdated?.Invoke(CurrentTime);
         OnDayUpdated?.Invoke(CurrentDay);
+        OnActiveQuestsUpdated?.Invoke(ActiveQuests);
+        OnGameDataLoaded?.Invoke();
     }
 }

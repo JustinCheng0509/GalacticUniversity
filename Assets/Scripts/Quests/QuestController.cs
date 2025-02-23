@@ -7,16 +7,13 @@ public class QuestController : MonoBehaviour
 
     private GameDataManager _gameDataManager;
 
-    public event System.Action<List<Quest>> OnQuestsUpdated;
-
-    public event System.Action<Quest> OnQuestsCompleted;
+    public event System.Action<Quest> OnQuestCompleted;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _quests.AddRange(Resources.LoadAll<Quest>("Quests"));
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
-        _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
         // Check if the current scene is the mini-game scene
         // if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == GameConstants.SCENE_MINIGAME)
         // {
@@ -26,15 +23,9 @@ public class QuestController : MonoBehaviour
         
     }
 
-    private void OnGameDataLoaded()
-    {
-        UpdateQuests();
-    }
-
     public void AddQuest(Quest quest)
     {
         _gameDataManager.ActiveQuests.Add(quest);
-        UpdateQuests();
     }
 
     public void AddQuest(string questID)
@@ -54,13 +45,19 @@ public class QuestController : MonoBehaviour
         }
     }
 
-    public void UpdateQuests()
+    public void TryReturnQuest(string questID)
     {
-        OnQuestsUpdated?.Invoke(_gameDataManager.ActiveQuests);
+        Quest quest = _gameDataManager.ActiveQuests.Find(q => q.questID == questID);
+        if (quest != null)
+        {
+            TryReturnQuest(quest);
+        }
     }
 
     public void TryReturnQuest(Quest quest)
     {
+        // Check if quest is in the active quests list
+        if (!_gameDataManager.ActiveQuests.Contains(quest)) return;
         // Switch statement to check the quest type
         switch (quest.questType)
         {
@@ -73,15 +70,13 @@ public class QuestController : MonoBehaviour
     private void CompleteQuest(Quest quest)
     {
         _gameDataManager.ActiveQuests.Remove(quest);
-        OnQuestsCompleted?.Invoke(quest);
+        OnQuestCompleted?.Invoke(quest);
         // Handle quest rewards
         // _gameDataManager.Money += quest.rewardMoney;
         // if (quest.rewardItem != null)
         // {
         //     _gameDataManager.AddItem(quest.rewardItem);
         // }
-
-        UpdateQuests();
     }
 
     // private void CheckQuests()

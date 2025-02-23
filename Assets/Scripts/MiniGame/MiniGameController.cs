@@ -41,7 +41,7 @@ public class MinigameController : MonoBehaviour
         _gameDataManager.OnGameDataLoaded += GameDataLoadedHandler;
         
         _switchScene = FindAnyObjectByType<SwitchScene>();
-        _switchScene.OnFadeInComplete += OnFadeInComplete;
+        _switchScene.OnFadeInCompleted += OnFadeInCompleted;
 
         _tutorialController = FindAnyObjectByType<TutorialController>();
         _tutorialController.OnTutorialCompleted += _minigameCountdownController.StartCountdown;
@@ -68,7 +68,7 @@ public class MinigameController : MonoBehaviour
         }
     }
 
-    private void OnFadeInComplete()
+    private void OnFadeInCompleted()
     {
         _minigameCountdownController.StartCountdown();
     }

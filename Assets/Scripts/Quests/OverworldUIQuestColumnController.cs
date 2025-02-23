@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class OverworldUIQuestColumnController : MonoBehaviour
 {
-    private QuestController _questController;
+    private GameDataManager _gameDataManager;
     private OverworldUILayoutController _layoutController;
 
     [SerializeField] private GameObject _questItemPrefab;
@@ -28,8 +28,8 @@ public class OverworldUIQuestColumnController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _questController = FindAnyObjectByType<QuestController>();
-        _questController.OnQuestsUpdated += HandleQuestUpdate;
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _gameDataManager.OnActiveQuestsUpdated += HandleQuestUpdate;
         _layoutController = FindAnyObjectByType<OverworldUILayoutController>();
     }
 
