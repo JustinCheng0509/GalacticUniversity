@@ -80,7 +80,7 @@ public class OverworldUIInteractionController : MonoBehaviour
     }
 
     private string GetPromptText(string tag) {
-        Debug.Log(tag);
+        // Debug.Log(tag);
         switch (tag) {
             case var value when value == GameConstants.INTERACTABLE_TAG_CLASS: return "(E) Start class";
             case var value when value == GameConstants.INTERACTABLE_TAG_SLEEP: return "(E) Sleep";

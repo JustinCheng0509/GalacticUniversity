@@ -5,6 +5,7 @@ using UnityEngine;
 public class OverworldTimeController : MonoBehaviour
 {
     private GameDataManager _gameDataManager;
+    private TutorialController _tutorialController;
     private IEnumerator _timeCoroutine;
 
     private const float BASE_INTERVAL_BETWEEN_MINUTES = 0.2f;
@@ -26,6 +27,8 @@ public class OverworldTimeController : MonoBehaviour
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
         _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
         _timeCoroutine = TimeCoroutine();
+
+        _tutorialController = FindAnyObjectByType<TutorialController>();
     }
 
     private void OnGameDataLoaded()
@@ -44,6 +47,9 @@ public class OverworldTimeController : MonoBehaviour
         while (true)
         {
             AdvanceTime();
+            if (_gameDataManager.IsTutorialEnabled && CanAttendClass) {
+                _tutorialController.ShowTutorial(TutorialIDs.TUTORIAL_CLASS_TIME);
+            }
             yield return new WaitForSeconds(IntervalBetweenMinute);
         }
     }

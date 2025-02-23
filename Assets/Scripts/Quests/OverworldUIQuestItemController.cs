@@ -22,6 +22,30 @@ public class OverworldUIQuestItemController : MonoBehaviour
         ToggleQuestDescription(false);
     }
 
+    void OnEnable()
+    {
+        if (_questColumnController != null)
+        {
+            _questColumnController.OnQuestSelected += HandleQuestSelected;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (_questColumnController != null)
+        {
+            _questColumnController.OnQuestSelected -= HandleQuestSelected;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (_questColumnController != null)
+        {
+            _questColumnController.OnQuestSelected -= HandleQuestSelected;
+        }
+    }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SetQuest(Quest quest)
@@ -33,6 +57,8 @@ public class OverworldUIQuestItemController : MonoBehaviour
 
     public void OnClick()
     {
+        if (_questColumnController == null) return;
+
         if (_questColumnController.SelectedQuest == _quest)
         {
             _questColumnController.SelectedQuest = null;

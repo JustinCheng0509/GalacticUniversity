@@ -25,7 +25,7 @@ public class QuestController : MonoBehaviour
 
     public void AddQuest(Quest quest)
     {
-        _gameDataManager.ActiveQuests.Add(quest);
+        _gameDataManager.AddQuest(quest);
     }
 
     public void AddQuest(string questID)
@@ -47,17 +47,23 @@ public class QuestController : MonoBehaviour
 
     public void TryReturnQuest(string questID)
     {
-        Quest quest = _gameDataManager.ActiveQuests.Find(q => q.questID == questID);
-        if (quest != null)
+        Quest quest = _gameDataManager.GetActiveQuests().Find(q => q.questID == questID);
+        if (quest == null)
         {
-            TryReturnQuest(quest);
+            Debug.LogWarning("Quest " + questID + " is not in the active quests list.");
+            return;
         }
+        
+        TryReturnQuest(quest);
     }
 
     public void TryReturnQuest(Quest quest)
     {
         // Check if quest is in the active quests list
-        if (!_gameDataManager.ActiveQuests.Contains(quest)) return;
+        if (!_gameDataManager.GetActiveQuests().Contains(quest)) {
+            Debug.LogWarning("Quest " + quest.questID + " is not in the active quests list.");
+            return;
+        }
         // Switch statement to check the quest type
         switch (quest.questType)
         {
@@ -69,14 +75,9 @@ public class QuestController : MonoBehaviour
 
     private void CompleteQuest(Quest quest)
     {
-        _gameDataManager.ActiveQuests.Remove(quest);
+        _gameDataManager.RemoveQuest(quest);
         OnQuestCompleted?.Invoke(quest);
         // Handle quest rewards
-        // _gameDataManager.Money += quest.rewardMoney;
-        // if (quest.rewardItem != null)
-        // {
-        //     _gameDataManager.AddItem(quest.rewardItem);
-        // }
     }
 
     // private void CheckQuests()

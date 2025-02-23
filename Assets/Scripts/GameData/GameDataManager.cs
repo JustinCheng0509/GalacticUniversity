@@ -150,10 +150,9 @@ public class GameDataManager : MonoBehaviour
         set => _gameData.totalSafetyScore = value;
     }
 
-    public List<Quest> ActiveQuests
+    public List<Quest> GetActiveQuests()
     {
-        get => _gameData.activeQuests;
-        set => _gameData.activeQuests = value;
+        return _gameData.activeQuests;
     }
 
     public void AddQuest(Quest quest)
@@ -224,7 +223,7 @@ public class GameDataManager : MonoBehaviour
         OnMoneyUpdated?.Invoke(Money);
         OnTimeUpdated?.Invoke(CurrentTime);
         OnDayUpdated?.Invoke(CurrentDay);
-        OnActiveQuestsUpdated?.Invoke(ActiveQuests);
+        OnActiveQuestsUpdated?.Invoke(GetActiveQuests());
         OnGameDataLoaded?.Invoke();
     }
 }

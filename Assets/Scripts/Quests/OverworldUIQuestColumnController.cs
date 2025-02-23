@@ -39,7 +39,7 @@ public class OverworldUIQuestColumnController : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-
+        
         SelectedQuest = null;
 
         foreach (Quest quest in quests)

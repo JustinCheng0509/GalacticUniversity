@@ -1,8 +1,8 @@
 public class QuestIDs
 {
-  public static readonly string QUEST_CLASSROOM_INTRO = "classroom_intro";
-  public static readonly string QUEST_DORM_INTRO = "dorm_intro";
-  public static readonly string QUEST_PLAY_ROOM_INTRO = "play_room_intro";
-  public static readonly string QUEST_WORK_INTRO = "work_intro";
-  public static readonly string QUEST_SHOP_INTRO = "shop_intro";
+  public static readonly string QUEST_INTRO_CLASSROOM = "quest_intro_classroom";
+  public static readonly string QUEST_INTRO_DORM = "quest_intro_dorm";
+  public static readonly string QUEST_INTRO_PLAY_ROOM = "quest_intro_play_room";
+  public static readonly string QUEST_INTRO_WORK = "quest_intro_work";
+  public static readonly string QUEST_INTRO_SHOP = "quest_intro_shop";
 }

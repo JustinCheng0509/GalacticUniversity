@@ -57,12 +57,12 @@ public class SwitchScene : MonoBehaviour
         OnFadeInCompleted?.Invoke();
     }
 
-    public void FadeOutScene(string sceneName)
+    public void FadeOutScene(string sceneName, float fadeDuration = 1f)
     {
-        StartCoroutine(FadeOutSceneCoroutine(sceneName));
+        StartCoroutine(FadeOutSceneCoroutine(sceneName, fadeDuration));
     }
 
-    IEnumerator FadeOutSceneCoroutine(string sceneName, float fadeDuration = 1f)
+    IEnumerator FadeOutSceneCoroutine(string sceneName, float fadeDuration)
     {
         _fadeCanvas.alpha = 0.0f;
         _fadeCanvas.gameObject.SetActive(true);
