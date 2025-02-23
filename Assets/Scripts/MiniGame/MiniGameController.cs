@@ -59,9 +59,9 @@ public class MinigameController : MonoBehaviour
 
     private void GameDataLoadedHandler()
     {
-        if (!_gameDataManager.IsTutorialCompleted(TutorialIDs.MINIGAME_TUTORIAL))
+        if (!_gameDataManager.IsTutorialCompleted(TutorialIDs.TUTORIAL_MINIGAME))
         {
-            _tutorialController.ShowTutorial(TutorialIDs.MINIGAME_TUTORIAL);
+            _tutorialController.ShowTutorial(TutorialIDs.TUTORIAL_MINIGAME);
         } else
         {
             _switchScene.FadeInScene();

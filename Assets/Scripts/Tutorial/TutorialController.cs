@@ -26,6 +26,7 @@ public class TutorialController : MonoBehaviour
 
     public void ShowTutorial(Tutorial tutorial)
     {
+        Debug.Log("Showing tutorial: " + tutorial.title);
         // if the tutorial is already completed, do not show it again
         if (_gameDataManager.IsTutorialCompleted(tutorial.tutorialID)) return;
 
@@ -117,15 +118,11 @@ public class TutorialController : MonoBehaviour
 
     public void ShowTutorialUI()
     {
-        tutorialPanel.GetComponent<CanvasGroup>().alpha = 1; 
-        tutorialPanel.GetComponent<CanvasGroup>().interactable = true; 
-        tutorialPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        tutorialPanel.gameObject.SetActive(true);
     }
 
     public void HideTutorialUI()
     {
-        tutorialPanel.GetComponent<CanvasGroup>().alpha = 0; 
-        tutorialPanel.GetComponent<CanvasGroup>().interactable = false; 
-        tutorialPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        tutorialPanel.gameObject.SetActive(false);
     }
 }

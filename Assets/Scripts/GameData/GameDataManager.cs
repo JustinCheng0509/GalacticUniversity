@@ -101,10 +101,25 @@ public class GameDataManager : MonoBehaviour
         set => _gameData.totalSafetyScore = value;
     }
 
-    public List<int> ActiveQuests
+    public List<Quest> ActiveQuests
     {
         get => _gameData.activeQuests;
         set => _gameData.activeQuests = value;
+    }
+
+    public void AddQuest(Quest quest)
+    {
+        // if quest is already in the list, don't add it again
+        if (_gameData.activeQuests.Contains(quest))
+        {
+            return;
+        }
+        _gameData.activeQuests.Add(quest);
+    }
+
+    public void RemoveQuest(Quest quest)
+    {
+        _gameData.activeQuests.Remove(quest);
     }
 
     public List<DailyGameData> DailyGameDataList
@@ -129,6 +144,42 @@ public class GameDataManager : MonoBehaviour
     {
         get => _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress;
         set => _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress = value;
+    }
+
+    public bool IntroDialogPlayed
+    {
+        get => _gameData.introDialogPlayed;
+        set => _gameData.introDialogPlayed = value;
+    }
+
+    public bool IntroClassPlayed
+    {
+        get => _gameData.introClassPlayed;
+        set => _gameData.introClassPlayed = value;
+    }
+
+    public bool IntroShopPlayed
+    {
+        get => _gameData.introShopPlayed;
+        set => _gameData.introShopPlayed = value;
+    }
+
+    public bool IntroDormPlayed
+    {
+        get => _gameData.introDormPlayed;
+        set => _gameData.introDormPlayed = value;
+    }
+
+    public bool IntroWorkPlayed
+    {
+        get => _gameData.introWorkPlayed;
+        set => _gameData.introWorkPlayed = value;
+    }
+
+    public bool IntroPlayRoomPlayed
+    {
+        get => _gameData.introPlayRoomPlayed;
+        set => _gameData.introPlayRoomPlayed = value;
     }
 
     public bool IsTutorialCompleted(string tutorialId)

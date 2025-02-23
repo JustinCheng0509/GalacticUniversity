@@ -1,41 +1,56 @@
+using System.Collections.Generic;
 using UnityEngine;
-
-public enum QuestType
-{
-    ScoreInRound,
-    ScoreTotal,
-    EnemiesDestroyedInRound,
-    EnemiesDestroyedTotal,
-    DamageDealtInRound,
-    DamageDealtTotal,
-    DamageTakenInRound,
-    TotalManeuverability,
-    TotalDestruction,
-    TotalMechanics,
-}
 
 public class QuestController : MonoBehaviour
 {
-    private Quest[] quests; // Array of all quests
-    public Quest[] activeQuests; // Array of active quests
+    private List<Quest> _quests = new List<Quest>(); // Array of all quests
 
-    private MinigameScoreController _minigameScoreController;
+    private GameDataManager _gameDataManager;
+
+    public event System.Action<List<Quest>> OnQuestsUpdated;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        quests = Resources.LoadAll<Quest>("Quests"); // Load all quests from the Resources folder
+        _quests.AddRange(Resources.LoadAll<Quest>("Quests"));
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
         // Check if the current scene is the mini-game scene
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == GameConstants.SCENE_MINIGAME)
-        {
-            _minigameScoreController = FindAnyObjectByType<MinigameScoreController>();
-            // MinigameScoreController.OnScoreUpdated += CheckQuests;
-        }
+        // if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == GameConstants.SCENE_MINIGAME)
+        // {
+        //     _minigameScoreController = FindAnyObjectByType<MinigameScoreController>();
+        //     // MinigameScoreController.OnScoreUpdated += CheckQuests;
+        // }
         
     }
 
-    private void CheckQuests()
+    private void OnGameDataLoaded()
     {
-        Debug.Log("Checking quests...");
+        UpdateQuests();
     }
+
+    public void AddQuest(Quest quest)
+    {
+        _gameDataManager.ActiveQuests.Add(quest);
+        UpdateQuests();
+    }
+
+    public void AddQuest(string questID)
+    {
+        Quest quest = _quests.Find(q => q.questID == questID);
+        if (quest != null)
+        {
+            AddQuest(quest);
+        }
+    }   
+
+    public void UpdateQuests()
+    {
+        OnQuestsUpdated?.Invoke(_gameDataManager.ActiveQuests);
+    }
+
+    // private void CheckQuests()
+    // {
+    //     Debug.Log("Checking quests...");
+    // }
 }

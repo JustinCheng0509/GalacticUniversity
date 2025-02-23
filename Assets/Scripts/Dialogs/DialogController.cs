@@ -39,6 +39,7 @@ public class DialogController : MonoBehaviour
     {
         _dialogPanel.SetActive(false);
         Time.timeScale = 1;
+        OnDialogEnd?.Invoke();
         // if (CompareDialogs(currentDialogs, introDialogs)) {
         //     tutorialController.ShowTutorial(tutorialController.startTutorial);
         // } else if (CompareDialogs(currentDialogs, classroomTriggerDialogs)) {
@@ -71,6 +72,7 @@ public class DialogController : MonoBehaviour
             text = text.Replace(GameConstants.PLAYER_NAME_PLACEHOLDER, _gameDataManager.PlayerName);
         }
 
+        _dialogNameText.text = name;
         _dialogText.text = text;
 
         if (dialog.isSelfDialog) {

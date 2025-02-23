@@ -14,7 +14,7 @@ public class OverworldTimeController : MonoBehaviour
     }
 
     // 1 means a minute in the game is 1 second in real life
-    private const float BASE_INTERVAL_BETWEEN_MINUTES = 0.01f;
+    private const float BASE_INTERVAL_BETWEEN_MINUTES = 0.2f;
 
     public float IntervalBetweenMinute => CanAttendClass ? BASE_INTERVAL_BETWEEN_MINUTES * 15 : BASE_INTERVAL_BETWEEN_MINUTES;
     public bool CanAttendClass => IsWithinTimeRange(GameConstants.CLASS_START_TIME, GameConstants.CLASS_LATE_TIME);
