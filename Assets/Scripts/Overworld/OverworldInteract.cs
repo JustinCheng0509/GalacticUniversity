@@ -4,39 +4,31 @@ using UnityEngine.InputSystem;
 
 public class OverworldInteract : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject interactPromptPanel;
+    [SerializeField] private GameObject interactPromptPanel;
 
-    [SerializeField]
-    private TMP_Text interactPromptText;
+    [SerializeField] private TMP_Text interactPromptText;
 
-    [SerializeField]
-    private GameObject interactStatusPanel;
+    [SerializeField] private GameObject interactStatusPanel;
 
-    [SerializeField]
-    private TMP_Text interactStatusText;
+    [SerializeField] private TMP_Text interactStatusText;
     
     public InputActionReference interact;
 
     private string interactableTag = "";
 
-    [SerializeField]
-    private PlayerInfo playerInfo;
+    [SerializeField] private PlayerInfo playerInfo;
 
-    [SerializeField]
-    private AudioSource schoolBell;
+    [SerializeField] private AudioSource schoolBell;
 
-    [SerializeField]
-    private OverworldSwitchScene overworldSwitchScene;
+    [SerializeField] private OverworldSwitchScene overworldSwitchScene;
 
-    [SerializeField]
-    private DialogueController dialogueController;
+    [SerializeField] private DialogueController dialogueController;
 
-    [SerializeField]
-    private OverworldTimeController overworldTimeController;
+    [SerializeField] private OverworldTimeController overworldTimeController;
 
-    [SerializeField]
-    private OverworldUIController overworldUIController;
+    [SerializeField] private OverworldUIController overworldUIController;
+
+    [SerializeField] private GameDataManager gameDataManager;
 
     void Update() {
         if (playerInfo.isSleeping) {
@@ -46,7 +38,7 @@ public class OverworldInteract : MonoBehaviour
         } else if (playerInfo.isDoingHomework) {
             interactPromptPanel.SetActive(false);
             interactStatusPanel.SetActive(true);
-            interactStatusText.text = "Homework: " + playerInfo.dailyGrade.homeworkProgress + "%";
+            interactStatusText.text = "Homework: " + playerInfo.GetHomeworkProgress() + "%";
         } else if (playerInfo.isWorking) {
             interactPromptPanel.SetActive(false);
             interactStatusPanel.SetActive(true);
@@ -69,7 +61,7 @@ public class OverworldInteract : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         // Check if the layer of the object is Interactable
-        if (other.gameObject.layer == LayerMask.NameToLayer(CustomString.INTERACTABLE_LAYER) && !playerInfo.IsBusy()) {  
+        if (other.gameObject.layer == LayerMask.NameToLayer(StaticValues.INTERACTABLE_LAYER) && !playerInfo.IsBusy()) {  
             interactPromptPanel.SetActive(true);
             interactPromptText.text = GetPromptText(other.gameObject.tag);
             interactableTag = other.gameObject.tag;
@@ -77,7 +69,7 @@ public class OverworldInteract : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer(CustomString.INTERACTABLE_LAYER) && !playerInfo.IsBusy()) {
+        if (other.gameObject.layer == LayerMask.NameToLayer(StaticValues.INTERACTABLE_LAYER) && !playerInfo.IsBusy()) {
             interactPromptPanel.SetActive(true);
             interactPromptText.text = GetPromptText(other.gameObject.tag);
             interactableTag = other.gameObject.tag;
@@ -85,7 +77,7 @@ public class OverworldInteract : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer(CustomString.INTERACTABLE_LAYER)) {
+        if (other.gameObject.layer == LayerMask.NameToLayer(StaticValues.INTERACTABLE_LAYER)) {
             interactPromptPanel.SetActive(false);
             interactPromptText.text = "";
             interactableTag = "";
@@ -94,14 +86,20 @@ public class OverworldInteract : MonoBehaviour
 
     private string GetPromptText(string tag) {
         switch (tag) {
-            case var value when value == CustomString.INTERACTABLE_TAG_CLASS:
+            case var value when value == StaticValues.INTERACTABLE_TAG_CLASS:
                 return "(E) Start class";
-            case var value when value == CustomString.INTERACTABLE_TAG_SLEEP:
+            case var value when value == StaticValues.INTERACTABLE_TAG_SLEEP:
                 return "(E) Sleep";
-            case var value when value == CustomString.INTERACTABLE_TAG_HOMEWORK:
+            case var value when value == StaticValues.INTERACTABLE_TAG_HOMEWORK:
                 return "(E) Do homework";
-            case var value when value == CustomString.INTERACTABLE_TAG_NPC:
+            case var value when value == StaticValues.INTERACTABLE_TAG_NPC:
                 return "(E) Chat";
+            case var value when value == StaticValues.INTERACTABLE_TAG_SHOP:
+                return "(E) Buy food";
+            case var value when value == StaticValues.INTERACTABLE_TAG_PLAY:
+                return "(E) Play";
+            case var value when value == StaticValues.INTERACTABLE_TAG_WORK:
+                return "(E) Work";
             default:
                 return "";
         }
@@ -109,23 +107,34 @@ public class OverworldInteract : MonoBehaviour
 
     private void StartInteraction(string tag) {
         switch (tag) {
-            case var value when value == CustomString.INTERACTABLE_TAG_CLASS:
+            case var value when value == StaticValues.INTERACTABLE_TAG_CLASS:
                 Debug.Log("Interacting with class");
                 StartClass();
                 break;
-            case var value when value == CustomString.INTERACTABLE_TAG_SLEEP:
+            case var value when value == StaticValues.INTERACTABLE_TAG_SLEEP:
                 Debug.Log("Interacting with sleep");
                 StartSleep();
                 break;
-            case var value when value == CustomString.INTERACTABLE_TAG_HOMEWORK:
+            case var value when value == StaticValues.INTERACTABLE_TAG_HOMEWORK:
                 Debug.Log("Interacting with homework");
                 StartHomework();
                 break;
-            case var value when value == CustomString.INTERACTABLE_TAG_NPC:
+            case var value when value == StaticValues.INTERACTABLE_TAG_WORK:
+                Debug.Log("Interacting with work");
+                StartWorking();
+                break;
+            case var value when value == StaticValues.INTERACTABLE_TAG_SHOP:
+                BuyFood();
+                break;
+            case var value when value == StaticValues.INTERACTABLE_TAG_PLAY:
+                Debug.Log("Interacting with play");
+                StartPlay();
+                break;
+            case var value when value == StaticValues.INTERACTABLE_TAG_NPC:
                 Debug.Log("Interacting with NPC");
                 dialogueController.SetCurrentDialogues(dialogueController.npcDialogues);
                 PlayerPrefs.SetInt("introNPCTalked", 1);
-                overworldUIController.talkToNPCToggle.isOn = true;
+                // overworldUIController.talkToNPCToggle.isOn = true;
                 break;
             default:
                 Debug.Log("No interaction found");
@@ -133,9 +142,14 @@ public class OverworldInteract : MonoBehaviour
         }
     }
 
+    private void StartPlay()
+    {
+        playerInfo.isPlaying = true;
+    }
+
     private void StartClass()
     {
-        if (playerInfo.dailyGrade.attendance)
+        if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED)
         {
             dialogueController.SetCurrentDialogues(dialogueController.alreadyAttendedDialogues);
             return;
@@ -148,11 +162,35 @@ public class OverworldInteract : MonoBehaviour
         }
         
         // Set attendance to true
-        playerInfo.dailyGrade.attendance = true;
+        playerInfo.SetAttendanceStatus(AttendanceStatus.ATTENDED);
         // Play the school bell sound
         schoolBell.Play();
+        // Save the game data
+        gameDataManager.SaveGameData(playerInfo.gameData);
         // Open the mini-game scene
-        overworldSwitchScene.FadeOutGame(CustomString.SCENE_MINIGAME);
+        overworldSwitchScene.FadeOutGame(StaticValues.SCENE_MINIGAME);
+    }
+    
+    private void BuyFood()
+    {
+        if (playerInfo.gameData.money < 50)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.notEnoughMoneyDialogues);
+            return;
+        }
+
+        if (playerInfo.gameData.hunger >= 90)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.alreadyFull);
+            return;
+        }
+        
+        playerInfo.gameData.money -= 50;
+        playerInfo.gameData.hunger += 30;
+        if (playerInfo.gameData.hunger > 100)
+        {
+            playerInfo.gameData.hunger = 100;
+        }
     }
 
     private void StartSleep()
@@ -163,7 +201,48 @@ public class OverworldInteract : MonoBehaviour
 
     private void StartHomework()
     {
+        if (playerInfo.GetHomeworkProgress() >= 100)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.homeworkDone);
+            return;
+        }
+        if (playerInfo.gameData.hunger < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooHungry);
+            return;
+        }
+        if (playerInfo.gameData.energy < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooTiredDialogues);
+            return;
+        }
+        if (playerInfo.gameData.mood < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooStressed);
+            return;
+        }
         // Set the player to do homework
         playerInfo.isDoingHomework = true;
+    }
+
+    private void StartWorking()
+    {
+        if (playerInfo.gameData.hunger < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooHungry);
+            return;
+        }
+        if (playerInfo.gameData.energy < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooTiredDialogues);
+            return;
+        }
+        if (playerInfo.gameData.mood < 20)
+        {
+            dialogueController.SetCurrentDialogues(dialogueController.tooStressed);
+            return;
+        }
+        // Set the player to work
+        playerInfo.isWorking = true;
     }
 }

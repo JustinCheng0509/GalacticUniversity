@@ -54,7 +54,7 @@ public class OverworldMovement : MonoBehaviour
 
         string tileTag = GetTileTag(footstepPosition.position);
 
-        if (tileTag == CustomString.TAG_GRASS) {
+        if (tileTag == StaticValues.TAG_GRASS) {
             footstepSounds = footstepGrass;
         }
         

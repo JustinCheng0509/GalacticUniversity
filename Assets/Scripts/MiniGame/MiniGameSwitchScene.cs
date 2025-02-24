@@ -41,7 +41,7 @@ public class MiniGameSwitchScene : MonoBehaviour
         float time = 0.0f;
         while (time < fadeDuration)
         {
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             fadeCanvas.alpha = time / fadeDuration;
             musicSource.volume = (1.0f - time / fadeDuration) * musicVolume;
             yield return null;

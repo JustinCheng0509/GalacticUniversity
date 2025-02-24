@@ -4,88 +4,72 @@ using UnityEngine.UI;
 
 public class OverworldUIController : MonoBehaviour
 {
-    [SerializeField]
-    private OverworldTimeController overworldTimeController;
+    [SerializeField] private OverworldTimeController overworldTimeController;
 
-    [SerializeField]
-    private PlayerInfo playerInfo;
+    [SerializeField] private PlayerInfo playerInfo;
 
-    [SerializeField]
-    private GameObject classNotificationPanel;
+    [SerializeField] private TMP_Text attendanceText;
 
-    [SerializeField]
-    private GameObject classPanel;
+    [SerializeField] private GameObject classStartWarningPanel;
 
-    [SerializeField]
-    private TMP_Text attendanceText;
+    [SerializeField] private TMP_Text homeworkText;
 
-    [SerializeField]
-    private TMP_Text homeworkText;
+    [SerializeField] private TMP_Text moneyText;
 
-    [SerializeField]
-    private GameObject taskPanel;
+    [SerializeField] private TMP_Text dayText;
 
-    public Toggle checkoutClassRoomToggle;
-    public Toggle talkToNPCToggle;
-    public Toggle checkoutShopToggle;
-    public Toggle checkoutDormToggle;
-    public Toggle attendClassToggle;
-    public Toggle doHomeworkToggle;
+    [SerializeField] private GameObject bottomRightPanel;
+
+    [SerializeField] private TMP_Text maneuverabilityText;
+
+    [SerializeField] private TMP_Text destructionText;
+
+    [SerializeField] private TMP_Text mechanicsText;
 
 
     public void UpdateHomeworkProgress(float homeworkProgress)
     {
         homeworkText.text = $"Homework Progress: {homeworkProgress}%";
     }
-
-    public void ToggleClassPanel()
-    {
-        classPanel.SetActive(!classPanel.activeSelf);
-    }
-
-    public void ToggleTaskPanel()
-    {
-        taskPanel.SetActive(!taskPanel.activeSelf);
-    }
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
-        // Check the toggle
-        if (PlayerPrefs.HasKey("introClassPlayed")) {
-            checkoutClassRoomToggle.isOn = true;
-        }
-        if (PlayerPrefs.HasKey("introShopPlayed")) {
-            checkoutShopToggle.isOn = true;
-        }
-        if (PlayerPrefs.HasKey("introDormPlayed")) {
-            checkoutDormToggle.isOn = true;
-        }
-        if (PlayerPrefs.HasKey("introNPCTalked")) {
-            talkToNPCToggle.isOn = true;
-        }
-        if (PlayerPrefs.HasKey("homeworkProgress") && PlayerPrefs.GetFloat("homeworkProgress") >= 100) {
-            doHomeworkToggle.isOn = true;
-        }
-        if (PlayerPrefs.HasKey("attendance") && PlayerPrefs.GetInt("attendance") == 1) {
-            attendClassToggle.isOn = true;
+        // If not using skill system, remove this
+        if (!StaticValues.USE_SKILL_SYSTEM)
+        {
+            bottomRightPanel.gameObject.SetActive(false);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (overworldTimeController.canAttendClass && !playerInfo.dailyGrade.attendance)
+        if (StaticValues.USE_SKILL_SYSTEM) {
+            maneuverabilityText.text = playerInfo.gameData.maneuverability.ToString();
+            destructionText.text = playerInfo.gameData.destruction.ToString();
+            mechanicsText.text = playerInfo.gameData.mechanics.ToString();
+        }
+
+        if (overworldTimeController.canAttendClass && playerInfo.GetAttendanceStatus() != AttendanceStatus.ATTENDED)
         {
-            classNotificationPanel.SetActive(true);
+            classStartWarningPanel.SetActive(true);
         }
         else
         {
-            classNotificationPanel.SetActive(false);
+            classStartWarningPanel.SetActive(false);
         }
-        attendanceText.text = "Today's attendance: " + (playerInfo.dailyGrade.attendance ? "Attended" : "Absent/Not Started");
-        attendClassToggle.isOn = playerInfo.dailyGrade.attendance;
-        doHomeworkToggle.isOn = playerInfo.dailyGrade.homeworkProgress >= 100;
+
+        dayText.text = "Day " + playerInfo.gameData.currentDay;
+        string attendanceStatus = "Not Started";
+        if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ATTENDED)
+        {
+            attendanceStatus = "Attended";
+        } else if (playerInfo.GetAttendanceStatus() == AttendanceStatus.ABSENT)
+        {
+            attendanceStatus = "Absent";
+        }
+        homeworkText.text = "Homework Progress: " + playerInfo.GetHomeworkProgress() + "%";
+        attendanceText.text = "Attendance: " + attendanceStatus;
+        moneyText.text = playerInfo.gameData.money.ToString();
     }
 }

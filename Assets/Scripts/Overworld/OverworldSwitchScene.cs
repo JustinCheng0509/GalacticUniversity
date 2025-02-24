@@ -12,7 +12,7 @@ public class OverworldSwitchScene : MonoBehaviour
     [SerializeField]
     private float fadeDuration = 1.0f;
 
-    private float musicVolume;
+    private float musicVolume = 0.5f;
 
     [SerializeField]
     private DialogueController dialogueController;
@@ -25,15 +25,12 @@ public class OverworldSwitchScene : MonoBehaviour
         fadeCanvas.alpha = 1.0f;
         fadeCanvas.gameObject.SetActive(true);
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void FadeInGame()
     {
-        musicVolume = musicSource.volume;
-        StartCoroutine(FadeInGame());
+        StartCoroutine(FadeInGameCoroutine());
     }
 
-    IEnumerator FadeInGame()
+    IEnumerator FadeInGameCoroutine()
     {
         musicSource.volume = 0.0f;
         musicSource.Play();
@@ -41,7 +38,7 @@ public class OverworldSwitchScene : MonoBehaviour
         float time = 0.0f;
         while (time < fadeDuration)
         {
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             fadeCanvas.alpha = 1.0f - time / fadeDuration;
             musicSource.volume = time / fadeDuration * musicVolume;
             yield return null;
@@ -70,7 +67,7 @@ public class OverworldSwitchScene : MonoBehaviour
         float fadeDuration = 3f;
         while (time < fadeDuration)
         {
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             fadeCanvas.alpha = time / fadeDuration;
             musicSource.volume = (1.0f - time / fadeDuration) * musicVolume;
             yield return null;
@@ -90,6 +87,6 @@ public class OverworldSwitchScene : MonoBehaviour
     public void BackToMainMenu()
     {
         Time.timeScale = 1;
-        FadeOutGame(CustomString.SCENE_MAIN_MENU);
+        FadeOutGame(StaticValues.SCENE_MAIN_MENU);
     }
 }

@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: ShopIntro
   m_EditorClassIdentifier: 
   isLeft: 0
-  text: This is the shop. It is not open today, but I can buy food and fancy items
-    here in the future!
+  text: This is the shop. I can buy food here when I am hungry
   isSelfDialogue: 1
