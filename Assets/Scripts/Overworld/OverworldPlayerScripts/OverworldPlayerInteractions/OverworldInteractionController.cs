@@ -6,17 +6,17 @@ public class OverworldInteractionController : MonoBehaviour
 {
     [SerializeField] private InputActionReference _interactAction;
 
-    private string _interactableTag = "";
+    private GameObject _interactableGameObject;
 
-    public string InteractableTag { 
-        get => _interactableTag;
+    public GameObject InteractableGameObject { 
+        get => _interactableGameObject;
         set {
-            _interactableTag = value;
-            OnInteractableTagChanged?.Invoke();
+            _interactableGameObject = value;
+            OnInteractableGameObjectChanged?.Invoke(_interactableGameObject);
         }
     }
 
-    public event Action OnInteractableTagChanged;
+    public event Action<GameObject> OnInteractableGameObjectChanged;
 
     private OverworldPlayerStatusController _overworldPlayerStatusController;
     private GameDataManager _gameDataManager;
@@ -57,24 +57,33 @@ public class OverworldInteractionController : MonoBehaviour
         }
         else
         {
-            if (!string.IsNullOrEmpty(_interactableTag))
+            if (InteractableGameObject != null)
             {
-                StartInteraction(_interactableTag);
+                StartInteraction(InteractableGameObject);
             }
         }
     }
     
-    public void StartInteraction(string tag) {
-        switch (tag) {
+    public void StartInteraction(GameObject interactableGameObject) {
+        switch (interactableGameObject.tag) {
             case var value when value == GameConstants.INTERACTABLE_TAG_CLASS: StartClass(); break;
             case var value when value == GameConstants.INTERACTABLE_TAG_SLEEP: StartSleep(); break;
+            case var value when value == GameConstants.INTERACTABLE_TAG_NPC: StartNPCInteract(interactableGameObject); break;
             // case var value when value == GameConstants.INTERACTABLE_TAG_HOMEWORK: StartHomework(); break;
             // case var value when value == GameConstants.INTERACTABLE_TAG_WORK: StartWork(); break;
             // case var value when value == GameConstants.INTERACTABLE_TAG_PLAY: StartPlay(); break;
-            // case var value when value == GameConstants.INTERACTABLE_TAG_NPC: StartChat(); break;
             // case var value when value == GameConstants.INTERACTABLE_TAG_SHOP: StartShop(); break;
             default: Debug.Log("No interaction found"); break;
         }
+    }
+
+    private void StartNPCInteract(GameObject interactableGameObject) {
+        NPCController npcController = interactableGameObject.GetComponent<NPCController>();
+        if (npcController == null) {
+            Debug.LogWarning("NPCController not found in NPC object.");
+            return;
+        }
+        npcController.Interact();
     }
 
     private void StartClass() {

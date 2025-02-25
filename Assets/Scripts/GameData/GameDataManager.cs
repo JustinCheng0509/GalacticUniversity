@@ -1,9 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class GameDataManager : MonoBehaviour
 {
+    private List<Dialog> _dialogList = new List<Dialog>();
+    private List<Tutorial> _tutorialList = new List<Tutorial>();
+    private List<Quest> _questList = new List<Quest>();
+    private List<NPC> _npcList = new List<NPC>();
+
     private GameData _gameData;
 
     public event Action OnGameDataLoaded;
@@ -23,6 +31,12 @@ public class GameDataManager : MonoBehaviour
     public event Action<string> OnTimeUpdated;
     public event Action<int> OnDayUpdated;
     public event Action<List<Quest>> OnActiveQuestsUpdated;
+    public event Action<Quest> OnQuestCompleted;
+
+    public List<Dialog> DialogList => _dialogList;
+    public List<Tutorial> TutorialList => _tutorialList;
+    public List<Quest> QuestList => _questList;
+    public List<NPC> NPCList => _npcList;
     
     public string PlayerName
     {
@@ -155,6 +169,11 @@ public class GameDataManager : MonoBehaviour
         return _gameData.activeQuests;
     }
 
+    public List<Quest> GetCompletedQuests()
+    {
+        return _gameData.completedQuests;
+    }
+
     public void AddQuest(Quest quest)
     {
         // if quest is already in the list, don't add it again
@@ -163,6 +182,18 @@ public class GameDataManager : MonoBehaviour
             return;
         }
         _gameData.activeQuests.Add(quest);
+        OnActiveQuestsUpdated?.Invoke(_gameData.activeQuests);
+    }
+
+    public void CompleteQuest(Quest quest)
+    {
+        if (!_gameData.activeQuests.Contains(quest))
+        {
+            return;
+        }
+        _gameData.activeQuests.Remove(quest);
+        _gameData.completedQuests.Add(quest);
+        OnQuestCompleted?.Invoke(quest);
         OnActiveQuestsUpdated?.Invoke(_gameData.activeQuests);
     }
 
@@ -209,11 +240,30 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
-    void Start()
+    async void Start()
     {
+        // Load game data first
         _gameData = SavedDataManager.LoadGameData();
+
+        // Start loading all assets concurrently
+        Task<List<Dialog>> dialogTask = AddressableLoader.LoadAllAssets<Dialog>(AddressableLabels.ADDRESSABLE_LABEL_DIALOGS);
+        Task<List<Tutorial>> tutorialTask = AddressableLoader.LoadAllAssets<Tutorial>(AddressableLabels.ADDRESSABLE_LABEL_TUTORIALS);
+        Task<List<Quest>> questTask = AddressableLoader.LoadAllAssets<Quest>(AddressableLabels.ADDRESSABLE_LABEL_QUESTS);
+        Task<List<NPC>> npcTask = AddressableLoader.LoadAllAssets<NPC>(AddressableLabels.ADDRESSABLE_LABEL_NPCS);
+
+        // Wait until all tasks are completed
+        await Task.WhenAll(dialogTask, tutorialTask, questTask, npcTask);
+
+        // Assign the results
+        _dialogList = dialogTask.Result;
+        _tutorialList = tutorialTask.Result;
+        _questList = questTask.Result;
+        _npcList = npcTask.Result;
+
+        // Now all assets are loaded, fire game data event
         OnGameDataLoaded?.Invoke();
 
+        // Update game state
         OnAttendanceUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].attendance);
         OnHomeworkProgressUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress);
         OnEnergyUpdated?.Invoke(_gameData.energy);

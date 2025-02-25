@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class DialogController : MonoBehaviour
 {
-    private List<Dialog> _dialogList = new List<Dialog>();
-
     [SerializeField] private GameObject _dialogPanel;
 
     [SerializeField] private TMP_Text _dialogNameText;
@@ -22,8 +20,6 @@ public class DialogController : MonoBehaviour
     void Start()
     {
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
-        // Load all dialogs from resources
-        _dialogList.AddRange(Resources.LoadAll<Dialog>("Dialogs"));
     }
 
     public void AdvanceDialog()
@@ -41,19 +37,6 @@ public class DialogController : MonoBehaviour
         Time.timeScale = 1;
         OnDialogEnded?.Invoke(_currentDialog);
         _currentDialog = null;
-        // if (CompareDialogs(currentDialogs, introDialogs)) {
-        //     tutorialController.ShowTutorial(tutorialController.startTutorial);
-        // } else if (CompareDialogs(currentDialogs, classroomTriggerDialogs)) {
-        //     tutorialController.ShowTutorial(tutorialController.classTutorial);
-        // } else if (CompareDialogs(currentDialogs, shopTriggerDialogs)) {
-        //     tutorialController.ShowTutorial(tutorialController.shopTutorial);
-        // } else if (CompareDialogs(currentDialogs, dormTriggerDialogs)) {
-        //     tutorialController.ShowTutorial(tutorialController.homeworkTutorial);
-        // } else if (CompareDialogs(currentDialogs, workTriggerDialogs)) {
-        //     tutorialController.ShowTutorial(tutorialController.workTutorial);
-        // } else if (CompareDialogs(currentDialogs, playRoomTriggerDialogs) && PlayerPrefs.GetInt("NeedTutorial", 0) == 0) {
-        //     tutorialController.ShowTutorial(tutorialController.needTutorial);
-        // }
     }
     
 
@@ -72,6 +55,8 @@ public class DialogController : MonoBehaviour
         if (text.Contains(GameConstants.PLAYER_NAME_PLACEHOLDER)) {
             text = text.Replace(GameConstants.PLAYER_NAME_PLACEHOLDER, _gameDataManager.PlayerName);
         }
+
+        // If dialog contains [npc_ prefix, replace it with the NPC's name
 
         _dialogNameText.text = name;
         _dialogText.text = text;
@@ -93,7 +78,7 @@ public class DialogController : MonoBehaviour
     // Overloaded function to set dialog with a string ID
     public void SetDialog(string dialogID)
     {
-        Dialog dialog = _dialogList.Find(d => d.dialogID == dialogID);
+        Dialog dialog = _gameDataManager.DialogList.Find(d => d.dialogID == dialogID);
         if (dialog != null) {
             SetDialog(dialog);
         } else {

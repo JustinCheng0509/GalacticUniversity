@@ -48,6 +48,10 @@ public class GameData
     public int totalSafetyScore = 0;
 
     public List<Quest> activeQuests = new List<Quest>();
+    public List<Quest> completedQuests = new List<Quest>();
+
+    public Dictionary<string, int> npcRelationships = new Dictionary<string, int>();
+
     public List<string> tutorialsCompleted = new List<string>();
 
     public List<Item> inventory = new List<Item>();

@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2008eece822dcc7458169ec19c2cef92, type: 3}
-  m_Name: dialog_npc
+  m_Name: dialog_status_not_enough_money
   m_EditorClassIdentifier: 
-  dialogID: dialog_npc
-  characterName: 
-  isLeft: 1
-  text: Hello! Welcome to Galactic University! (This is a demo dialogue. More interactions
-    will be available in future builds.)
-  isSelfDialog: 0
+  dialogID: dialog_status_not_enough_money
+  characterName: '[PlayerName]'
+  isLeft: 0
+  text: I don't have enough money right now
+  isSelfDialog: 1
   nextDialog: {fileID: 0}
   associatedTutorials: []
   associatedQuests: []

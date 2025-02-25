@@ -6,9 +6,6 @@ using UnityEngine;
 public class TutorialController : MonoBehaviour
 {
     private GameDataManager _gameDataManager;
-
-    private List<Tutorial> _tutorials = new List<Tutorial>();
-
     private List<Tutorial> _currentTutorials = new List<Tutorial>();
     private int _currentTutorialIndex = 0;
 
@@ -20,8 +17,6 @@ public class TutorialController : MonoBehaviour
     void Start()
     {
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
-        // Add all tutorials from the resources folder to the list
-        _tutorials.AddRange(Resources.LoadAll<Tutorial>("Tutorials")); 
     }
 
     public void ShowTutorial(Tutorial tutorial)
@@ -76,7 +71,7 @@ public class TutorialController : MonoBehaviour
     // Overload for showing a tutorial by ID
     public void ShowTutorial(string tutorialID)
     {
-        var tutorial = _tutorials.Find(t => t.tutorialID == tutorialID);
+        var tutorial = _gameDataManager.TutorialList.Find(t => t.tutorialID == tutorialID);
         if (tutorial != null)
         {
             ShowTutorial(tutorial);
@@ -86,7 +81,7 @@ public class TutorialController : MonoBehaviour
     // Overload for showing a list of tutorials by ID
     public void ShowTutorial(List<string> tutorialIDs)
     {
-        var tutorials = _tutorials.FindAll(t => tutorialIDs.Contains(t.tutorialID));
+        var tutorials = _gameDataManager.TutorialList.FindAll(t => tutorialIDs.Contains(t.tutorialID));
         ShowTutorial(tutorials);
     }
     

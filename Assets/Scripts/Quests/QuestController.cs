@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class QuestController : MonoBehaviour
 {
-    private List<Quest> _quests = new List<Quest>(); // Array of all quests
-
     private GameDataManager _gameDataManager;
 
     public event System.Action<Quest> OnQuestCompleted;
@@ -12,7 +10,6 @@ public class QuestController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _quests.AddRange(Resources.LoadAll<Quest>("Quests"));
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
         // Check if the current scene is the mini-game scene
         // if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == GameConstants.SCENE_MINIGAME)
@@ -30,7 +27,7 @@ public class QuestController : MonoBehaviour
 
     public void AddQuest(string questID)
     {
-        Quest quest = _quests.Find(q => q.questID == questID);
+        Quest quest = _gameDataManager.QuestList.Find(q => q.questID == questID);
         if (quest != null)
         {
             AddQuest(quest);
@@ -75,7 +72,7 @@ public class QuestController : MonoBehaviour
 
     private void CompleteQuest(Quest quest)
     {
-        _gameDataManager.RemoveQuest(quest);
+        _gameDataManager.CompleteQuest(quest);
         OnQuestCompleted?.Invoke(quest);
         // Handle quest rewards
     }

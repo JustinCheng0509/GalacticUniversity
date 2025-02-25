@@ -17,14 +17,14 @@ public class OverworldUIInteractionController : MonoBehaviour
         _overworldPlayerStatusController = FindAnyObjectByType<OverworldPlayerStatusController>();
         _overworldPlayerStatusController.OnStatusChanged += HandlePlayerStatusChanged;
         _overworldInteractionController = FindAnyObjectByType<OverworldInteractionController>();
-        _overworldInteractionController.OnInteractableTagChanged += HandleInteractableTagChanged;
+        _overworldInteractionController.OnInteractableGameObjectChanged += HandleInteractableGameObjectChanged;
     }
 
-    private void HandleInteractableTagChanged()
+    private void HandleInteractableGameObjectChanged(GameObject interactableGameObject)
     {
-        if (_overworldInteractionController.InteractableTag != "" && !_overworldPlayerStatusController.IsBusy)
+        if (interactableGameObject != null && !_overworldPlayerStatusController.IsBusy)
         {
-            ShowInteractPrompt(GetPromptText(_overworldInteractionController.InteractableTag));
+            ShowInteractPrompt(GetPromptText(interactableGameObject.tag));
         } else
         {
             HideInteractPrompt();
@@ -85,7 +85,7 @@ public class OverworldUIInteractionController : MonoBehaviour
             case var value when value == GameConstants.INTERACTABLE_TAG_CLASS: return "(E) Start class";
             case var value when value == GameConstants.INTERACTABLE_TAG_SLEEP: return "(E) Sleep";
             case var value when value == GameConstants.INTERACTABLE_TAG_HOMEWORK: return "(E) Do homework";
-            case var value when value == GameConstants.INTERACTABLE_TAG_NPC: return "(E) Chat";
+            case var value when value == GameConstants.INTERACTABLE_TAG_NPC: return "(E) Interact";
             case var value when value == GameConstants.INTERACTABLE_TAG_SHOP: return "(E) Buy food";
             case var value when value == GameConstants.INTERACTABLE_TAG_PLAY: return "(E) Play";
             case var value when value == GameConstants.INTERACTABLE_TAG_WORK: return "(E) Work";

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: 866de7d630c76814aad293da903e8890
+  m_SerializeEntries:
+  - m_GUID: 0b925f852ade59f4ea65f87320d738a1
+    m_Address: Dialogs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - addressable_label_dialogs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f299a0d672f43043940254ce840438d
+    m_Address: Quests
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - addressable_label_quests
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32f66f9522a42a14587424205d7bfef5
+    m_Address: Tutorials
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - addressable_label_tutorials
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5735ef4882b6ee489a7351a22405c43
+    m_Address: NPCs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - addressable_label_npcs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6a1cd36fcbcdcc4080a180359f61eeb
+    m_Address: Items
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - addressable_label_items
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 02d3d7c7a8cdf20458689302aec5b58d, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 9b78d7c0f1180424dad776666aae3776, type: 2}
+    - {fileID: 11400000, guid: da096a54364014644ad5877e02502a1e, type: 2}
