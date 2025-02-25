@@ -2,28 +2,63 @@ using UnityEngine;
 
 public class OverworldGameController : MonoBehaviour
 {
-    [SerializeField] private GameDataManager gameDataManager;
-    [SerializeField] private OverworldSwitchScene overworldSwitchScene;
-    [SerializeField] private PlayerInfo playerInfo;
+    private GameDataManager _gameDataManager;
+    private SwitchScene _switchScene;
 
+    private DialogController _dialogController;
+    private QuestController _questController;
+    private TutorialController _tutorialController;
+    
+    private OverworldUILayoutController _overworldUILayoutController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Set time scale to 0
-        Time.timeScale = 0;
-        // Load game data
-        playerInfo.gameData = gameDataManager.LoadGameData();
-        // Set time scale to 1
-        Time.timeScale = 1;
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
 
-        // Fade in the game
-        overworldSwitchScene.FadeInGame();
+        _switchScene = FindAnyObjectByType<SwitchScene>();
+        _switchScene.OnFadeInCompleted += HandleFadeInComplete;
+
+        _dialogController = FindAnyObjectByType<DialogController>();
+        _dialogController.OnDialogEnded += HandleDialogEnd;
+        
+        _questController = FindAnyObjectByType<QuestController>();
+        _questController.OnQuestCompleted += HandleQuestComplete;
+
+        _tutorialController = FindAnyObjectByType<TutorialController>();
+        _overworldUILayoutController = FindAnyObjectByType<OverworldUILayoutController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnGameDataLoaded()
     {
-        
+        _overworldUILayoutController.ForceLayoutRebuild();
+        _switchScene.FadeInScene();
+    }
+
+    private void HandleFadeInComplete()
+    {
+        if (_gameDataManager.CurrentDay == 1 && !_gameDataManager.IntroDialogPlayed)
+        {
+            _gameDataManager.IntroDialogPlayed = true;
+            _dialogController.SetDialog(DialogIDs.DIALOG_INTRO);
+        }
+    }
+
+    private void HandleDialogEnd(Dialog dialog)
+    {
+        if (dialog.associatedTutorials != null) {
+            _tutorialController.ShowTutorial(dialog.associatedTutorials);
+        }
+        if (dialog.associatedQuests != null) {
+            _questController.AddQuests(dialog.associatedQuests);
+        }
+    }
+
+    private void HandleQuestComplete(Quest quest)
+    {
+        if (quest.completeDialog != null) {
+            _dialogController.SetDialog(quest.completeDialog);
+        }
     }
 }

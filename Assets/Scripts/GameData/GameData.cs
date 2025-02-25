@@ -39,17 +39,29 @@ public class GameData
     public float destruction = 0;
     public float mechanics = 0;
 
-    public string currentTime = StaticValues.NEW_GAME_START_TIME;
+    public string currentTime = GameConstants.NEW_GAME_START_TIME;
     public int currentDay = 1;
     public int totalNumberOfDays = 10;
-
-    public bool isTutorialEnabled = true;
 
     public int totalScore = 0;
     public int totalDestructionScore = 0;
     public int totalSafetyScore = 0;
 
+    public List<Quest> activeQuests = new List<Quest>();
+    public List<string> tutorialsCompleted = new List<string>();
+
+    public List<Item> inventory = new List<Item>();
+
     public List<DailyGameData> dailyGameDataList = new List<DailyGameData>();
 
     public List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
+
+    // Intros and tutorials
+    public bool isTutorialEnabled = true;
+    public bool introDialogPlayed = false;
+    // public bool introClassPlayed = false;
+    // public bool introShopPlayed = false;
+    // public bool introDormPlayed = false;
+    // public bool introPlayRoomPlayed = false;
+    // public bool introWorkPlayed = false;
 }

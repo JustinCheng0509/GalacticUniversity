@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 991f26351e03560438a2916ceeb7c866, type: 3}
+  m_Name: tutorial_minigame
+  m_EditorClassIdentifier: 
+  tutorialID: tutorial_minigame
+  title: Mini-game
+  description: When you attend the class, you will play a spaceshooting 2D mini-game
+    that lasts for 60 seconds. Your goal is to get as much score as possible\n\nYou
+    can move the spaceship with WASD and shoot with Spacebar.\n\nYou can gain score
+    by damaging and destroying enemies.\n\nYou lose score when you take damage or
+    get blown up.

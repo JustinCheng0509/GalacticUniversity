@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bullet
   - TAG_GRASS
+  - TAG_INDOOR
   - TAG_BOSS
   - INTERACTABLE_TAG_SLEEP
   - INTERACTABLE_TAG_HOMEWORK
