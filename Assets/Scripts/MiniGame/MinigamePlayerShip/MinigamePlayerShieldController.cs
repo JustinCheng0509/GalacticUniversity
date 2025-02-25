@@ -8,6 +8,14 @@ public class MinigamePlayerShieldController : MonoBehaviour
 
     public bool IsShieldActive => _isShieldActive;
 
+    private MinigamePlayerHealthController _playerHealthController;
+
+    void Start()
+    {
+        _playerHealthController = FindAnyObjectByType<MinigamePlayerHealthController>();
+        _playerHealthController.OnPlayerRespawn += ActivateShield;
+    }
+
     public void ActivateShield()
     {
         StartCoroutine(ActivateShieldCoroutine());

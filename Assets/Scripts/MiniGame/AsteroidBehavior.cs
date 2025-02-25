@@ -21,11 +21,11 @@ public class AsteroidBehavior : MonoBehaviour
     [SerializeField] private AudioClip _enemyDestroyedSFX;
     
     private AudioSource _sfxSource;
-    private GameDataManager _gameDataManager;
     private MinigamePlayerShooting _playerShooting;
     private MinigameScoreController _minigameScoreController;
     private MinigamePlayerShieldController _playerShieldController;
     private MinigamePlayerHealthController _playerHealthController;
+    private MinigameController _minigameController;
 
     private bool _canMove = false;
 
@@ -36,11 +36,13 @@ public class AsteroidBehavior : MonoBehaviour
             _sfxSource = sfxSourceObject.GetComponent<AudioSource>();
         }
 
-        _gameDataManager = FindAnyObjectByType<GameDataManager>();
         _playerShooting = FindAnyObjectByType<MinigamePlayerShooting>();
         _minigameScoreController = FindAnyObjectByType<MinigameScoreController>();
         _playerShieldController = FindAnyObjectByType<MinigamePlayerShieldController>();
         _playerHealthController = FindAnyObjectByType<MinigamePlayerHealthController>();
+
+        _minigameController = FindAnyObjectByType<MinigameController>();
+        _minigameController.OnMinigameEnd += () => _canMove = false;
 
         _currentHealth = _maxHealth;
     }
@@ -75,6 +77,8 @@ public class AsteroidBehavior : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!_canMove) return;
+        
         if (collision.CompareTag("Bullet"))
         {
             TakeDamage(_playerShooting.Damage);

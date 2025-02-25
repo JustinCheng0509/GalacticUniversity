@@ -13,17 +13,17 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
-        _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
-
-        InvokeRepeating(nameof(SpawnAsteroid), 1f, _spawnRate);
+        UpdateDifficulty();
+        _gameDataManager.OnDayUpdated += _ => UpdateDifficulty();
     }
 
-    private void OnGameDataLoaded()
+    private void UpdateDifficulty()
     {
         // Adjust spawn rate based on day
         _spawnRate -= 0.05f * (_gameDataManager.CurrentDay - 1);
         // Adjust scale based on day
         _maxScale += 0.4f * (_gameDataManager.CurrentDay - 1);
+        InvokeRepeating(nameof(SpawnAsteroid), 1f, _spawnRate);
     }
 
     void SpawnAsteroid()
@@ -51,10 +51,10 @@ public class EnemySpawner : MonoBehaviour
         // Randomize the scale of the asteroid
         float scale = Random.Range(1f, _maxScale);
 
-        Instantiate(_asteroidPrefab, spawnPosition, Quaternion.identity);
+        GameObject asteroid = Instantiate(_asteroidPrefab, spawnPosition, Quaternion.identity);
 
         // Get the asteroid's script component
-        AsteroidBehavior asteroidBehavior = _asteroidPrefab.GetComponent<AsteroidBehavior>();
+        AsteroidBehavior asteroidBehavior = asteroid.GetComponent<AsteroidBehavior>();
 
         asteroidBehavior.SetAttributes(scale, _minMoveSpeed, _maxMoveSpeed, moveDirection);
     }

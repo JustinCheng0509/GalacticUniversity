@@ -43,11 +43,11 @@ public class MinigameController : MonoBehaviour
         _switchScene = FindAnyObjectByType<SwitchScene>();
         _switchScene.OnFadeInCompleted += OnFadeInCompleted;
 
-        _tutorialController = FindAnyObjectByType<TutorialController>();
-        _tutorialController.OnTutorialCompleted += _minigameCountdownController.StartCountdown;
-
         _minigameCountdownController = FindAnyObjectByType<MinigameCountdownController>();
         _minigameCountdownController.OnCountdownFinished += StartMinigame;
+
+        _tutorialController = FindAnyObjectByType<TutorialController>();
+        _tutorialController.OnTutorialCompleted += _minigameCountdownController.StartCountdown;
 
         _minigameTimerController = FindAnyObjectByType<MinigameTimerController>();
         _minigameTimerController.OnTimerFinished += EndMinigame;
@@ -59,18 +59,19 @@ public class MinigameController : MonoBehaviour
 
     private void GameDataLoadedHandler()
     {
+        
+        _switchScene.FadeInScene();   
+    }
+
+    private void OnFadeInCompleted()
+    {
         if (!_gameDataManager.IsTutorialCompleted(TutorialIDs.TUTORIAL_MINIGAME))
         {
             _tutorialController.ShowTutorial(TutorialIDs.TUTORIAL_MINIGAME);
         } else
         {
-            _switchScene.FadeInScene();
+            _minigameCountdownController.StartCountdown();
         }
-    }
-
-    private void OnFadeInCompleted()
-    {
-        _minigameCountdownController.StartCountdown();
     }
 
     private void StartMinigame()
@@ -96,26 +97,6 @@ public class MinigameController : MonoBehaviour
         _minigameScoreController.CalculateFinalScore();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // if (!isGameActive) return;
-
-        // // Decrement time remaining
-        // timeRemaining -= Time.deltaTime;
-
-        // // Update the timer UI
-        // timerText.text = $"{timeRemaining:F1}s";
-        
-        // // Check if total time is up
-        // if (timeRemaining <= 0)
-        // {
-        //     PauseGame(); // Pause the game
-        //     scorePanelController.UpdateScorePanel((int) playerShipInfo.baseScore, (int) playerShipInfo.damageDealt, (int) playerShipInfo.dangersDestroyed, (int) playerShipInfo.damageTaken, (int) playerShipInfo.timesDead);
-        //     gameEndPanel.SetActive(true); // Show the game end panel
-        // }
-    }
-
     // Public methods for game control
     public void PauseGame()
     {
@@ -131,16 +112,12 @@ public class MinigameController : MonoBehaviour
         OnMinigameResume?.Invoke();
     }
 
-    // public void EndGame()
-    // {
-    //     Time.timeScale = 1; // Ensure time is running normally
-    //     Debug.Log("Time's up! Game Over.");
-    //     // Set currentTime to 16:00
-    //     playerShipInfo.gameData.currentTime = GameConstants.CLASS_END_TIME;
-
-    //     // Save the game data
-    //     gameDataManager.SaveGameData(playerShipInfo.gameData);
-
-    //     miniGameSwitchScene.FadeOutScene(GameConstants.SCENE_OVERWORLD);
-    // }
+    public void ExitMiniGame()
+    {
+        Time.timeScale = 1; // Ensure time is running normally
+        // Set currentTime to 16:00
+        _gameDataManager.CurrentTime = GameConstants.CLASS_END_TIME;
+        SavedDataManager.SaveGameData(_gameDataManager.GameData);
+        _switchScene.FadeOutScene(GameConstants.SCENE_OVERWORLD);
+    }
 }

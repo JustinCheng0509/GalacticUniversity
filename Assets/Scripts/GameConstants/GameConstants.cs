@@ -1,7 +1,7 @@
 public class GameConstants
 {
     public static readonly int TOTAL_NUMBER_OF_DAYS = 10;
-    public static readonly bool USE_SKILL_SYSTEM = false;
+    public static readonly bool USE_SKILL_SYSTEM = true;
     public static readonly string LEADERBOARD_JSON_PATH = "/leaderboard.json";
     public static readonly string GAME_DATA_JSON_PATH = "/gamedata.json";
     public static readonly string NEW_GAME_START_TIME = "08:00";

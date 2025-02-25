@@ -212,18 +212,19 @@ public class GameDataManager : MonoBehaviour
     void Start()
     {
         _gameData = SavedDataManager.LoadGameData();
-        OnAttendanceUpdated?.Invoke(Attendance);
-        OnHomeworkProgressUpdated?.Invoke(HomeworkProgress);
-        OnEnergyUpdated?.Invoke(Energy);
-        OnHungerUpdated?.Invoke(Hunger);
-        OnMoodUpdated?.Invoke(Mood);
-        OnManeuverabilityUpdated?.Invoke(Maneuverability);
-        OnDestructionUpdated?.Invoke(Destruction);
-        OnMechanicsUpdated?.Invoke(Mechanics);
-        OnMoneyUpdated?.Invoke(Money);
-        OnTimeUpdated?.Invoke(CurrentTime);
-        OnDayUpdated?.Invoke(CurrentDay);
-        OnActiveQuestsUpdated?.Invoke(GetActiveQuests());
         OnGameDataLoaded?.Invoke();
+
+        OnAttendanceUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].attendance);
+        OnHomeworkProgressUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress);
+        OnEnergyUpdated?.Invoke(_gameData.energy);
+        OnHungerUpdated?.Invoke(_gameData.hunger);
+        OnMoodUpdated?.Invoke(_gameData.mood);
+        OnManeuverabilityUpdated?.Invoke(_gameData.maneuverability);
+        OnDestructionUpdated?.Invoke(_gameData.destruction);
+        OnMechanicsUpdated?.Invoke(_gameData.mechanics);
+        OnMoneyUpdated?.Invoke(_gameData.money);
+        OnTimeUpdated?.Invoke(_gameData.currentTime);
+        OnDayUpdated?.Invoke(_gameData.currentDay);
+        OnActiveQuestsUpdated?.Invoke(_gameData.activeQuests);
     }
 }

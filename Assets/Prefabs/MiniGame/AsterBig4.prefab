@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.174278, y: 1.174278, z: 1.174278}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -101,14 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf3cbc714912f448959faa5e153eca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 2.9557033
-  sfxSource: {fileID: 0}
-  enemyDestroyedSFX: {fileID: 8300000, guid: 3fbaac1e95160a24187a5849936e2b95, type: 3}
-  playerShipInfo: {fileID: 0}
-  minMoveSpeed: 3
-  maxMoveSpeed: 8
-  moveDirection: {x: 0.31742296, y: -1}
-  destructionEffect: {fileID: 6192724089161036641, guid: 13b2e50eefdf4f74a8147f9bf3057451, type: 3}
+  _destructionEffect: {fileID: 6192724089161036641, guid: 13b2e50eefdf4f74a8147f9bf3057451, type: 3}
+  _enemyDestroyedSFX: {fileID: 8300000, guid: 3fbaac1e95160a24187a5849936e2b95, type: 3}
 --- !u!70 &4331402028309080784
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

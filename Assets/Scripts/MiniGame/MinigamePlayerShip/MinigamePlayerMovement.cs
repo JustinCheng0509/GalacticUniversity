@@ -17,6 +17,7 @@ public class MinigamePlayerMovement : MonoBehaviour
 
     private MinigameController _minigameController;
     private GameDataManager _gameDataManager;
+    private MinigamePlayerHealthController _playerHealthController;
 
     void Start()
     {
@@ -26,10 +27,24 @@ public class MinigamePlayerMovement : MonoBehaviour
         _minigameController.OnMinigameResume += () => _canMove = true;
         _minigameController.OnMinigameEnd += () => _canMove = false;
 
+        _playerHealthController = FindAnyObjectByType<MinigamePlayerHealthController>();
+        _playerHealthController.OnPlayerDeath += () => _canMove = false;
+        _playerHealthController.OnPlayerRespawn += () => _canMove = true;
+
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
         
         _screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         _rb = GetComponent<Rigidbody2D>();
+    }
+
+    void OnEnable()
+    {
+        _canMove = true;        
+    }
+
+    void OnDisable()
+    {
+        _canMove = false;
     }
 
     void Update()

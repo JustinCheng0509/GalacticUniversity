@@ -11,6 +11,8 @@ public class OverworldUIAttendanceController : MonoBehaviour
     {
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
         _gameDataManager.OnAttendanceUpdated += HandleAttendanceUpdate;
+
+        HandleAttendanceUpdate(_gameDataManager.Attendance);
     }
 
     // Update is called once per frame
