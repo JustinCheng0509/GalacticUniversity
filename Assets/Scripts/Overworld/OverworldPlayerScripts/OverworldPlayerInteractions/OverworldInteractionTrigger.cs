@@ -10,19 +10,19 @@ public class OverworldInteractionTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (IsInteractable(other)) {
-            _interactionController.InteractableTag = other.gameObject.tag;
+            _interactionController.InteractableGameObject = other.gameObject;
         }
     }
 
     private void OnTriggerStay2D(Collider2D other) {
         if (IsInteractable(other)) {
-            _interactionController.InteractableTag = other.gameObject.tag;
+            _interactionController.InteractableGameObject = other.gameObject;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if (IsInteractable(other)) {
-            _interactionController.InteractableTag = "";
+            _interactionController.InteractableGameObject = null;
         }
     }
 

@@ -25,8 +25,9 @@ public class Quest : ScriptableObject
     public QuestType questType;
     public float targetValue;
     public float currentValue;
-    public int itemID; // For item delivery quests
-    public int npcID;
+    public string itemID; // For item delivery quests
+    public string npcID; // For item delivery quests
+    public Dialog startDialog;
     public Dialog incompleteDialog;
     public Dialog completeDialog;
     public float rewardMoney;

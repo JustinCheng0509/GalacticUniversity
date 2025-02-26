@@ -8,7 +8,7 @@ public class OverworldTimeController : MonoBehaviour
     private TutorialController _tutorialController;
     private IEnumerator _timeCoroutine;
 
-    private const float BASE_INTERVAL_BETWEEN_MINUTES = 0.2f;
+    private const float BASE_INTERVAL_BETWEEN_MINUTES = 0.1f;
 
     public float IntervalBetweenMinute => CanAttendClass ? BASE_INTERVAL_BETWEEN_MINUTES * 15 : BASE_INTERVAL_BETWEEN_MINUTES;
     public bool CanAttendClass => IsWithinTimeRange(_gameDataManager.CurrentTime, GameConstants.CLASS_START_TIME, GameConstants.CLASS_LATE_TIME);

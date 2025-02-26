@@ -3,14 +3,8 @@ using UnityEngine.UI;
 
 public class OverworldItemPrefabController : MonoBehaviour
 {
-    private Image _itemImage;
-    private Button _itemButton;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        _itemImage = GetComponent<Image>();
-        _itemButton = GetComponent<Button>();
-    }
+    [SerializeField] private Image _itemImage;
+    [SerializeField] private Button _itemButton;
 
     public void SetItemInfo(Sprite itemSprite, UnityEngine.Events.UnityAction onClickAction)
     {

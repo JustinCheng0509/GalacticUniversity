@@ -21,6 +21,7 @@ public class MinigamePlayerShooting : MonoBehaviour
 
     private MinigameController _minigameController;
     private GameDataManager _gameDataManager;
+    private MinigamePlayerHealthController _playerHealthController;
 
     public float Damage => _damage;
 
@@ -32,8 +33,23 @@ public class MinigamePlayerShooting : MonoBehaviour
         _minigameController.OnMinigameResume += () => _canFire = true;
         _minigameController.OnMinigameEnd += () => _canFire = false;
 
+        _playerHealthController = FindAnyObjectByType<MinigamePlayerHealthController>();
+        _playerHealthController.OnPlayerDeath += () => _canFire = false;
+        _playerHealthController.OnPlayerRespawn += () => _canFire = true;
+
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
-        _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
+        _gameDataManager.OnDestructionUpdated += _ => UpdateDamage();
+        UpdateDamage();
+    }
+
+    void OnEnable()
+    {
+        _canFire = true;        
+    }
+
+    void OnDisable()
+    {
+        _canFire = false;
     }
 
     void Update()
@@ -47,7 +63,7 @@ public class MinigamePlayerShooting : MonoBehaviour
         }
     }
 
-    private void OnGameDataLoaded()
+    private void UpdateDamage()
     {
         // Check if applying skill system
         if (GameConstants.USE_SKILL_SYSTEM)

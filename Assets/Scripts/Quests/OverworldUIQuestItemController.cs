@@ -8,9 +8,12 @@ public class OverworldUIQuestItemController : MonoBehaviour
     private Quest _quest;
     [SerializeField] private TMP_Text questTitleText;
     [SerializeField] private TMP_Text questDescriptionText;
+    [SerializeField] private TMP_Text questProgressText;
 
     private OverworldUIQuestColumnController _questColumnController;
     private OverworldUILayoutController _layoutController;
+
+    private GameDataManager _gameDataManager;
 
     void Start()
     {
@@ -18,6 +21,7 @@ public class OverworldUIQuestItemController : MonoBehaviour
         _questColumnController.OnQuestSelected += HandleQuestSelected;
 
         _layoutController = FindAnyObjectByType<OverworldUILayoutController>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
 
         ToggleQuestDescription(false);
     }
@@ -46,13 +50,19 @@ public class OverworldUIQuestItemController : MonoBehaviour
         }
     }
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SetQuest(Quest quest)
     {
+        if (_gameDataManager == null) {
+            _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        }
+        
         _quest = quest;
         questTitleText.text = quest.questName;
         questDescriptionText.text = quest.questDescription;
+        if (quest.questType == QuestType.ScoreTotal)
+        {
+            questProgressText.text = "Progress: " + _gameDataManager.TotalScore + "/" + (int) quest.targetValue;
+        }
     }
 
     public void OnClick()
@@ -77,6 +87,15 @@ public class OverworldUIQuestItemController : MonoBehaviour
     private void ToggleQuestDescription(bool isShown)
     {
         questDescriptionText.gameObject.SetActive(isShown);
+        if (_quest.questType == QuestType.ScoreTotal)
+        {
+            questProgressText.gameObject.SetActive(isShown);
+        }
+        else
+        {
+            questProgressText.gameObject.SetActive(false);
+        }
+
         _layoutController.ForceLayoutRebuild();
     }
 }

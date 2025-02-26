@@ -27,17 +27,17 @@ public class OverworldItemController : MonoBehaviour
         {
             return;
         }
-        _gameDataManager.GameData.energy += item.energyRestore;
-        _gameDataManager.GameData.hunger += item.hungerRestore;
-        _gameDataManager.GameData.mood += item.moodRestore;
+        _gameDataManager.Energy += item.energyRestore;
+        _gameDataManager.Hunger += item.hungerRestore;
+        _gameDataManager.Mood += item.moodRestore;
         // Remove the item from the inventory
-        _gameDataManager.GameData.inventory.Remove(item);
+        _gameDataManager.RemoveItemFromInventory(item);
         OnUseItem?.Invoke(item);
     }
 
     public void DiscardItem(Item item)
     {
-        _gameDataManager.GameData.inventory.Remove(item);
+        _gameDataManager.RemoveItemFromInventory(item);
         OnDiscardItem?.Invoke(item);
     }
 }

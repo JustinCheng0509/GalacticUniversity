@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class OverworldUITimeController : MonoBehaviour
 
     private GameDataManager _gameDataManager;
     private OverworldTimeController _overworldTimeController;
+    private TutorialController _tutorialController;
 
     private void Start()
     {
@@ -18,6 +20,9 @@ public class OverworldUITimeController : MonoBehaviour
 
         _overworldTimeController = FindAnyObjectByType<OverworldTimeController>();
         _overworldTimeController.OnPastClassTime += OnPastClassTime;
+        _overworldTimeController.OnAfterClass += OnAfterClass;
+
+        _tutorialController = FindAnyObjectByType<TutorialController>();
     }
     private void OnTimeUpdated(string time)
     {
@@ -32,5 +37,12 @@ public class OverworldUITimeController : MonoBehaviour
     private void OnPastClassTime()
     {
         _classTimeWarningPanel.SetActive(true);
+    }
+
+    private void OnAfterClass()
+    {
+        if (_gameDataManager.IsTutorialEnabled && _gameDataManager.Attendance == AttendanceStatus.ATTENDED) {
+            _tutorialController.ShowTutorial(new List<string> { TutorialIDs.TUTORIAL_SHIP_CONTROL, TutorialIDs.TUTORIAL_LEADERBOARD });
+        }
     }
 }

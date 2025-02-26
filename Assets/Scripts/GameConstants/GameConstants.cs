@@ -1,34 +1,34 @@
 public class GameConstants
 {
-    public static readonly int TOTAL_NUMBER_OF_DAYS = 10;
-    public static readonly bool USE_SKILL_SYSTEM = false;
-    public static readonly string LEADERBOARD_JSON_PATH = "/leaderboard.json";
-    public static readonly string GAME_DATA_JSON_PATH = "/gamedata.json";
-    public static readonly string NEW_GAME_START_TIME = "08:00";
-    public static readonly string CLASS_START_TIME = "14:00";
-    public static readonly string CLASS_LATE_TIME = "14:30";
-    public static readonly string CLASS_END_TIME = "16:00";
-    public static readonly string INTERACTABLE_LAYER = "INTERACTABLE_LAYER";
-    public static readonly string INTERACTABLE_TAG_CLASS = "INTERACTABLE_TAG_CLASS";
-    public static readonly string INTERACTABLE_TAG_WORK = "INTERACTABLE_TAG_WORK";
-    public static readonly string INTERACTABLE_TAG_PLAY = "INTERACTABLE_TAG_PLAY";
-    public static readonly string INTERACTABLE_TAG_SLEEP = "INTERACTABLE_TAG_SLEEP";
-    public static readonly string INTERACTABLE_TAG_HOMEWORK = "INTERACTABLE_TAG_HOMEWORK";
-    public static readonly string INTERACTABLE_TAG_JOB = "INTERACTABLE_TAG_JOB";
-    public static readonly string INTERACTABLE_TAG_SHOP = "INTERACTABLE_TAG_SHOP";
-    public static readonly string INTERACTABLE_TAG_NPC = "INTERACTABLE_TAG_NPC";
-    public static readonly string TRIGGER_TAG_CLASS = "TRIGGER_TAG_CLASS";
-    public static readonly string TRIGGER_TAG_DORM = "TRIGGER_TAG_DORM";
-    public static readonly string TRIGGER_TAG_SHOP = "TRIGGER_TAG_SHOP";
-    public static readonly string TRIGGER_TAG_PLAYROOM = "TRIGGER_TAG_PLAYROOM";
-    public static readonly string TRIGGER_TAG_WORK = "TRIGGER_TAG_WORK";
-    public static readonly string LAYER_GROUND = "LAYER_GROUND";
-    public static readonly string TAG_GRASS = "TAG_GRASS";
-    public static readonly string TAG_INDOOR = "TAG_INDOOR";
-    public static readonly string SCENE_OVERWORLD = "Overworld";
-    public static readonly string SCENE_MAIN_MENU = "MainMenu";
-    public static readonly string SCENE_MINIGAME = "Minigame";
-    public static readonly string TAG_BOSS = "TAG_BOSS";
+    public const int TOTAL_NUMBER_OF_DAYS = 10;
+    public const bool USE_SKILL_SYSTEM = true;
+    public const string LEADERBOARD_JSON_PATH = "/leaderboard.json";
+    public const string GAME_DATA_JSON_PATH = "/gamedata.json";
+    public const string NEW_GAME_START_TIME = "08:00";
+    public const string CLASS_START_TIME = "14:00";
+    public const string CLASS_LATE_TIME = "14:30";
+    public const string CLASS_END_TIME = "16:00";
+    public const string INTERACTABLE_LAYER = "INTERACTABLE_LAYER";
+    public const string INTERACTABLE_TAG_CLASS = "INTERACTABLE_TAG_CLASS";
+    public const string INTERACTABLE_TAG_WORK = "INTERACTABLE_TAG_WORK";
+    public const string INTERACTABLE_TAG_PLAY = "INTERACTABLE_TAG_PLAY";
+    public const string INTERACTABLE_TAG_SLEEP = "INTERACTABLE_TAG_SLEEP";
+    public const string INTERACTABLE_TAG_HOMEWORK = "INTERACTABLE_TAG_HOMEWORK";
+    public const string INTERACTABLE_TAG_JOB = "INTERACTABLE_TAG_JOB";
+    public const string INTERACTABLE_TAG_SHOP = "INTERACTABLE_TAG_SHOP";
+    public const string INTERACTABLE_TAG_NPC = "INTERACTABLE_TAG_NPC";
+    public const string TRIGGER_TAG_CLASS = "TRIGGER_TAG_CLASS";
+    public const string TRIGGER_TAG_DORM = "TRIGGER_TAG_DORM";
+    public const string TRIGGER_TAG_SHOP = "TRIGGER_TAG_SHOP";
+    public const string TRIGGER_TAG_PLAYROOM = "TRIGGER_TAG_PLAYROOM";
+    public const string TRIGGER_TAG_WORK = "TRIGGER_TAG_WORK";
+    public const string LAYER_GROUND = "LAYER_GROUND";
+    public const string TAG_GRASS = "TAG_GRASS";
+    public const string TAG_INDOOR = "TAG_INDOOR";
+    public const string SCENE_OVERWORLD = "Overworld";
+    public const string SCENE_MAIN_MENU = "MainMenu";
+    public const string SCENE_MINIGAME = "Minigame";
+    public const string TAG_BOSS = "TAG_BOSS";
 
     public static readonly string[] ALIEN_NAMES = new string[] {
         // Original Alien Names
@@ -56,28 +56,12 @@ public class GameConstants
         "Fizzbin", "Wibber", "Jimblo", "Gabblo", "Zibbit", "Norb", "Sklarp", "Glibber", "Boffo", "Twizzle"
     };
 
-    public static readonly string GAME_DATA_KEY = "GameData";
+    public const string GAME_DATA_KEY = "GameData";
 
-    // public static readonly string PLAYER_NAME_KEY = "PlayerName";
-    // public static readonly string ENERGY_KEY = "Energy";
-    // public static readonly string HUNGER_KEY = "Hunger";
-    // public static readonly string MOOD = "Mood";
-    // public static readonly string MANEUVERABILITY_KEY = "Maneuverability";
-    // public static readonly string DESTRUCTION_KEY = "Destruction";
-    // public static readonly string MECHANICS_KEY = "Mechanics";
-    // public static readonly string CURRENT_TIME_KEY = "CurrentTime";
-    // public static readonly string CURRENT_DAY_KEY = "CurrentDay";
-    // public static readonly string TOTAL_DAYS_KEY = "TotalNumberOfDays";
-    // public static readonly string TUTORIAL_KEY = "IsTutorialEnabled";
-    // public static readonly string DAILY_GAME_DATA_LIST_KEY = "DaoilyGameDataList";
-    // public static readonly string LEADERBOARD_KEY = "Leaderboard";
+    public const string ENEMY_DESTROYED_SFX_AUDIO_SOURCE = "EnemyDestroyedSFXAudioSource";
 
-    public static readonly string ENEMY_DESTROYED_SFX_AUDIO_SOURCE = "EnemyDestroyedSFXAudioSource";
+    public const string BGM_AUDIO_SOURCE = "BGMAudioSource";
 
-    public static readonly string BGM_AUDIO_SOURCE = "BGMAudioSource";
-
-    public static readonly int MINIGAME_BASE_DAMAGE = 10;
-    public static readonly int MINIGAME_ENEMY_BASE_SCORE = 100;
-
-    public static readonly string PLAYER_NAME_PLACEHOLDER = "[PlayerName]";
+    public const int MINIGAME_BASE_DAMAGE = 10;
+    public const int MINIGAME_ENEMY_BASE_SCORE = 100;
 }
