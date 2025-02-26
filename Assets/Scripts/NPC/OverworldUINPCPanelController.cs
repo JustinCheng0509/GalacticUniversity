@@ -20,6 +20,7 @@ public class OverworldUINPCPanelController : MonoBehaviour
         _overworldNPCInteractionController = FindAnyObjectByType<OverworldNPCInteractionController>();
         _overworldNPCInteractionController.OnNPCInteractionStarted += OnNPCInteractionStarted;
         _overworldNPCInteractionController.OnNPCStartChat += () => _npcPanel.SetActive(false);
+        _overworldNPCInteractionController.OnNPCQuestAttempted += () => _npcPanel.SetActive(false);
 
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
     }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f08122b69ac13b4e824ad331d9cf942, type: 3}
+  m_Name: quest_intro_play_room
+  m_EditorClassIdentifier: 
+  questID: quest_intro_play_room
+  questName: Check out the recreational hall
+  questDescription: To see the rooms you need to visit, look for the quest (?) icons
+    in the minimap. You can click on the minimap to expand it.
+  questType: 0
+  targetValue: 0
+  currentValue: 0
+  itemID: 0
+  npcID: 0
+  incompleteDialog: {fileID: 0}
+  completeDialog: {fileID: 11400000, guid: 98ad2e75d89630644a3cf6c2ef0a0101, type: 2}
+  rewardMoney: 0
+  rewardItem: {fileID: 0}

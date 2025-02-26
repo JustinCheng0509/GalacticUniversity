@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogID: dialog_npc_1_intro
   characterName: '[npc_1]'
-  isLeft: 0
+  isLeft: 1
   text: Oh! Welcome to Galactic University! I'm [npc_1], a senior on the orientation
     team. You must be a new student.
   isSelfDialog: 0

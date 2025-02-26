@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NPC", menuName = "Scriptable Objects/NPC")]
@@ -10,7 +11,5 @@ public class NPC : ScriptableObject
     public Sprite npcSprite;
 
     public Dialog introDialog;
-    public Quest firstThresholdQuest;
-    public Quest secondThresholdQuest;
-    public Quest thirdThresholdQuest;
+    public List<Quest> quests;
 }

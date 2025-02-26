@@ -5,4 +5,6 @@ public class QuestIDs
   public const string QUEST_INTRO_PLAY_ROOM = "quest_intro_play_room";
   public const string QUEST_INTRO_WORK = "quest_intro_work";
   public const string QUEST_INTRO_SHOP = "quest_intro_shop";
+
+  public static readonly int[] QUEST_RELATIONSHIP_THRESHOLDS = { 30, 60, 80 };
 }

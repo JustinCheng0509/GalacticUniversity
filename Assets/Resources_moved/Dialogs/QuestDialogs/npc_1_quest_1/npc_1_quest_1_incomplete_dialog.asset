@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2008eece822dcc7458169ec19c2cef92, type: 3}
+  m_Name: npc_1_quest_1_incomplete_dialog
+  m_EditorClassIdentifier: 
+  dialogID: npc_1_quest_1_incomplete_dialog
+  characterName: '[npc_1]'
+  isLeft: 1
+  text: Hmm... You don't seem to have reached the target score yet. Come back again
+    when you do.
+  isSelfDialog: 0
+  nextDialog: {fileID: 0}
+  associatedTutorials: []
+  associatedQuests: []

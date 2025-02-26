@@ -64,8 +64,4 @@ public class GameConstants
 
     public const int MINIGAME_BASE_DAMAGE = 10;
     public const int MINIGAME_ENEMY_BASE_SCORE = 100;
-
-    public const string PLAYER_NAME_PLACEHOLDER = "[PlayerName]";
-
-    public const string DIALOG_NPC_PREFIX = "[npc_";
 }

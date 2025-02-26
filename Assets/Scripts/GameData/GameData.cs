@@ -48,7 +48,7 @@ public class GameData
     public int totalSafetyScore = 0;
 
     public List<Quest> activeQuests = new List<Quest>();
-    public List<Quest> completedQuests = new List<Quest>();
+    public List<string> completedQuestIDs = new List<string>();
 
     public Dictionary<string, float> npcRelationships = new Dictionary<string, float>();
 

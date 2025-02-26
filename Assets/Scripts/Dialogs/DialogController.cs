@@ -17,9 +17,12 @@ public class DialogController : MonoBehaviour
 
     private GameDataManager _gameDataManager;
 
+    private OverworldNPCInteractionController _overworldNPCInteractionController;
+
     void Start()
     {
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _overworldNPCInteractionController = FindAnyObjectByType<OverworldNPCInteractionController>();
     }
 
     public void AdvanceDialog()
@@ -69,11 +72,15 @@ public class DialogController : MonoBehaviour
     {
         if (string.IsNullOrEmpty(text)) return text;
 
-        text = text.Replace(GameConstants.PLAYER_NAME_PLACEHOLDER, _gameDataManager.PlayerName);
+        text = text.Replace(DialogIDs.DIALOG_PLAYER_NAME_PLACEHOLDER, _gameDataManager.PlayerName);
+        
+        if (_overworldNPCInteractionController.CurrentNPC != null) {
+            text = text.Replace(DialogIDs.DIALOG_CURRENT_NPC_PLACEHOLDER, _overworldNPCInteractionController.CurrentNPC.npcName);
+        }
 
         while(true)
         {
-            int startIndex = text.IndexOf(GameConstants.DIALOG_NPC_PREFIX);
+            int startIndex = text.IndexOf(DialogIDs.DIALOG_NPC_NAME_PREFIX);
             if (startIndex == -1) break;
 
             int endIndex = text.IndexOf("]", startIndex);

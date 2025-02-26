@@ -170,9 +170,14 @@ public class GameDataManager : MonoBehaviour
         return _gameData.activeQuests;
     }
 
-    public List<Quest> GetCompletedQuests()
+    public bool IsQuestActive(string id)
     {
-        return _gameData.completedQuests;
+        return _gameData.activeQuests.Exists(quest => quest.questID == id);
+    }
+
+    public List<string> GetCompletedQuestIDs()
+    {
+        return _gameData.completedQuestIDs;
     }
 
     public void AddQuest(Quest quest)
@@ -193,7 +198,7 @@ public class GameDataManager : MonoBehaviour
             return;
         }
         _gameData.activeQuests.Remove(quest);
-        _gameData.completedQuests.Add(quest);
+        _gameData.completedQuestIDs.Add(quest.questID);
         OnQuestCompleted?.Invoke(quest);
         OnActiveQuestsUpdated?.Invoke(_gameData.activeQuests);
     }
