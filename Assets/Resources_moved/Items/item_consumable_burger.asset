@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: item_consumable_burger
   itemName: Burger
   itemDescription: Just like your regular burger on Earth
-  itemIcon: {fileID: 0}
+  itemSprite: {fileID: 416187264504988275, guid: 9db161075ff79e04fbe451fa049bb017, type: 3}
   itemValue: 20
   isConsumable: 1
   energyRestore: 10

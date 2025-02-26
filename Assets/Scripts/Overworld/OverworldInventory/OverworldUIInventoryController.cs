@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,22 +17,13 @@ public class OverworldUIInventoryController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        HideInfo();
         _overworldItemController = FindAnyObjectByType<OverworldItemController>();
         _overworldItemController.OnSelectItem += OnSelectItem;
-        _overworldItemController.OnUseItem += OnItemListUpdated;
-        _overworldItemController.OnDiscardItem += OnItemListUpdated;
+
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
-        _gameDataManager.OnGameDataLoaded += OnGameDataLoaded;
-    }
-
-    private void OnGameDataLoaded()
-    {
-        ReloadItemList();
-    }
-
-    private void OnItemListUpdated(Item itemChanged)
-    {
-        ReloadItemList();
+        _gameDataManager.OnGameDataLoaded += ReloadItemList;
+        _gameDataManager.OnInventoryUpdated += ReloadItemList;
     }
 
     private void ReloadItemList()
@@ -41,12 +33,29 @@ public class OverworldUIInventoryController : MonoBehaviour
             Destroy(child.gameObject);
         }
         // Loop through the inventory and create a slot for each item
-        foreach (Item item in _gameDataManager.GameData.inventory)
+        foreach (Item item in _gameDataManager.Inventory)
         {
             GameObject itemSlot = Instantiate(_itemSlotPrefab, _itemGrid.transform);
             OverworldItemPrefabController itemSlotController = itemSlot.GetComponent<OverworldItemPrefabController>();
             itemSlotController.SetItemInfo(item.itemSprite, () => _overworldItemController.SelectItem(item));
+            // Set the grid as the parent of the item slot
+            itemSlot.transform.SetParent(_itemGrid.transform, false);
         }
+
+        HideInfo();
+    }
+
+    private void HideInfo()
+    {
+        _itemNameText.text = "";
+        _itemDescriptionText.text = "";
+        _useButton.gameObject.SetActive(false);
+        _discardButton.gameObject.SetActive(false);
+    }
+
+    private void ReloadItemList(List<Item> items)
+    {
+        ReloadItemList();
     }
 
     private void OnSelectItem(Item item)

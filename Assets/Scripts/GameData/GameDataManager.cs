@@ -33,6 +33,7 @@ public class GameDataManager : MonoBehaviour
     public event Action<List<Quest>> OnActiveQuestsUpdated;
     public event Action<Quest> OnQuestCompleted;
     public event Action<NPC> OnNPCRelationshipUpdated;
+    public event Action<List<Item>> OnInventoryUpdated;
 
     public List<Dialog> DialogList => _dialogList;
     public List<Tutorial> TutorialList => _tutorialList;
@@ -50,6 +51,7 @@ public class GameDataManager : MonoBehaviour
         get => _gameData.energy;
         set {
             _gameData.energy = value;
+            _gameData.energy = Mathf.Clamp(_gameData.energy, 0, 100);
             OnEnergyUpdated?.Invoke(_gameData.energy);
         }
         
@@ -60,6 +62,7 @@ public class GameDataManager : MonoBehaviour
         get => _gameData.hunger;
         set {
             _gameData.hunger = value;
+            _gameData.hunger = Mathf.Clamp(_gameData.hunger, 0, 100);
             OnHungerUpdated?.Invoke(_gameData.hunger);
         }
     }
@@ -69,6 +72,7 @@ public class GameDataManager : MonoBehaviour
         get => _gameData.mood;
         set {
             _gameData.mood = value;
+            _gameData.mood = Mathf.Clamp(_gameData.mood, 0, 100);
             OnMoodUpdated?.Invoke(_gameData.mood);
         }
     }
@@ -87,6 +91,7 @@ public class GameDataManager : MonoBehaviour
         get => _gameData.maneuverability;
         set {
             _gameData.maneuverability = value;
+            _gameData.maneuverability = Mathf.Clamp(_gameData.maneuverability, 0, 100);
             OnManeuverabilityUpdated?.Invoke(_gameData.maneuverability);
         }
     }
@@ -96,6 +101,7 @@ public class GameDataManager : MonoBehaviour
         get => _gameData.destruction;
         set {
             _gameData.destruction = value;
+            _gameData.destruction = Mathf.Clamp(_gameData.destruction, 0, 100);
             OnDestructionUpdated?.Invoke(_gameData.destruction);
         }
     }
@@ -105,6 +111,7 @@ public class GameDataManager : MonoBehaviour
         get => _gameData.mechanics;
         set {
             _gameData.mechanics = value;
+            _gameData.mechanics = Mathf.Clamp(_gameData.mechanics, 0, 100);
             OnMechanicsUpdated?.Invoke(_gameData.mechanics);
         }
     }
@@ -275,10 +282,25 @@ public class GameDataManager : MonoBehaviour
         set
         {
             _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress = value;
+            _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress = Mathf.Clamp(_gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress, 0, 100);
             OnHomeworkProgressUpdated?.Invoke(value);
         }
     }
 
+    public List<Item> Inventory => _gameData.inventory;
+
+    public void AddItemToInventory(Item item)
+    {
+        _gameData.inventory.Add(item);
+        OnInventoryUpdated?.Invoke(_gameData.inventory);
+    }
+
+    public void RemoveItemFromInventory(Item item)
+    {
+        _gameData.inventory.Remove(item);
+        OnInventoryUpdated?.Invoke(_gameData.inventory);
+    }
+    
     public bool IsTutorialCompleted(string tutorialId)
     {
         return _gameData.tutorialsCompleted.Contains(tutorialId);

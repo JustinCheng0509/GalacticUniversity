@@ -163,5 +163,18 @@ public class OverworldInteractionController : MonoBehaviour
     }
 
     private void StartShop() {
+        // If player does not have enough money, show dialog
+        if (_gameDataManager.Money < 20)
+        {
+            _dialogController.SetDialog(DialogIDs.DIALOG_STATUS_NOT_ENOUGH_MONEY);
+            return;
+        }
+        if (_gameDataManager.Hunger > 90)
+        {
+            _dialogController.SetDialog(DialogIDs.DIALOG_STATUS_ALREADY_FULL);
+            return;
+        }
+        _gameDataManager.Money -= 20;
+        _gameDataManager.Hunger += 30;
     }
 }

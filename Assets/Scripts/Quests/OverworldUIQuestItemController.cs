@@ -50,10 +50,12 @@ public class OverworldUIQuestItemController : MonoBehaviour
         }
     }
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SetQuest(Quest quest)
     {
+        if (_gameDataManager == null) {
+            _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        }
+        
         _quest = quest;
         questTitleText.text = quest.questName;
         questDescriptionText.text = quest.questDescription;
@@ -93,7 +95,7 @@ public class OverworldUIQuestItemController : MonoBehaviour
         {
             questProgressText.gameObject.SetActive(false);
         }
-        
+
         _layoutController.ForceLayoutRebuild();
     }
 }

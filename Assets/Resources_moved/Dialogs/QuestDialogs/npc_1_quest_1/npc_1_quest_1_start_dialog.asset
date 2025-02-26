@@ -15,7 +15,7 @@ MonoBehaviour:
   dialogID: npc_1_quest_1_start_dialog
   characterName: '[npc_1]'
   isLeft: 1
-  text: Reach a total score of 7000 in your class, and I'll give you a nice item.
+  text: Reach a total score of 4000 in your class, and I'll give you a nice item.
   isSelfDialog: 0
   nextDialog: {fileID: 0}
   associatedTutorials: []

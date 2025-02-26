@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questID: npc_1_quest_1
   questName: The first quest
-  questDescription: Reach a total score of 7000
+  questDescription: Reach a total score of 4000
   questType: 3
-  targetValue: 7000
+  targetValue: 4000
   currentValue: 0
   itemID: 0
   npcID: 0
@@ -24,4 +24,4 @@ MonoBehaviour:
   incompleteDialog: {fileID: 11400000, guid: 4227204a0d6f9344998d8d509943056d, type: 2}
   completeDialog: {fileID: 11400000, guid: debda272da22b4344a7e4740bd452f51, type: 2}
   rewardMoney: 0
-  rewardItem: {fileID: 0}
+  rewardItem: {fileID: 11400000, guid: dbddcc5ef647ee5469f178e450a336fd, type: 2}

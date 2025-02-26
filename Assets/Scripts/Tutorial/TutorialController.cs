@@ -21,7 +21,7 @@ public class TutorialController : MonoBehaviour
 
     public void ShowTutorial(Tutorial tutorial)
     {
-        Debug.Log("Showing tutorial: " + tutorial.title);
+        // Debug.Log("Showing tutorial: " + tutorial.title);
         // if the tutorial is already completed, do not show it again
         if (_gameDataManager.IsTutorialCompleted(tutorial.tutorialID)) return;
 

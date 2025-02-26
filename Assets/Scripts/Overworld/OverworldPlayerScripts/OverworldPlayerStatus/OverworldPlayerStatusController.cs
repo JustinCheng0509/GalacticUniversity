@@ -84,9 +84,6 @@ public class OverworldPlayerStatusController : MonoBehaviour
             UpdateHomework();
             UpdateWork();
             UpdateNPCRelationships();
-
-            ClampStats();
-
             CheckForLowStats();
 
             yield return new WaitForSeconds(_overworldTimeController.IntervalBetweenMinute);
@@ -172,13 +169,6 @@ public class OverworldPlayerStatusController : MonoBehaviour
                     break;
             }
         }
-    }
-
-    private void ClampStats()
-    {
-        _gameDataManager.Energy = Mathf.Clamp(_gameDataManager.Energy, 0, 100);
-        _gameDataManager.Hunger = Mathf.Clamp(_gameDataManager.Hunger, 0, 100);
-        _gameDataManager.Mood = Mathf.Clamp(_gameDataManager.Mood, 0, 100);
     }
 
     private void CheckForLowStats()

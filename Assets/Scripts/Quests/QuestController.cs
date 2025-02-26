@@ -71,6 +71,12 @@ public class QuestController : MonoBehaviour
     private void CompleteQuest(Quest quest)
     {
         _gameDataManager.CompleteQuest(quest);
+        // Reward the player
+        _gameDataManager.Money += quest.rewardMoney;
+        if (quest.rewardItem != null)
+        {
+            _gameDataManager.AddItemToInventory(quest.rewardItem);
+        }
         OnQuestCompleted?.Invoke(quest);
     }
 
