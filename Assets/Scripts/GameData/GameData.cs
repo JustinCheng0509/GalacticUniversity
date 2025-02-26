@@ -50,7 +50,7 @@ public class GameData
     public List<Quest> activeQuests = new List<Quest>();
     public List<Quest> completedQuests = new List<Quest>();
 
-    public Dictionary<string, int> npcRelationships = new Dictionary<string, int>();
+    public Dictionary<string, float> npcRelationships = new Dictionary<string, float>();
 
     public List<string> tutorialsCompleted = new List<string>();
 

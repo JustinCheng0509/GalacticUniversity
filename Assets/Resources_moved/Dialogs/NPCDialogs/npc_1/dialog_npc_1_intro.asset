@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: dialog_npc_1_intro
   m_EditorClassIdentifier: 
   dialogID: dialog_npc_1_intro
-  npc: {fileID: 11400000, guid: ec23a2d6aa93a634f85c071cdb5850f4, type: 2}
-  isPlayer: 0
+  characterName: '[npc_1]'
   isLeft: 0
   text: Oh! Welcome to Galactic University! I'm [npc_1], a senior on the orientation
     team. You must be a new student.

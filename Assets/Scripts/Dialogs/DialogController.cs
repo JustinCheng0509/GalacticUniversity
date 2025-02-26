@@ -45,18 +45,8 @@ public class DialogController : MonoBehaviour
         Time.timeScale = 0;
         _currentDialog = dialog;
 
-        string name = dialog.characterName;
-        string text = dialog.text;
-
-        // If dialog contains PLAYER_NAME_PLACEHOLDER, replace it with the player's name
-        if (name.Contains(GameConstants.PLAYER_NAME_PLACEHOLDER)) {
-            name = name.Replace(GameConstants.PLAYER_NAME_PLACEHOLDER, _gameDataManager.PlayerName);
-        }
-        if (text.Contains(GameConstants.PLAYER_NAME_PLACEHOLDER)) {
-            text = text.Replace(GameConstants.PLAYER_NAME_PLACEHOLDER, _gameDataManager.PlayerName);
-        }
-
-        // If dialog contains [npc_ prefix, replace it with the NPC's name
+        string name = ReplacePlaceholders(dialog.characterName);
+        string text = ReplacePlaceholders(dialog.text);
 
         _dialogNameText.text = name;
         _dialogText.text = text;
@@ -73,6 +63,31 @@ public class DialogController : MonoBehaviour
         _dialogText.alignment = dialog.isLeft ? TextAlignmentOptions.Left : TextAlignmentOptions.Right;
         
         _dialogPanel.SetActive(true);
+    }
+
+    private string ReplacePlaceholders(string text)
+    {
+        if (string.IsNullOrEmpty(text)) return text;
+
+        text = text.Replace(GameConstants.PLAYER_NAME_PLACEHOLDER, _gameDataManager.PlayerName);
+
+        while(true)
+        {
+            int startIndex = text.IndexOf(GameConstants.DIALOG_NPC_PREFIX);
+            if (startIndex == -1) break;
+
+            int endIndex = text.IndexOf("]", startIndex);
+            if (endIndex == -1) break;
+
+            string npcPlaceholder = text.Substring(startIndex, endIndex - startIndex + 1);
+            string npcId = npcPlaceholder.Substring(1, npcPlaceholder.Length - 2); // Remove the brackets
+
+            // Replace the placeholder with the NPC's name
+            string npcName = _gameDataManager.GetNPCName(npcId);
+            text = text.Replace(npcPlaceholder, npcName);
+        }
+
+        return text;
     }
 
     // Overloaded function to set dialog with a string ID

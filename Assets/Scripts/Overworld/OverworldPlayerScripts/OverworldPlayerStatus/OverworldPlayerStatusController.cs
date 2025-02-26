@@ -8,6 +8,7 @@ public enum OverworldPlayerStatus
     Walking,
     Running,
     Sleeping,
+    Chatting,
     DoingHomework,
     Working,
     Playing
@@ -30,10 +31,11 @@ public class OverworldPlayerStatusController : MonoBehaviour
         }
     }
 
-    public bool IsBusy => _currentStatus == OverworldPlayerStatus.Sleeping || _currentStatus == OverworldPlayerStatus.DoingHomework || _currentStatus == OverworldPlayerStatus.Working || _currentStatus == OverworldPlayerStatus.Playing;
+    public bool IsBusy => _currentStatus == OverworldPlayerStatus.Sleeping || _currentStatus == OverworldPlayerStatus.DoingHomework || _currentStatus == OverworldPlayerStatus.Working || _currentStatus == OverworldPlayerStatus.Playing || _currentStatus == OverworldPlayerStatus.Chatting;
 
     private GameDataManager _gameDataManager;
     private OverworldTimeController _overworldTimeController;
+    private OverworldNPCInteractionController _overworldNPCInteractionController;
 
     private Coroutine _updateStatusCoroutine;
     public event Action<OverworldPlayerStatus> OnStatusChanged;
@@ -45,6 +47,9 @@ public class OverworldPlayerStatusController : MonoBehaviour
 
         _overworldTimeController = FindAnyObjectByType<OverworldTimeController>();
         _overworldTimeController.OnPastClassLateTime += HandleLateClassTime;
+
+        _overworldNPCInteractionController = FindAnyObjectByType<OverworldNPCInteractionController>();
+        _overworldNPCInteractionController.OnNPCStartChat += () => CurrentStatus = OverworldPlayerStatus.Chatting;
     }
 
     private void HandleLateClassTime()
@@ -78,12 +83,21 @@ public class OverworldPlayerStatusController : MonoBehaviour
             UpdateMood();
             UpdateHomework();
             UpdateWork();
+            UpdateNPCRelationships();
 
             ClampStats();
 
             CheckForLowStats();
 
             yield return new WaitForSeconds(_overworldTimeController.IntervalBetweenMinute);
+        }
+    }
+
+    private void UpdateNPCRelationships()
+    {
+        if (_currentStatus == OverworldPlayerStatus.Chatting)
+        {
+            _gameDataManager.UpdateNPCRelationship(_overworldNPCInteractionController.CurrentNPC.npcID, 0.2f);
         }
     }
 
@@ -105,6 +119,8 @@ public class OverworldPlayerStatusController : MonoBehaviour
         } else if (_currentStatus == OverworldPlayerStatus.Playing)
         {
             _gameDataManager.Mood += 0.4f;
+        } else if (_currentStatus == OverworldPlayerStatus.Chatting) {
+            _gameDataManager.Mood += 0.2f;
         }
     }
 

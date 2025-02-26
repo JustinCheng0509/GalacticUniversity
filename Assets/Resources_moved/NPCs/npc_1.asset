@@ -18,6 +18,7 @@ MonoBehaviour:
   npcDescription: "Rumor has it, they\u2019ve been at Galactic University a little
     longer than most students - perhaps enjoying the experience a bit too much."
   npcSprite: {fileID: -2893043290658190983, guid: e1ca01dee4a0a354a9ce04ff05a9896a, type: 3}
+  introDialog: {fileID: 11400000, guid: 0dd784c8d277fa1499547290c714d2e4, type: 2}
   firstThresholdQuest: {fileID: 0}
   secondThresholdQuest: {fileID: 0}
   thirdThresholdQuest: {fileID: 0}

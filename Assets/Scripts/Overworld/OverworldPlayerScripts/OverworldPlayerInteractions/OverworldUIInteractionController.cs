@@ -10,6 +10,8 @@ public class OverworldUIInteractionController : MonoBehaviour
 
     private OverworldPlayerStatusController _overworldPlayerStatusController;
     private OverworldInteractionController _overworldInteractionController;
+    private GameDataManager _gameDataManager;
+    private OverworldNPCInteractionController _overworldNPCInteractionController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,6 +20,11 @@ public class OverworldUIInteractionController : MonoBehaviour
         _overworldPlayerStatusController.OnStatusChanged += HandlePlayerStatusChanged;
         _overworldInteractionController = FindAnyObjectByType<OverworldInteractionController>();
         _overworldInteractionController.OnInteractableGameObjectChanged += HandleInteractableGameObjectChanged;
+        _overworldNPCInteractionController = FindAnyObjectByType<OverworldNPCInteractionController>();
+
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _gameDataManager.OnHomeworkProgressUpdated += HandleHomeworkProgressUpdate;
+        _gameDataManager.OnNPCRelationshipUpdated += HandleNPCRelationshipUpdate;
     }
 
     private void HandleInteractableGameObjectChanged(GameObject interactableGameObject)
@@ -43,7 +50,7 @@ public class OverworldUIInteractionController : MonoBehaviour
                 ShowInteractStatus("Sleeping...");
                 break;
             case OverworldPlayerStatus.DoingHomework:
-                ShowInteractStatus("Doing Homework...");
+                ShowInteractStatus("Homework: " + (int) _gameDataManager.HomeworkProgress + "%");
                 break;
             case OverworldPlayerStatus.Working:
                 ShowInteractStatus("Working...");
@@ -51,9 +58,31 @@ public class OverworldUIInteractionController : MonoBehaviour
             case OverworldPlayerStatus.Playing:
                 ShowInteractStatus("Playing...");
                 break;
+            case OverworldPlayerStatus.Chatting:
+                ShowInteractStatus("Chatting: " + (int) _gameDataManager.GetNPCRelationship(_overworldNPCInteractionController.CurrentNPC.npcID) + "/100");
+                break;
             default:
                 HideInteractStatus();
                 break;
+        }
+    }
+
+    private void HandleHomeworkProgressUpdate(float progress)
+    {
+        if (_overworldPlayerStatusController.CurrentStatus == OverworldPlayerStatus.DoingHomework)
+        {
+            ShowInteractStatus("Homework: " + (int) progress + "%");
+        }
+    }
+
+    private void HandleNPCRelationshipUpdate(NPC npc)
+    {
+        // Debug.Log(_overworldPlayerStatusController.CurrentStatus);
+        // Debug.Log(npc.npcID == _overworldNPCInteractionController.CurrentNPC.npcID);
+        
+        if (_overworldPlayerStatusController.CurrentStatus == OverworldPlayerStatus.Chatting && npc.npcID == _overworldNPCInteractionController.CurrentNPC.npcID)
+        {
+            ShowInteractStatus("Chatting: " + (int) _gameDataManager.GetNPCRelationship(npc.npcID) + "/100");
         }
     }
 

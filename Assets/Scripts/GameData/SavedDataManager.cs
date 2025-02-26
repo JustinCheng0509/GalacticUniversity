@@ -69,7 +69,7 @@ public class SavedDataManager : MonoBehaviour
             totalSafetyScore = 0,
             activeQuests = new List<Quest>(),
             completedQuests = new List<Quest>(),
-            npcRelationships = new Dictionary<string, int>(),
+            npcRelationships = new Dictionary<string, float>(),
             tutorialsCompleted = new List<string>(),
             dailyGameDataList = dailyGameDataList,
             inventory = new List<Item>(),

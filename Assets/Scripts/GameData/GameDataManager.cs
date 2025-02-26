@@ -32,6 +32,7 @@ public class GameDataManager : MonoBehaviour
     public event Action<int> OnDayUpdated;
     public event Action<List<Quest>> OnActiveQuestsUpdated;
     public event Action<Quest> OnQuestCompleted;
+    public event Action<NPC> OnNPCRelationshipUpdated;
 
     public List<Dialog> DialogList => _dialogList;
     public List<Tutorial> TutorialList => _tutorialList;
@@ -203,6 +204,44 @@ public class GameDataManager : MonoBehaviour
         OnActiveQuestsUpdated?.Invoke(_gameData.activeQuests);
     }
 
+    public Dictionary<string, float> NPCRelationships => _gameData.npcRelationships;
+
+    public float GetNPCRelationship(string npcId)
+    {
+        if (_gameData.npcRelationships.ContainsKey(npcId))
+        {
+            return _gameData.npcRelationships[npcId];
+        }
+        _gameData.npcRelationships[npcId] = 0; // Default relationship if not found
+        return 0;
+    }
+
+    public float GetNPCRelationship(NPC npc)
+    {
+        return GetNPCRelationship(npc.npcID);
+    }
+
+    public string GetNPCName(string npcId)
+    {
+        NPC npc = _npcList.Find(n => n.npcID == npcId);
+        return npc != null ? npc.npcName : "Unknown NPC";
+    }
+
+    public void UpdateNPCRelationship(string npcId, float relationshipChange)
+    {
+        if (_gameData.npcRelationships.ContainsKey(npcId))
+        {
+            _gameData.npcRelationships[npcId] += relationshipChange;
+        }
+        else
+        {
+            _gameData.npcRelationships[npcId] = relationshipChange;
+        }
+        
+        _gameData.npcRelationships[npcId] = Mathf.Clamp(_gameData.npcRelationships[npcId], 0, 100);
+        OnNPCRelationshipUpdated?.Invoke(_npcList.Find(n => n.npcID == npcId));
+    }
+
     public List<DailyGameData> DailyGameDataList
     {
         get => _gameData.dailyGameDataList;
@@ -218,13 +257,21 @@ public class GameDataManager : MonoBehaviour
     public AttendanceStatus Attendance
     {
         get => _gameData.dailyGameDataList[_gameData.currentDay - 1].attendance;
-        set => _gameData.dailyGameDataList[_gameData.currentDay - 1].attendance = value;
+        set
+        {
+            _gameData.dailyGameDataList[_gameData.currentDay - 1].attendance = value;
+            OnAttendanceUpdated?.Invoke(value);
+        }
     }
 
     public float HomeworkProgress
     {
         get => _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress;
-        set => _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress = value;
+        set
+        {
+            _gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress = value;
+            OnHomeworkProgressUpdated?.Invoke(value);
+        }
     }
 
     public bool IsTutorialCompleted(string tutorialId)
