@@ -34,11 +34,31 @@ AudioMixerGroupController:
   - {fileID: 1603074806044939961}
   - {fileID: 7531983955340906956}
   - {fileID: -1016218095807916408}
+  - {fileID: -6011787655926326623}
   m_Volume: 45ccd3d6d7b024c209a058da251d97ed
   m_Pitch: 662d24261895441d698e4b1181a67791
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -5787609510766216694}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &-6011787655926326623
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Amb
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 63a3042e68758465bba0b36b6218569a
+  m_Children: []
+  m_Volume: 8c9883d6b009f42cda6499f6f1c2d18c
+  m_Pitch: f7c806944c63144caacab789a9aac123
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 15449709159511221}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -149,6 +169,7 @@ AudioMixerController:
     - eb271cc77391a4c74b7a12f80d027b84
     - 850f9c065ed0047e6a86164a95769fe5
     - b27221cad638a459e9a2a1b22353a618
+    - 63a3042e68758465bba0b36b6218569a
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -197,8 +218,23 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: e0830a59c96bf4039b8ac80404b252df
   m_FloatValues:
+    7d198896e282f4fa792395936fcaab38: -1.5191216
     2088405b0c43e4b85be551487d9e0c90: -10.867776
   m_TransitionOverrides: {}
+--- !u!244 &15449709159511221
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 1753fda8504d54c60a83374d583c1700
+  m_EffectName: Attenuation
+  m_MixLevel: 2779f3193b43743baaf209db99991775
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &786343891156493287
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
