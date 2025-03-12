@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sprite_item_consumable_burger_0: 416187264504988275
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

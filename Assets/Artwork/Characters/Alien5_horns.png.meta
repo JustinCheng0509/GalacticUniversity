@@ -172,7 +172,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Alien5_horns_0: -5838861274062685082
+      Alien5_horns_1: -5605088920181376482
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

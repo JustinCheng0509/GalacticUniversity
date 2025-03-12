@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Alien5_leg_left_0: 2149884959087413807
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

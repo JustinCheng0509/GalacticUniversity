@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Alien3_wing_left_0: 425588119561354378
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
