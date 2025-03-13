@@ -54,7 +54,7 @@ public class OverworldBGMController : MonoBehaviour
         // Fade out current BGM
         while (_audioSource.volume > 0)
         {
-            _audioSource.volume -= Time.unscaledDeltaTime / 0.5; // fade out
+            _audioSource.volume -= Time.unscaledDeltaTime / 1; // fade out
             yield return null;
         }
         _audioSource.Stop();
@@ -74,7 +74,7 @@ public class OverworldBGMController : MonoBehaviour
         _audioSource.volume = 0; 
         while (_audioSource.volume < targetVolume)
         {
-            _audioSource.volume += Time.unscaledDeltaTime / 0.5; //fade 
+            _audioSource.volume += Time.unscaledDeltaTime / 1; //fade 
             yield return null;
         }
     }
