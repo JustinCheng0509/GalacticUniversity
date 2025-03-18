@@ -27,6 +27,9 @@ public class OverworldPlayerMovement : MonoBehaviour
 
     private OverworldPlayerStatusController _overworldPlayerStatusController;
 
+    [SerializeField] private Animator _animator;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -37,14 +40,22 @@ public class OverworldPlayerMovement : MonoBehaviour
         _moveDirection = _moveAction.action.ReadValue<Vector2>();
     }
 
-    private void FixedUpdate() {
-        _rb.linearVelocity = new Vector2(_moveDirection.x * _moveSpeed, _moveDirection.y * _moveSpeed);     
+    private void FixedUpdate() { 
         if (_moveDirection != Vector2.zero) {
+            // moveY is reversed because of the sprite orientation
+            _animator.SetInteger("moveY", _moveDirection.y > 0 ? -1 : _moveDirection.y < 0 ? 1 : 0);
+            if (_moveDirection.y == 0) {
+                _spriteRenderer.flipX = _moveDirection.x < 0;
+            }
+            _animator.SetInteger("moveX", _moveDirection.x > 0 ? 1 : _moveDirection.x < 0 ? -1 : 0);
             PlayFootstepSound();
             _overworldPlayerStatusController.CurrentStatus = OverworldPlayerStatus.Walking;
         } else if (_overworldPlayerStatusController.CurrentStatus == OverworldPlayerStatus.Walking) {
             _overworldPlayerStatusController.CurrentStatus = OverworldPlayerStatus.Idle;
+            _animator.SetInteger("moveX", 0);
+            _animator.SetInteger("moveY", 0);
         }
+        _rb.linearVelocity = new Vector2(_moveDirection.x * _moveSpeed, _moveDirection.y * _moveSpeed);    
     }
 
     private void PlayFootstepSound() {
