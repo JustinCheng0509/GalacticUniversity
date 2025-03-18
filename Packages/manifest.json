@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.manakhovn.figma_to_unity_importer": "https://github.com/ManakhovN/FigmaToUnityImporter.git?path=/Assets/FigmaImporter",
     "com.nobi.roundedcorners": "https://github.com/kirevdokimov/Unity-UI-Rounded-Corners.git",
     "com.unity.addressables": "2.2.2",
     "com.unity.cinemachine": "3.1.2",
