@@ -29,9 +29,9 @@ public class OverworldNPCInteractionController : MonoBehaviour
         Time.timeScale = 0;
         _currentNPC = npc;
         // If player has never interacted with this NPC before, show the dialog
-        if (!_gameDataManager.NPCRelationships.ContainsKey(npc.npcID))
+        if (!_gameDataManager.IsNPCRelationshipExists(npc.npcID))
         {
-            _gameDataManager.NPCRelationships[npc.npcID] = 0;
+            _gameDataManager.UpdateNPCRelationship(npc.npcID, 0);
             _dialogController.SetDialog(npc.introDialog);
         }
         

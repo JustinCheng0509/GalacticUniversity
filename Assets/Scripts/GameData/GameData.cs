@@ -10,6 +10,13 @@ public enum AttendanceStatus
 }
 
 [System.Serializable]
+public class NPCRelationshipKeyValuePair
+{
+    public string npcID;
+    public float relationshipValue;
+}
+
+[System.Serializable]
 public class DailyGameData
 {
     public float homeworkProgress = 0;
@@ -50,7 +57,7 @@ public class GameData
     public List<Quest> activeQuests = new List<Quest>();
     public List<string> completedQuestIDs = new List<string>();
 
-    public Dictionary<string, float> npcRelationships = new Dictionary<string, float>();
+    public List<NPCRelationshipKeyValuePair> npcRelationships = new List<NPCRelationshipKeyValuePair>();
 
     public List<string> tutorialsCompleted = new List<string>();
 

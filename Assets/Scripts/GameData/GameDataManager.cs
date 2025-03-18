@@ -216,16 +216,24 @@ public class GameDataManager : MonoBehaviour
         OnActiveQuestsUpdated?.Invoke(_gameData.activeQuests);
     }
 
-    public Dictionary<string, float> NPCRelationships => _gameData.npcRelationships;
+    public List<NPCRelationshipKeyValuePair> NPCRelationships => _gameData.npcRelationships;
 
     public float GetNPCRelationship(string npcId)
     {
-        if (_gameData.npcRelationships.ContainsKey(npcId))
+        NPCRelationshipKeyValuePair n = _gameData.npcRelationships.Find(n => n.npcID == npcId);
+        if (n != null)
         {
-            return _gameData.npcRelationships[npcId];
+            return n.relationshipValue;
         }
-        _gameData.npcRelationships[npcId] = 0; // Default relationship if not found
+        // Create a new relationship if it doesn't exist
+        n = new NPCRelationshipKeyValuePair { npcID = npcId, relationshipValue = 0 };
+        _gameData.npcRelationships.Add(n);
         return 0;
+    }
+
+    public bool IsNPCRelationshipExists(string npcId)
+    {
+        return _gameData.npcRelationships.Exists(n => n.npcID == npcId);
     }
 
     public float GetNPCRelationship(NPC npc)
@@ -241,16 +249,18 @@ public class GameDataManager : MonoBehaviour
 
     public void UpdateNPCRelationship(string npcId, float relationshipChange)
     {
-        if (_gameData.npcRelationships.ContainsKey(npcId))
+        NPCRelationshipKeyValuePair n = _gameData.npcRelationships.Find(n => n.npcID == npcId);
+        if (n == null)
         {
-            _gameData.npcRelationships[npcId] += relationshipChange;
+            n = new NPCRelationshipKeyValuePair { npcID = npcId, relationshipValue = 0 };
+            n.relationshipValue = Mathf.Clamp(n.relationshipValue, 0, 100);
+            _gameData.npcRelationships.Add(n);
+        } else {
+            n.relationshipValue += relationshipChange;  
+            n.relationshipValue = Mathf.Clamp(n.relationshipValue, 0, 100);
+            // Update the relationship value in the list
+            _gameData.npcRelationships[_gameData.npcRelationships.IndexOf(n)] = n;
         }
-        else
-        {
-            _gameData.npcRelationships[npcId] = relationshipChange;
-        }
-        
-        _gameData.npcRelationships[npcId] = Mathf.Clamp(_gameData.npcRelationships[npcId], 0, 100);
         OnNPCRelationshipUpdated?.Invoke(_npcList.Find(n => n.npcID == npcId));
     }
 
