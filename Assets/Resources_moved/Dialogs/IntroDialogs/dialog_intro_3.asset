@@ -21,6 +21,7 @@ MonoBehaviour:
   nextDialog: {fileID: 0}
   associatedTutorials:
   - {fileID: 11400000, guid: b8957340c40d8ec42982d4419a4abcec, type: 2}
+  - {fileID: 11400000, guid: a44fddb7235b6314a9ad2098f921028b, type: 2}
   associatedQuests:
   - {fileID: 11400000, guid: bd076e534f2313548a5bcccd6b5d0e83, type: 2}
   - {fileID: 11400000, guid: 1379e395d2a11ca4198a23f44f04189e, type: 2}

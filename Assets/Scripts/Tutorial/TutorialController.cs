@@ -42,8 +42,10 @@ public class TutorialController : MonoBehaviour
     // Overload for showing a list of tutorials
     public void ShowTutorial(List<Tutorial> tutorials)
     {
+        Debug.Log("Showing tutorials: " + tutorials.Count);
         // Remove all tutorials that are already completed from the list
         tutorials.RemoveAll(tutorial => _gameDataManager.IsTutorialCompleted(tutorial.tutorialID));
+        Debug.Log("Showing tutorials: " + tutorials.Count);
         
         // If there are no tutorials left, return
         if (tutorials.Count == 0) return;

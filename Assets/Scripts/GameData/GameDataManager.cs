@@ -356,8 +356,6 @@ public class GameDataManager : MonoBehaviour
         Task<List<Tutorial>> tutorialTask = AddressableLoader.LoadAllAssets<Tutorial>(AddressableLabels.ADDRESSABLE_LABEL_TUTORIALS);
         Task<List<Quest>> questTask = AddressableLoader.LoadAllAssets<Quest>(AddressableLabels.ADDRESSABLE_LABEL_QUESTS);
         Task<List<NPC>> npcTask = AddressableLoader.LoadAllAssets<NPC>(AddressableLabels.ADDRESSABLE_LABEL_NPCS);
-        Task<List<Chest>> chestTask = AddressableLoader.LoadAllAssets<Chest>(AddressableLabels.ADDRESSABLE_LABEL_CHESTS);
-
         // Wait until all tasks are completed
         await Task.WhenAll(dialogTask, tutorialTask, questTask, npcTask);
 
@@ -366,6 +364,11 @@ public class GameDataManager : MonoBehaviour
         _tutorialList = tutorialTask.Result;
         _questList = questTask.Result;
         _npcList = npcTask.Result;
+
+        foreach (Dialog dialog in _dialogList) {
+            Debug.Log(dialog.text);
+            Debug.Log(dialog.associatedTutorials.Count);
+        }
 
         // Now all assets are loaded, fire game data event
         OnGameDataLoaded?.Invoke();

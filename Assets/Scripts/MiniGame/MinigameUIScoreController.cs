@@ -58,8 +58,8 @@ public class MinigameUIScoreController : MonoBehaviour
 
         // Update UI panels
         UpdateLeaderboardPanel(_totalScoreLeaderboardPanel, totalScoreLeaderboard, totalScorePositions);
-        UpdateLeaderboardPanel(_destructionScoreLeaderboardPanel, destructionScoreLeaderboard, destructionScorePositions);
-        UpdateLeaderboardPanel(_safetyScoreLeaderboardPanel, safetyScoreLeaderboard, safetyScorePositions);
+        // UpdateLeaderboardPanel(_destructionScoreLeaderboardPanel, destructionScoreLeaderboard, destructionScorePositions);
+        // UpdateLeaderboardPanel(_safetyScoreLeaderboardPanel, safetyScoreLeaderboard, safetyScorePositions);
 
         _gameEndPanel.SetActive(true);
     }

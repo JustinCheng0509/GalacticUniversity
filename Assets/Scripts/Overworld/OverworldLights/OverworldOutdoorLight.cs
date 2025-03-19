@@ -18,7 +18,7 @@ public class OverworldOutdoorLight : MonoBehaviour
     }
 
     private void CheckOutdoorLightTime(string time) {
-        if (OverworldTimeController.IsWithinTimeRange(_gameDataManager.CurrentTime, _turnOnTime, _turnOffTime)) {
+        if (OverworldTimeController.IsWithinTimeRange(_gameDataManager.CurrentTime, _turnOnTime, "23:59") || OverworldTimeController.IsWithinTimeRange(_gameDataManager.CurrentTime, "00:00", _turnOffTime)) {
             if (!_isLightOn) {
                 _isLightOn = true;
                 ToggleLights(true);

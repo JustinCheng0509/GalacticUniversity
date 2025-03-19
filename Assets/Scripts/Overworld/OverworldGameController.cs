@@ -47,6 +47,8 @@ public class OverworldGameController : MonoBehaviour
 
     private void HandleDialogEnd(Dialog dialog)
     {
+        Debug.Log(dialog.text);
+        Debug.Log(dialog.associatedTutorials.Count);
         if (dialog.associatedTutorials != null) {
             _tutorialController.ShowTutorial(dialog.associatedTutorials);
         }
