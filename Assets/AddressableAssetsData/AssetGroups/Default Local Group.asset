@@ -33,6 +33,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - addressable_label_tutorials
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e4438b954a7a8e408a33ae81f54cdd6
+    m_Address: Assets/Resources_moved/Chests
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - addressable_label_chests
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5735ef4882b6ee489a7351a22405c43
     m_Address: NPCs
     m_ReadOnly: 0

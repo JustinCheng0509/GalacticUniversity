@@ -19,7 +19,7 @@ public class MinigameCountdownController : MonoBehaviour
     {
         Time.timeScale = 0f;
         countdownText.gameObject.SetActive(true);
-        int count = 3;
+        int count = countdownTime > 0 ? Mathf.CeilToInt(countdownTime) : 3;
         while (count > 0)
         {
             countdownText.text = count.ToString();

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 866de7d630c76814aad293da903e8890
   m_currentHash:
     serializedVersion: 2
-    Hash: 8c10d015ac1fdcbb46aaa13132f8a2e0
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
     - addressable_label_npcs
     - addressable_label_tutorials
     - addressable_label_quests
+    - addressable_label_chests
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 76366e1f50d2223498522f06a91623a6, type: 2}

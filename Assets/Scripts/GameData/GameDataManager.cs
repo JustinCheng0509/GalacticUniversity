@@ -11,6 +11,7 @@ public class GameDataManager : MonoBehaviour
     private List<Tutorial> _tutorialList = new List<Tutorial>();
     private List<Quest> _questList = new List<Quest>();
     private List<NPC> _npcList = new List<NPC>();
+    private List<Chest> _chestList = new List<Chest>();
 
     private GameData _gameData;
 
@@ -34,6 +35,7 @@ public class GameDataManager : MonoBehaviour
     public event Action<Quest> OnQuestCompleted;
     public event Action<NPC> OnNPCRelationshipUpdated;
     public event Action<List<Item>> OnInventoryUpdated;
+    public event Action<string> OnChestOpened;
 
     public List<Dialog> DialogList => _dialogList;
     public List<Tutorial> TutorialList => _tutorialList;
@@ -324,6 +326,26 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
+    public bool IsChestOpened(string chestId)
+    {
+        return _gameData.openedChests.Contains(chestId);
+    }
+
+    public void OpenChest(Chest chest)
+    {
+        if (!_gameData.openedChests.Contains(chest.chestID))
+        {
+            // Add the chest to the list of opened chests
+            _gameData.openedChests.Add(chest.chestID);
+            // Add the items to the inventory
+            foreach (Item item in chest.items)
+            {
+                AddItemToInventory(item);
+            }
+            OnChestOpened?.Invoke(chest.chestID);
+        }
+    }
+
     async void Start()
     {
         // Load game data first
@@ -334,6 +356,7 @@ public class GameDataManager : MonoBehaviour
         Task<List<Tutorial>> tutorialTask = AddressableLoader.LoadAllAssets<Tutorial>(AddressableLabels.ADDRESSABLE_LABEL_TUTORIALS);
         Task<List<Quest>> questTask = AddressableLoader.LoadAllAssets<Quest>(AddressableLabels.ADDRESSABLE_LABEL_QUESTS);
         Task<List<NPC>> npcTask = AddressableLoader.LoadAllAssets<NPC>(AddressableLabels.ADDRESSABLE_LABEL_NPCS);
+        Task<List<Chest>> chestTask = AddressableLoader.LoadAllAssets<Chest>(AddressableLabels.ADDRESSABLE_LABEL_CHESTS);
 
         // Wait until all tasks are completed
         await Task.WhenAll(dialogTask, tutorialTask, questTask, npcTask);

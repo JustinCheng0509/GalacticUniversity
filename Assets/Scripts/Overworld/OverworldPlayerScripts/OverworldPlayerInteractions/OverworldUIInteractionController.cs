@@ -118,6 +118,7 @@ public class OverworldUIInteractionController : MonoBehaviour
             case var value when value == GameConstants.INTERACTABLE_TAG_SHOP: return "(E) Buy food";
             case var value when value == GameConstants.INTERACTABLE_TAG_PLAY: return "(E) Play";
             case var value when value == GameConstants.INTERACTABLE_TAG_WORK: return "(E) Work";
+            case var value when value == GameConstants.INTERACTABLE_TAG_CHEST: return "(E) Open chest";
             default: return "";
         }
     }

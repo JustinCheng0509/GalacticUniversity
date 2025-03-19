@@ -24,6 +24,7 @@ public class OverworldInteractionController : MonoBehaviour
     private DialogController _dialogController;
     private SwitchScene _switchScene;
     private OverworldNPCInteractionController _overworldNPCInteractionController;
+    private OverworldUIChestController _overworldUIChestController;
 
     [SerializeField] private AudioSource _interactionAudioSource;
     [SerializeField] private AudioClip _sfxSchoolBellClip;
@@ -36,8 +37,8 @@ public class OverworldInteractionController : MonoBehaviour
         _overworldTimeController = FindAnyObjectByType<OverworldTimeController>();
         _dialogController = FindAnyObjectByType<DialogController>();
         _switchScene = FindAnyObjectByType<SwitchScene>();
-
         _overworldNPCInteractionController = FindAnyObjectByType<OverworldNPCInteractionController>();
+        _overworldUIChestController = FindAnyObjectByType<OverworldUIChestController>();
     }
 
     private void OnEnable()
@@ -76,8 +77,20 @@ public class OverworldInteractionController : MonoBehaviour
             case var value when value == GameConstants.INTERACTABLE_TAG_WORK: StartWork(); break;
             case var value when value == GameConstants.INTERACTABLE_TAG_PLAY: StartPlay(); break;
             case var value when value == GameConstants.INTERACTABLE_TAG_SHOP: StartShop(); break;
+            case var value when value == GameConstants.INTERACTABLE_TAG_CHEST: OpenChest(interactableGameObject); break;
             default: Debug.Log("No interaction found"); break;
         }
+    }
+
+    private void OpenChest(GameObject interactableGameObject) {
+        OverworldChestPrefabController chestController = interactableGameObject.GetComponent<OverworldChestPrefabController>();
+        if (chestController == null) {
+            Debug.LogWarning("ChestController not found in Chest object.");
+            return;
+        }
+        Chest Chest = chestController.Chest;
+        _gameDataManager.OpenChest(Chest);
+        _overworldUIChestController.OpenChestUI(Chest);
     }
 
     private void StartNPCInteraction(GameObject interactableGameObject) {

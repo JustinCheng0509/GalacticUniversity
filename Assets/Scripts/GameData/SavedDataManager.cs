@@ -71,6 +71,7 @@ public class SavedDataManager : MonoBehaviour
             completedQuestIDs = new List<string>(),
             npcRelationships = new List<NPCRelationshipKeyValuePair>(),
             tutorialsCompleted = new List<string>(),
+            openedChests = new List<string>(),
             dailyGameDataList = dailyGameDataList,
             inventory = new List<Item>(),
             leaderboard = GenerateLeaderboard("Player")

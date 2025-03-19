@@ -17,6 +17,7 @@ public class GameConstants
     public const string INTERACTABLE_TAG_JOB = "INTERACTABLE_TAG_JOB";
     public const string INTERACTABLE_TAG_SHOP = "INTERACTABLE_TAG_SHOP";
     public const string INTERACTABLE_TAG_NPC = "INTERACTABLE_TAG_NPC";
+    public const string INTERACTABLE_TAG_CHEST = "INTERACTABLE_TAG_CHEST";
     public const string TRIGGER_TAG_CLASS = "TRIGGER_TAG_CLASS";
     public const string TRIGGER_TAG_DORM = "TRIGGER_TAG_DORM";
     public const string TRIGGER_TAG_SHOP = "TRIGGER_TAG_SHOP";

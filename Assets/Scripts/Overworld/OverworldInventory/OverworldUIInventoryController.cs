@@ -47,7 +47,13 @@ public class OverworldUIInventoryController : MonoBehaviour
 
     private void HideInfo()
     {
-        _itemNameText.text = "";
+        if (_gameDataManager != null && _gameDataManager.Inventory.Count == 0)
+        {
+            _itemNameText.text = "No items in inventory";
+        } else
+        {
+            _itemNameText.text = "Select an item to view details";
+        }
         _itemDescriptionText.text = "";
         _useButton.gameObject.SetActive(false);
         _discardButton.gameObject.SetActive(false);

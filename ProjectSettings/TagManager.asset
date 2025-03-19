@@ -15,6 +15,7 @@ TagManager:
   - INTERACTABLE_TAG_SHOP
   - INTERACTABLE_TAG_WORK
   - INTERACTABLE_TAG_PLAY
+  - INTERACTABLE_TAG_CHEST
   - TRIGGER_TAG_CLASS
   - TRIGGER_TAG_DORM
   - TRIGGER_TAG_SHOP
@@ -65,6 +66,9 @@ TagManager:
     locked: 0
   - name: BACKGROUND_INDOOR
     uniqueID: 1298135851
+    locked: 0
+  - name: BACKGROUND_OBJECT
+    uniqueID: 3596454113
     locked: 0
   - name: Player
     uniqueID: 2177876831
