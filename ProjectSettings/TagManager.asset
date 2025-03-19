@@ -30,7 +30,7 @@ TagManager:
   - UI
   - Player
   - INTERACTABLE_LAYER
-  - 
+  - MINIMAP
   - 
   - 
   - 
@@ -84,6 +84,9 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 3136614727
+    locked: 0
+  - name: Minimap
+    uniqueID: 3984499193
     locked: 0
   m_RenderingLayers:
   - Default
