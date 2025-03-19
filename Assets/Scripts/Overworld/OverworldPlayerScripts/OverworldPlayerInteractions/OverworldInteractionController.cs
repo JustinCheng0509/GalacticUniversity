@@ -25,6 +25,7 @@ public class OverworldInteractionController : MonoBehaviour
     private SwitchScene _switchScene;
     private OverworldNPCInteractionController _overworldNPCInteractionController;
     private OverworldUIChestController _overworldUIChestController;
+    private OverworldUIShopController _overworldUIShopController;
 
     [SerializeField] private AudioSource _interactionAudioSource;
     [SerializeField] private AudioClip _sfxSchoolBellClip;
@@ -39,6 +40,7 @@ public class OverworldInteractionController : MonoBehaviour
         _switchScene = FindAnyObjectByType<SwitchScene>();
         _overworldNPCInteractionController = FindAnyObjectByType<OverworldNPCInteractionController>();
         _overworldUIChestController = FindAnyObjectByType<OverworldUIChestController>();
+        _overworldUIShopController = FindAnyObjectByType<OverworldUIShopController>();
     }
 
     private void OnEnable()
@@ -176,18 +178,6 @@ public class OverworldInteractionController : MonoBehaviour
     }
 
     private void StartShop() {
-        // If player does not have enough money, show dialog
-        if (_gameDataManager.Money < 20)
-        {
-            _dialogController.SetDialog(DialogIDs.DIALOG_STATUS_NOT_ENOUGH_MONEY);
-            return;
-        }
-        if (_gameDataManager.Hunger > 90)
-        {
-            _dialogController.SetDialog(DialogIDs.DIALOG_STATUS_ALREADY_FULL);
-            return;
-        }
-        _gameDataManager.Money -= 20;
-        _gameDataManager.Hunger += 30;
+        _overworldUIShopController.OpenShopUI();
     }
 }

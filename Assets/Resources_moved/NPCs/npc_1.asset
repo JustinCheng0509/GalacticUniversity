@@ -17,7 +17,7 @@ MonoBehaviour:
   npcRace: Ixenian
   npcDescription: "Rumor has it, they\u2019ve been at Galactic University a little
     longer than most students - perhaps enjoying the experience a bit too much."
-  npcSprite: {fileID: -2893043290658190983, guid: e1ca01dee4a0a354a9ce04ff05a9896a, type: 3}
+  npcSprite: {fileID: -7935230736950799002, guid: be20b17e299e83a4f8000b423eae7ad7, type: 3}
   introDialog: {fileID: 11400000, guid: 0dd784c8d277fa1499547290c714d2e4, type: 2}
   quests:
   - {fileID: 11400000, guid: c3ea314323c23f54a87d7402cdacff15, type: 2}
