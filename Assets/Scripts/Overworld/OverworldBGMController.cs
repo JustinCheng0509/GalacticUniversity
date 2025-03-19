@@ -5,13 +5,15 @@ public class OverworldBGMController : MonoBehaviour
 {
     private GameDataManager _gameDataManager;
     private AudioSource _audioSource;
+    
     [SerializeField] private AudioClip _dayTheme;
     [SerializeField] private AudioClip _nightTheme;
+    [SerializeField] private AudioClip _dayToNightTransitionClip;  
+    [SerializeField] private AudioClip _nightToDayTransitionClip;  
 
     private float targetVolume = 1.0f;
-
     private bool isDayTime = true;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
@@ -19,6 +21,7 @@ public class OverworldBGMController : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         targetVolume = _audioSource.volume;
         _audioSource.clip = isDayTime ? _dayTheme : _nightTheme;
+        _audioSource.Play();
         _gameDataManager.OnTimeUpdated += UpdateBGM;
     }
 
@@ -34,29 +37,44 @@ public class OverworldBGMController : MonoBehaviour
     private void UpdateBGM(string time)
     {
         bool isNowDayTime = CheckDayTime();
+
+        // Only switch BGM if time of day actually changes
         if (isNowDayTime != isDayTime)
         {
-            isDayTime = isNowDayTime;
-            AudioClip newClip = isDayTime ? _dayTheme : _nightTheme;
-            StartCoroutine(SwitchBGM(newClip));
+            AudioClip newBGM = isNowDayTime ? _dayTheme : _nightTheme;
+            AudioClip transitionClip = isNowDayTime ? _nightToDayTransitionClip : _dayToNightTransitionClip;
+            
+            isDayTime = isNowDayTime; // Update state
+            StartCoroutine(SwitchBGM(newBGM, transitionClip));
         }
     }
 
-    private IEnumerator SwitchBGM(AudioClip newClip)
+    private IEnumerator SwitchBGM(AudioClip newBGM, AudioClip transitionClip)
     {
-        // Fade out the current clip
+        // Fade out current BGM
         while (_audioSource.volume > 0)
         {
-            _audioSource.volume -= Time.unscaledDeltaTime / 2; // 2 seconds to fade out
+            _audioSource.volume -= Time.unscaledDeltaTime / 1; // fade out
             yield return null;
         }
         _audioSource.Stop();
-        _audioSource.clip = newClip;
-        // Fade in the new clip
+
+        // Play transition clip
+        if (transitionClip != null)
+        {
+            _audioSource.clip = transitionClip;
+            _audioSource.volume = targetVolume; 
+            _audioSource.Play();
+            yield return new WaitForSeconds(transitionClip.length); // Wait until the transition clip is finished
+        }
+
+        // Switch to the new BGM and fade it in
+        _audioSource.clip = newBGM;
         _audioSource.Play();
+        _audioSource.volume = 0; 
         while (_audioSource.volume < targetVolume)
         {
-            _audioSource.volume += Time.unscaledDeltaTime / 2; // 2 seconds to fade in
+            _audioSource.volume += Time.unscaledDeltaTime / 1; //fade 
             yield return null;
         }
     }

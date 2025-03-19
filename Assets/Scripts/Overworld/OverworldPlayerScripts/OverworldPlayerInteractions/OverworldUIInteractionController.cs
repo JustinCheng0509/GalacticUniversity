@@ -13,7 +13,6 @@ public class OverworldUIInteractionController : MonoBehaviour
     private GameDataManager _gameDataManager;
     private OverworldNPCInteractionController _overworldNPCInteractionController;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _overworldPlayerStatusController = FindAnyObjectByType<OverworldPlayerStatusController>();
@@ -27,12 +26,21 @@ public class OverworldUIInteractionController : MonoBehaviour
         _gameDataManager.OnNPCRelationshipUpdated += HandleNPCRelationshipUpdate;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            FindAnyObjectByType<OverworldInteractionTrigger>()?.PlayInteractionSFX(); //plays sfx
+        }
+    }
+
     private void HandleInteractableGameObjectChanged(GameObject interactableGameObject)
     {
         if (interactableGameObject != null && !_overworldPlayerStatusController.IsBusy)
         {
             ShowInteractPrompt(GetPromptText(interactableGameObject.tag));
-        } else
+        }
+        else
         {
             HideInteractPrompt();
         }
@@ -50,7 +58,7 @@ public class OverworldUIInteractionController : MonoBehaviour
                 ShowInteractStatus("Sleeping...");
                 break;
             case OverworldPlayerStatus.DoingHomework:
-                ShowInteractStatus("Homework: " + (int) _gameDataManager.HomeworkProgress + "%");
+                ShowInteractStatus("Homework: " + (int)_gameDataManager.HomeworkProgress + "%");
                 break;
             case OverworldPlayerStatus.Working:
                 ShowInteractStatus("Working...");
@@ -59,7 +67,7 @@ public class OverworldUIInteractionController : MonoBehaviour
                 ShowInteractStatus("Playing...");
                 break;
             case OverworldPlayerStatus.Chatting:
-                ShowInteractStatus("Chatting: " + (int) _gameDataManager.GetNPCRelationship(_overworldNPCInteractionController.CurrentNPC.npcID) + "/100");
+                ShowInteractStatus("Chatting: " + (int)_gameDataManager.GetNPCRelationship(_overworldNPCInteractionController.CurrentNPC.npcID) + "/100");
                 break;
             default:
                 HideInteractStatus();
@@ -71,18 +79,15 @@ public class OverworldUIInteractionController : MonoBehaviour
     {
         if (_overworldPlayerStatusController.CurrentStatus == OverworldPlayerStatus.DoingHomework)
         {
-            ShowInteractStatus("Homework: " + (int) progress + "%");
+            ShowInteractStatus("Homework: " + (int)progress + "%");
         }
     }
 
     private void HandleNPCRelationshipUpdate(NPC npc)
     {
-        // Debug.Log(_overworldPlayerStatusController.CurrentStatus);
-        // Debug.Log(npc.npcID == _overworldNPCInteractionController.CurrentNPC.npcID);
-        
         if (_overworldPlayerStatusController.CurrentStatus == OverworldPlayerStatus.Chatting && npc.npcID == _overworldNPCInteractionController.CurrentNPC.npcID)
         {
-            ShowInteractStatus("Chatting: " + (int) _gameDataManager.GetNPCRelationship(npc.npcID) + "/100");
+            ShowInteractStatus("Chatting: " + (int)_gameDataManager.GetNPCRelationship(npc.npcID) + "/100");
         }
     }
 
@@ -108,9 +113,10 @@ public class OverworldUIInteractionController : MonoBehaviour
         interactStatusPanel.SetActive(false);
     }
 
-    private string GetPromptText(string tag) {
-        // Debug.Log(tag);
-        switch (tag) {
+    private string GetPromptText(string tag)
+    {
+        switch (tag)
+        {
             case var value when value == GameConstants.INTERACTABLE_TAG_CLASS: return "(E) Start class";
             case var value when value == GameConstants.INTERACTABLE_TAG_SLEEP: return "(E) Sleep";
             case var value when value == GameConstants.INTERACTABLE_TAG_HOMEWORK: return "(E) Do homework";
