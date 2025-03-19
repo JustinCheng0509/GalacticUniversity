@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HorizontalLaser (1)_0: -7631414016116802321
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -297,7 +297,14 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sprite_item_hoverboard_0: -163599830608881577
+      sprite_item_hoverboard_1: -9181532227325999560
+      sprite_item_hoverboard_2: -7033464811139242171
+      sprite_item_hoverboard_3: -6920129585257194597
+      sprite_item_hoverboard_4: -3240583984551309713
+      sprite_item_hoverboard_5: 34654326266573395
+      sprite_item_hoverboard_6: 1497213998119452271
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
