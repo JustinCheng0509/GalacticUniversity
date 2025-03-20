@@ -15,9 +15,8 @@ MonoBehaviour:
   dialogID: dialog_npc_2_intro
   characterName: '[npc_2]'
   isLeft: 1
-  text: Oh! Welcome to Galactic University! I'm [npc_1], a senior on the orientation
-    team. You must be a new student.
+  text: Hello! Welcome to the shop.
   isSelfDialog: 0
-  nextDialog: {fileID: 11400000, guid: c39a6dc9da8fcdd4eb66460284d2d8a0, type: 2}
+  nextDialog: {fileID: 11400000, guid: d4096ab58b73f0a4cbbd1eb8197fb7ed, type: 2}
   associatedTutorials: []
   associatedQuests: []

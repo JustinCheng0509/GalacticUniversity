@@ -20,4 +20,6 @@ public class Item : ScriptableObject
     public float energyRecoveryBonus;
     public float overworldMoveSpeedBonus;
     public float minigameMoveSpeedBonus;
+    public float learningSpeedBonus;
+    public float shopItemDiscount;
 }

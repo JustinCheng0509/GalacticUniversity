@@ -20,6 +20,5 @@ MonoBehaviour:
     after graduation.
   isSelfDialog: 0
   nextDialog: {fileID: 11400000, guid: cbd0b7804f202b24f969b90450982f6b, type: 2}
-  associatedTutorials:
-  - {fileID: 0}
+  associatedTutorials: []
   associatedQuests: []

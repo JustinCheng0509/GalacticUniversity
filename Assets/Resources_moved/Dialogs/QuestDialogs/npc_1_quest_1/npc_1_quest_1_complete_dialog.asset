@@ -15,8 +15,9 @@ MonoBehaviour:
   dialogID: npc_1_quest_1_complete_dialog
   characterName: '[npc_1]'
   isLeft: 1
-  text: Nice work! Check out your inventory for the item I just gave you
+  text: Nice work! Here is a free burger for your effort.
   isSelfDialog: 0
   nextDialog: {fileID: 0}
-  associatedTutorials: []
+  associatedTutorials:
+  - {fileID: 11400000, guid: c4a1a8864523f4144a5136f2e9ce4c5d, type: 2}
   associatedQuests: []

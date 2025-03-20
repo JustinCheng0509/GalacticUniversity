@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_6302_0
+      name: sprite_npc_4
       rect:
         serializedVersion: 2
         x: 30
@@ -134,7 +134,7 @@ TextureImporter:
         width: 1082
         height: 1534
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 455ca01df760e9145bb227ae6c9ef8a5
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IMG_6302_0: -8153013900901007512
+      sprite_npc_4: -8153013900901007512
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

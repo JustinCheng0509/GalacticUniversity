@@ -59,7 +59,7 @@ public class OverworldUIQuestItemController : MonoBehaviour
         _quest = quest;
         questTitleText.text = quest.questName;
         questDescriptionText.text = quest.questDescription;
-        if (quest.questType == QuestType.ScoreTotal)
+        if (quest.questType == QuestType.ScoreTotal || quest.questType == QuestType.NumberOfItemsBought || quest.questType == QuestType.Attendance || quest.questType == QuestType.ItemDelivery)
         {
             questProgressText.text = "Progress: " + _gameDataManager.TotalScore + "/" + (int) quest.targetValue;
         }

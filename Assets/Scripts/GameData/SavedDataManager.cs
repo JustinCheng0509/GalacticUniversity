@@ -81,7 +81,9 @@ public class SavedDataManager : MonoBehaviour
             leaderboard = GenerateLeaderboard("Player"),
             moveSpeedBonus = 0,
             minigameMoveSpeedBonus = 0,
-            numberOfItemsBought = 0
+            numberOfItemsBought = 0,
+            learningSpeedBonus = 0,
+            shopItemDiscount = 0
         };
 
         SaveGameData(newGameData);

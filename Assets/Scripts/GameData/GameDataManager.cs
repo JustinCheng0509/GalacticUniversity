@@ -192,6 +192,11 @@ public class GameDataManager : MonoBehaviour
         set => _gameData.totalSafetyScore = value;
     }
 
+    public float LeaningSpeedBonus {
+        get => _gameData.learningSpeedBonus;
+        set => _gameData.learningSpeedBonus = value;
+    }
+
     public List<Quest> GetActiveQuests()
     {
         return _gameData.activeQuests;
@@ -317,6 +322,12 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
+    public float ShopItemDiscount 
+    {
+        get => _gameData.shopItemDiscount;
+        set => _gameData.shopItemDiscount = value;
+    }
+
     public List<Item> Inventory => _gameData.inventory;
 
     public void AddItemToInventory(Item item)
@@ -329,8 +340,23 @@ public class GameDataManager : MonoBehaviour
             if (item.minigameMoveSpeedBonus > 0) {
                 MinigameMoveSpeedBonus += item.minigameMoveSpeedBonus;
             }
+            if (item.learningSpeedBonus > 0) {
+                LeaningSpeedBonus += item.learningSpeedBonus;
+            }
+            if (item.shopItemDiscount > 0) {
+                ShopItemDiscount += item.shopItemDiscount;
+            }
         }
         OnInventoryUpdated?.Invoke(_gameData.inventory);
+    }
+
+    public void RemoveItemFromInventory(string itemId)
+    {
+        Item item = _gameData.inventory.Find(i => i.itemID == itemId);
+        if (item != null)
+        {
+            RemoveItemFromInventory(item);
+        }
     }
 
     public void RemoveItemFromInventory(Item item)

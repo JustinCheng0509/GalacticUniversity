@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: npc_2
   m_EditorClassIdentifier: 
   npcID: npc_1
-  npcName: Zumhorn
-  npcRace: Ixenian
-  npcDescription: "Rumor has it, they\u2019ve been at Galactic University a little
-    longer than most students - perhaps enjoying the experience a bit too much."
+  npcName: Bloop Zargleflorp
+  npcRace: Drelvian
+  npcDescription: Nobody at Galactic University has ever seen Bloop outside their
+    bulky, overly-customized spacesuit, which constantly hisses and beeps from unknown
+    internal mechanisms.
   npcSprite: {fileID: 21300000, guid: facbe5f726d244848055171f4c739dfb, type: 3}
-  introDialog: {fileID: 11400000, guid: 0dd784c8d277fa1499547290c714d2e4, type: 2}
+  introDialog: {fileID: 11400000, guid: 15ed89763aadb74498c2e8c8f586acc2, type: 2}
   quests:
-  - {fileID: 11400000, guid: c3ea314323c23f54a87d7402cdacff15, type: 2}
+  - {fileID: 11400000, guid: 1b61a9d1e64a29041b8780cc63644c40, type: 2}

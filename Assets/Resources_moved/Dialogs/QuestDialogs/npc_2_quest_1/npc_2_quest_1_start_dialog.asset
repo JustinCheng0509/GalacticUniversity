@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2008eece822dcc7458169ec19c2cef92, type: 3}
+  m_Name: npc_2_quest_1_start_dialog
+  m_EditorClassIdentifier: 
+  dialogID: npc_2_quest_1_start_dialog
+  characterName: '[npc_2]'
+  isLeft: 1
+  text: It's my first time having this much fun talking to a customer! Let's see...
+    If you buy 10 items from my shop, I will give you something reaaaly nice.
+  isSelfDialog: 0
+  nextDialog: {fileID: 11400000, guid: 83617073ee3f4ad47bd1e830110cfdfd, type: 2}
+  associatedTutorials: []
+  associatedQuests: []

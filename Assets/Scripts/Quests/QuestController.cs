@@ -68,9 +68,38 @@ public class QuestController : MonoBehaviour
             case QuestType.Attendance:
                 CheckAttendanceQuest(quest);
                 break;
+            case QuestType.ItemDelivery:
+                CheckItemDeliveryQuest(quest);
+                break;
             default:
                 CompleteQuest(quest);
                 break;
+        }
+    }
+
+    private void CheckItemDeliveryQuest(Quest quest)
+    {
+        int numberOfItems = 0;
+        foreach (Item item in _gameDataManager.Inventory)
+        {
+            if (item.itemID == quest.itemID)
+            {
+                numberOfItems++;
+            }
+        }
+        if (numberOfItems >= quest.targetValue)
+        {
+            // Remove number of items from inventory
+            for (int i = 0; i < quest.targetValue; i++)
+            {
+                _gameDataManager.RemoveItemFromInventory(quest.itemID);
+            }
+            _dialogController.SetDialog(quest.completeDialog);
+            CompleteQuest(quest);
+        }
+        else
+        {
+            _dialogController.SetDialog(quest.incompleteDialog);
         }
     }
 

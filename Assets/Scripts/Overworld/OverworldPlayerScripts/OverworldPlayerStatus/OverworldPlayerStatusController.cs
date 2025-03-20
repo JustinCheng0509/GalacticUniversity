@@ -129,7 +129,8 @@ public class OverworldPlayerStatusController : MonoBehaviour
 
             if (GameConstants.USE_SKILL_SYSTEM)
             {
-                TryIncreaseRandomSkill(5);
+                int chanceToIncreaseSkill = 5 + (int) _gameDataManager.LeaningSpeedBonus;
+                TryIncreaseRandomSkill(chanceToIncreaseSkill);
             }
         }
 
@@ -146,7 +147,8 @@ public class OverworldPlayerStatusController : MonoBehaviour
             _gameDataManager.Money += 1;
             if (GameConstants.USE_SKILL_SYSTEM)
             {
-                TryIncreaseRandomSkill(5);
+                int chanceToIncreaseSkill = 5 + (int) _gameDataManager.LeaningSpeedBonus;
+                TryIncreaseRandomSkill(chanceToIncreaseSkill);
             }
         }
     }

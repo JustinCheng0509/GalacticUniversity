@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questID: npc_2_quest_1
   questName: The apprentice salesman
-  questDescription: Reach a total score of 4000
+  questDescription: Buy 10 items from the shop
   questType: 2
   targetValue: 10
   currentValue: 0
   itemID: 0
   npcID: 0
-  startDialog: {fileID: 11400000, guid: a4a52b870d5bb094d84fac60f740687c, type: 2}
-  incompleteDialog: {fileID: 11400000, guid: 4227204a0d6f9344998d8d509943056d, type: 2}
-  completeDialog: {fileID: 11400000, guid: debda272da22b4344a7e4740bd452f51, type: 2}
+  startDialog: {fileID: 11400000, guid: 0c4dc5b7bc5e4c24ab632e63d17c3ad4, type: 2}
+  incompleteDialog: {fileID: 11400000, guid: ee2f2019e9d3c12408d724d9566af03b, type: 2}
+  completeDialog: {fileID: 11400000, guid: debbadc11afb5394cac5b50fcfb58557, type: 2}
   rewardMoney: 0
-  rewardItem: {fileID: 11400000, guid: dbddcc5ef647ee5469f178e450a336fd, type: 2}
+  rewardItem: {fileID: 11400000, guid: 970d57c7c34a5f34cb2950d988c75f27, type: 2}

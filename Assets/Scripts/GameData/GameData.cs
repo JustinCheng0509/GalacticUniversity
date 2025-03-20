@@ -72,6 +72,8 @@ public class GameData
     public float moveSpeedBonus;
     public float minigameMoveSpeedBonus;
     public int numberOfItemsBought;
+    public float learningSpeedBonus;
+    public float shopItemDiscount;
 
     // Intros and tutorials
     public bool isTutorialEnabled = true;

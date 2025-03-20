@@ -18,6 +18,5 @@ MonoBehaviour:
   text: Isn't it? I modeled it after my old lab in planet Veyl-4.
   isSelfDialog: 0
   nextDialog: {fileID: 11400000, guid: 9af5bc4ff9d66c54c8bd6bee703ce812, type: 2}
-  associatedTutorials:
-  - {fileID: 0}
+  associatedTutorials: []
   associatedQuests: []

@@ -89,19 +89,27 @@ public class OverworldUIInventoryController : MonoBehaviour
         description += "\n\n";
         if (item.energyRestore > 0)
         {
-            description += "Energy Restore: " + item.energyRestore + "\n";
+            description += "Energy Restore: +" + item.energyRestore + "\n";
         }
         if (item.hungerRestore > 0)
         {
-            description += "Hunger Restore: " + item.hungerRestore + "\n";
+            description += "Hunger Restore: +" + item.hungerRestore + "\n";
         }
         if (item.overworldMoveSpeedBonus > 0)
         {
-            description += "Campus Move Speed Bonus: " + item.overworldMoveSpeedBonus + "%\n";
+            description += "Campus Move Speed Bonus: +" + item.overworldMoveSpeedBonus + "%\n";
         }
         if (item.minigameMoveSpeedBonus > 0)
         {
-            description += "Minigame Move Speed Bonus: " + item.minigameMoveSpeedBonus + "%\n";
+            description += "Minigame Move Speed Bonus: +" + item.minigameMoveSpeedBonus + "%\n";
+        }
+        if (item.learningSpeedBonus > 0)
+        {
+            description += "Chance to gain skills: +" + item.learningSpeedBonus + "%\n";
+        }
+        if (item.shopItemDiscount > 0)
+        {
+            description += "Shop Discount: -" + item.shopItemDiscount + "%\n";
         }
         return description;
     }
