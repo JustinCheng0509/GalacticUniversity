@@ -18,4 +18,6 @@ public class Item : ScriptableObject
     [Header("Passive Effects (Non-Consumable)")]
     public bool hasPassiveEffect;
     public float energyRecoveryBonus;
+    public float overworldMoveSpeedBonus;
+    public float minigameMoveSpeedBonus;
 }

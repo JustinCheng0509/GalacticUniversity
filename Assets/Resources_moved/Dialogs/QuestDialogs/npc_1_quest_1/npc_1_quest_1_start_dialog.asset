@@ -15,8 +15,9 @@ MonoBehaviour:
   dialogID: npc_1_quest_1_start_dialog
   characterName: '[npc_1]'
   isLeft: 1
-  text: Reach a total score of 4000 in your class, and I'll give you a nice item.
+  text: It was nice talking to you! I meet a lot of newcomers every semester, but
+    you are one fine schoolmate.
   isSelfDialog: 0
-  nextDialog: {fileID: 0}
+  nextDialog: {fileID: 11400000, guid: ed42dec0ef2297b46b2a4149eac55dd7, type: 2}
   associatedTutorials: []
   associatedQuests: []

@@ -69,6 +69,10 @@ public class GameData
 
     public List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
 
+    public float moveSpeedBonus;
+    public float minigameMoveSpeedBonus;
+    public int numberOfItemsBought;
+
     // Intros and tutorials
     public bool isTutorialEnabled = true;
     public bool introDialogPlayed = false;

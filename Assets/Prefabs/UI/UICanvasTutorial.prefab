@@ -673,6 +673,7 @@ GameObject:
   - component: {fileID: 3780630181662408776}
   - component: {fileID: 8639273384476982535}
   - component: {fileID: 4628755322325317054}
+  - component: {fileID: 1945828516160389833}
   m_Layer: 5
   m_Name: UIPanelTutorial
   m_TagString: Untagged
@@ -766,3 +767,15 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1945828516160389833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8109531599438552738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03562f2384ee8848a6eba36e04cc4a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

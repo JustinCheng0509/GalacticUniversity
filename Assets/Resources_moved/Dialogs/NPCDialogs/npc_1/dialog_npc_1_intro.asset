@@ -18,6 +18,6 @@ MonoBehaviour:
   text: Oh! Welcome to Galactic University! I'm [npc_1], a senior on the orientation
     team. You must be a new student.
   isSelfDialog: 0
-  nextDialog: {fileID: 0}
+  nextDialog: {fileID: 11400000, guid: c39a6dc9da8fcdd4eb66460284d2d8a0, type: 2}
   associatedTutorials: []
   associatedQuests: []

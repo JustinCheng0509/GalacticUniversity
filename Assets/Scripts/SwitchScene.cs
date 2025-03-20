@@ -12,11 +12,6 @@ public class SwitchScene : MonoBehaviour
 
     public event Action OnFadeInCompleted;
 
-    // [SerializeField]
-    // private DialogController dialogController;
-
-    // public GameObject gameEndPanel;
-
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
     void Awake()
     {
@@ -48,12 +43,6 @@ public class SwitchScene : MonoBehaviour
         }
         _fadeCanvas.alpha = 0.0f;
         _fadeCanvas.gameObject.SetActive(false);
-        // check PlayerPrefs to see if the the intro dialogs have been played
-        // if (!PlayerPrefs.HasKey("introDialogsPlayed"))
-        // {
-        //     dialogController.SetCurrentDialogs(dialogController.introDialogs);
-        //     PlayerPrefs.SetInt("introDialogsPlayed", 1);
-        // }
         OnFadeInCompleted?.Invoke();
     }
 

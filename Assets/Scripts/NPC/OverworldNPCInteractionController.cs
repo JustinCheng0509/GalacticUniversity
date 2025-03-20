@@ -26,27 +26,30 @@ public class OverworldNPCInteractionController : MonoBehaviour
 
     public void StartNPCInteraction(NPC npc)
     {
-        Time.timeScale = 0;
         _currentNPC = npc;
         // If player has never interacted with this NPC before, show the dialog
         if (!_gameDataManager.IsNPCRelationshipExists(npc.npcID))
         {
             _gameDataManager.UpdateNPCRelationship(npc.npcID, 0);
             _dialogController.SetDialog(npc.introDialog);
+            _dialogController.OnDialogEnded += (_) => HandleStartInteraction(npc);
+        } else {
+            HandleStartInteraction(npc);
         }
-        
+    }
+
+    public void HandleStartInteraction(NPC npc)
+    {
         OnNPCInteractionStarted?.Invoke(npc);
     }
 
     public void EndNPCInteraction()
     {
-        Time.timeScale = 1;
         _currentNPC = null;
     }
 
     public void StartNPCChat()
     {
-        Time.timeScale = 1;
         OnNPCStartChat?.Invoke();
     }
 

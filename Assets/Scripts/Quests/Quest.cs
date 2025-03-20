@@ -4,6 +4,8 @@ public enum QuestType
 {
     VisitRoom,
     ItemDelivery,
+    NumberOfItemsBought,
+    Attendance,
     ScoreInRound,
     ScoreTotal,
     EnemiesDestroyedInRound,

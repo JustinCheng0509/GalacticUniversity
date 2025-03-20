@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2008eece822dcc7458169ec19c2cef92, type: 3}
+  m_Name: dialog_npc_2_intro
+  m_EditorClassIdentifier: 
+  dialogID: dialog_npc_2_intro
+  characterName: '[npc_2]'
+  isLeft: 1
+  text: Oh! Welcome to Galactic University! I'm [npc_1], a senior on the orientation
+    team. You must be a new student.
+  isSelfDialog: 0
+  nextDialog: {fileID: 11400000, guid: c39a6dc9da8fcdd4eb66460284d2d8a0, type: 2}
+  associatedTutorials: []
+  associatedQuests: []

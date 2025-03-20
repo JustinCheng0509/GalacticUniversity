@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Diagnostics;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] private AudioSource sfxAudioSource;
-    [SerializeField] private AudioClip startGameSFX;
+    [SerializeField] private TMP_InputField _playerNameInputField;
     private SwitchScene _switchScene;
 
     void Start()
@@ -19,9 +19,12 @@ public class MainMenuController : MonoBehaviour
     public void StartGame(bool isNewGame) {
         if (isNewGame) {
             PlayerPrefs.DeleteAll();
-            SavedDataManager.CreateNewGameData();
+            string playerName = _playerNameInputField.text;
+            if (playerName == "") {
+                playerName = "Player";
+            }
+            SavedDataManager.CreateNewGameData(playerName);
         }
-        sfxAudioSource.PlayOneShot(startGameSFX);
         _switchScene.FadeOutScene(GameConstants.SCENE_OVERWORLD);
     }
 }

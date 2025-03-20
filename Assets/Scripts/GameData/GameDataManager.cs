@@ -41,6 +41,24 @@ public class GameDataManager : MonoBehaviour
     public List<Tutorial> TutorialList => _tutorialList;
     public List<Quest> QuestList => _questList;
     public List<NPC> NPCList => _npcList;
+
+    public float MoveSpeedBonus
+    {
+        get => _gameData.moveSpeedBonus;
+        set => _gameData.moveSpeedBonus = value;
+    }
+
+    public float MinigameMoveSpeedBonus
+    {
+        get => _gameData.minigameMoveSpeedBonus;
+        set => _gameData.minigameMoveSpeedBonus = value;
+    }
+
+    public int NumberOfItemsBought
+    {
+        get => _gameData.numberOfItemsBought;
+        set => _gameData.numberOfItemsBought = value;
+    }
     
     public string PlayerName
     {
@@ -304,6 +322,14 @@ public class GameDataManager : MonoBehaviour
     public void AddItemToInventory(Item item)
     {
         _gameData.inventory.Add(item);
+        if (item.hasPassiveEffect) {
+            if (item.overworldMoveSpeedBonus > 0) {
+                MoveSpeedBonus += item.overworldMoveSpeedBonus;
+            }
+            if (item.minigameMoveSpeedBonus > 0) {
+                MinigameMoveSpeedBonus += item.minigameMoveSpeedBonus;
+            }
+        }
         OnInventoryUpdated?.Invoke(_gameData.inventory);
     }
 

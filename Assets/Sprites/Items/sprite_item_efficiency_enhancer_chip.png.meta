@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8a0ab6187ff07e54eafaae13c6db585c
+guid: 543644116c9dfee44a0050e6157ade66
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7171700165236031638
-    second: IMG_6300_0
+      213: -7316202990035007129
+    second: sprite_efficiency_enhancer_chip_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WindowsStoreApps
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_6300_0
+      name: sprite_efficiency_enhancer_chip_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 7
-        width: 1149
-        height: 1695
+        x: 239
+        y: 194
+        width: 707
+        height: 737
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a6ffe7f62b0097c90800000000000000
-      internalID: -7171700165236031638
+      spriteID: 769005ab420a77a90800000000000000
+      internalID: -7316202990035007129
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IMG_6300_0: -7171700165236031638
+      sprite_efficiency_enhancer_chip_0: -7316202990035007129
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

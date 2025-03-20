@@ -70,11 +70,11 @@ TagManager:
   - name: BACKGROUND_OBJECT
     uniqueID: 3596454113
     locked: 0
-  - name: Player
-    uniqueID: 2177876831
-    locked: 0
   - name: NPC
     uniqueID: 3365395431
+    locked: 0
+  - name: Player
+    uniqueID: 2177876831
     locked: 0
   - name: FOREGROUND
     uniqueID: 28477667

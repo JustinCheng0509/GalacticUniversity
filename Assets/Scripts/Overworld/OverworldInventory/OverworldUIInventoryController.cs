@@ -67,7 +67,7 @@ public class OverworldUIInventoryController : MonoBehaviour
     private void OnSelectItem(Item item)
     {
         _itemNameText.text = item.itemName;
-        _itemDescriptionText.text = item.itemDescription;
+        _itemDescriptionText.text = AppendItemDescription(item);
         if (!item.isConsumable)
         {
             _useButton.gameObject.SetActive(false);
@@ -81,5 +81,28 @@ public class OverworldUIInventoryController : MonoBehaviour
             _discardButton.onClick.RemoveAllListeners();
             _discardButton.onClick.AddListener(() => _overworldItemController.DiscardItem(item));
         }
+    }
+
+    public static string AppendItemDescription(Item item)
+    {
+        string description = item.itemDescription;
+        description += "\n\n";
+        if (item.energyRestore > 0)
+        {
+            description += "Energy Restore: " + item.energyRestore + "\n";
+        }
+        if (item.hungerRestore > 0)
+        {
+            description += "Hunger Restore: " + item.hungerRestore + "\n";
+        }
+        if (item.overworldMoveSpeedBonus > 0)
+        {
+            description += "Campus Move Speed Bonus: " + item.overworldMoveSpeedBonus + "%\n";
+        }
+        if (item.minigameMoveSpeedBonus > 0)
+        {
+            description += "Minigame Move Speed Bonus: " + item.minigameMoveSpeedBonus + "%\n";
+        }
+        return description;
     }
 }

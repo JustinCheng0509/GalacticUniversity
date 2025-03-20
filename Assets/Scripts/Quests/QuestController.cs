@@ -62,9 +62,50 @@ public class QuestController : MonoBehaviour
             case QuestType.ScoreTotal:
                 CheckScoreTotalQuest(quest);
                 break;
+            case QuestType.NumberOfItemsBought:
+                CheckNumberOfItemsBoughtQuest(quest);
+                break;
+            case QuestType.Attendance:
+                CheckAttendanceQuest(quest);
+                break;
             default:
                 CompleteQuest(quest);
                 break;
+        }
+    }
+
+    private void CheckNumberOfItemsBoughtQuest(Quest quest)
+    {
+        if (_gameDataManager.NumberOfItemsBought >= quest.targetValue)
+        {
+            _dialogController.SetDialog(quest.completeDialog);
+            CompleteQuest(quest);
+        }
+        else
+        {
+            _dialogController.SetDialog(quest.incompleteDialog);
+        }
+    }
+
+    private void CheckAttendanceQuest(Quest quest)
+    {
+        // Count the number of days the player has attended
+        int attendance = 0;
+        foreach (var day in _gameDataManager.DailyGameDataList)
+        {
+            if (day.attendance == AttendanceStatus.ATTENDED)
+            {
+                attendance++;
+            }
+        }
+        if (attendance >= quest.targetValue)
+        {
+            _dialogController.SetDialog(quest.completeDialog);
+            CompleteQuest(quest);
+        }
+        else
+        {
+            _dialogController.SetDialog(quest.incompleteDialog);
         }
     }
 

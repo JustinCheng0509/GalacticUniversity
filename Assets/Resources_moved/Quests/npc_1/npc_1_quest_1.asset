@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: npc_1_quest_1
   m_EditorClassIdentifier: 
   questID: npc_1_quest_1
-  questName: The first quest
+  questName: The easy goal
   questDescription: Reach a total score of 4000
-  questType: 3
+  questType: 4
   targetValue: 4000
   currentValue: 0
   itemID: 0

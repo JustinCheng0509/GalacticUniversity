@@ -66,6 +66,8 @@ public class MinigamePlayerMovement : MonoBehaviour
             // float speedFactor = playerShipInfo.maneuverability/ 100f;
             float speedFactor = Mathf.Lerp(_minSpeedFactor, _maxSpeedFactor, _gameDataManager.Maneuverability / 100f);
 
+            speedFactor += speedFactor * _gameDataManager.MinigameMoveSpeedBonus / 100f;
+
             // Calculate the desired velocity (direction multiplied by speed)
             Vector2 desiredVelocity = new Vector2(horizontalInput, Input.GetAxis("Vertical")) * _speed;
 

@@ -17,7 +17,6 @@ public class MinigameCountdownController : MonoBehaviour
 
     private IEnumerator CountDownToStartCoroutine()
     {
-        Time.timeScale = 0f;
         countdownText.gameObject.SetActive(true);
         int count = countdownTime > 0 ? Mathf.CeilToInt(countdownTime) : 3;
         while (count > 0)
@@ -29,7 +28,6 @@ public class MinigameCountdownController : MonoBehaviour
         countdownText.text = "GO!";
         yield return new WaitForSecondsRealtime(1f);
         countdownText.gameObject.SetActive(false);
-        Time.timeScale = 1f;
         OnCountdownFinished?.Invoke();
     }
 }

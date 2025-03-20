@@ -36,8 +36,12 @@ public class SavedDataManager : MonoBehaviour
         return leaderboard;
     }
 
-    
     public static GameData CreateNewGameData() {
+        return CreateNewGameData("Player");
+    }
+
+    
+    public static GameData CreateNewGameData(string playerName) {
         int totalNumberOfDays = GameConstants.TOTAL_NUMBER_OF_DAYS;
         
         List<DailyGameData> dailyGameDataList = new List<DailyGameData>();
@@ -51,7 +55,7 @@ public class SavedDataManager : MonoBehaviour
         }
         
         GameData newGameData = new GameData {
-            playerName = "Player",
+            playerName = playerName,
             energy = 100,
             hunger = 100,
             mood = 100,
@@ -74,7 +78,10 @@ public class SavedDataManager : MonoBehaviour
             openedChests = new List<string>(),
             dailyGameDataList = dailyGameDataList,
             inventory = new List<Item>(),
-            leaderboard = GenerateLeaderboard("Player")
+            leaderboard = GenerateLeaderboard("Player"),
+            moveSpeedBonus = 0,
+            minigameMoveSpeedBonus = 0,
+            numberOfItemsBought = 0
         };
 
         SaveGameData(newGameData);

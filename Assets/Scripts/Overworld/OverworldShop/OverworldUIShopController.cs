@@ -61,7 +61,7 @@ public class OverworldUIShopController : MonoBehaviour
     {
         _notEnoughMoneyText.gameObject.SetActive(false);
         _itemNameText.text = item.itemName;
-        _itemDescriptionText.text = item.itemDescription;
+        _itemDescriptionText.text = OverworldUIInventoryController.AppendItemDescription(item);
         _itemValueText.text = "$" + item.itemValue.ToString();
         _buyButton.onClick.AddListener(() => BuyItem(item));
         _buyButton.gameObject.SetActive(true);

@@ -26,6 +26,7 @@ public class OverworldPlayerMovement : MonoBehaviour
     private bool _delayFootstep = false;
 
     private OverworldPlayerStatusController _overworldPlayerStatusController;
+    private GameDataManager _gameDataManager;
 
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -34,6 +35,7 @@ public class OverworldPlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _overworldPlayerStatusController = FindAnyObjectByType<OverworldPlayerStatusController>();
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
     }
 
     private void Update() {
@@ -55,7 +57,11 @@ public class OverworldPlayerMovement : MonoBehaviour
             _animator.SetInteger("moveX", 0);
             _animator.SetInteger("moveY", 0);
         }
-        _rb.linearVelocity = new Vector2(_moveDirection.x * _moveSpeed, _moveDirection.y * _moveSpeed);    
+        float moveSpeed = _moveSpeed;
+        if (_gameDataManager != null) {
+            moveSpeed = _moveSpeed + _moveSpeed * _gameDataManager.MoveSpeedBonus / 100;
+        }
+        _rb.linearVelocity = new Vector2(_moveDirection.x * _moveSpeed, _moveDirection.y * moveSpeed);    
     }
 
     private void PlayFootstepSound() {

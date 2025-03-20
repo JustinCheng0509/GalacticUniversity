@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2549f8833a0d8ab47bc9943c0416a767, type: 3}
+  m_Name: item_bonus_guiding_engine
+  m_EditorClassIdentifier: 
+  itemID: item_bonus_guiding_engine
+  itemName: Guiding Engine
+  itemDescription: This engine can adapt to your maneuvering intentions and help
+    you pilot better.
+  itemSprite: {fileID: -163599830608881577, guid: 7486a4a400e856e4295a1a4c1d44c372, type: 3}
+  itemValue: 200
+  isConsumable: 0
+  energyRestore: 0
+  hungerRestore: 0
+  moodRestore: 0
+  hasPassiveEffect: 1
+  energyRecoveryBonus: 0
+  overworldMoveSpeedBonus: 0
+  minigameMoveSpeedBonus: 20

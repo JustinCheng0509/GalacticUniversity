@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed1f2a2550ff9b4d82a8a21fa5b488f, type: 3}
+  m_Name: npc_3
+  m_EditorClassIdentifier: 
+  npcID: npc_3
+  npcName: Professor Xyrr Vellix
+  npcRace: Quorvian
+  npcDescription: Professor Xyrr Vellix is a renowned Quorvian engineer who once
+    worked on designing warp drives for the Galactic Council. However, after a catastrophic
+    prototype failure that resulted in a near-universe-wide anomaly, they left the
+    high-stakes world of engineering to teach at Galactic University.
+  npcSprite: {fileID: -7171700165236031638, guid: 8a0ab6187ff07e54eafaae13c6db585c, type: 3}
+  introDialog: {fileID: 11400000, guid: 6e51cac6df385d94a9d82bb91598dabe, type: 2}
+  quests:
+  - {fileID: 11400000, guid: e185991c4814b054f8eb8851af87ccab, type: 2}

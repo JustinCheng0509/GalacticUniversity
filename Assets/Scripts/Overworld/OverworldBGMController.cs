@@ -21,7 +21,7 @@ public class OverworldBGMController : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         targetVolume = _audioSource.volume;
         _audioSource.clip = isDayTime ? _dayTheme : _nightTheme;
-        _audioSource.Play();
+        // _audioSource.Play();
         _gameDataManager.OnTimeUpdated += UpdateBGM;
     }
 

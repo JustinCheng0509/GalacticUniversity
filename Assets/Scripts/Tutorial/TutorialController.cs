@@ -28,7 +28,6 @@ public class TutorialController : MonoBehaviour
         _gameDataManager.CompleteTutorial(tutorial.tutorialID);
         _currentTutorials.Add(tutorial);
         _currentTutorialIndex = 0;
-        Time.timeScale = 0;
         // Find the Title child of the tutorialPanel
         tutorialPanel.transform.Find("Title").GetComponent<TMPro.TextMeshProUGUI>().text = tutorial.title;
         // Find the Description child of the tutorialPanel
@@ -57,7 +56,6 @@ public class TutorialController : MonoBehaviour
         }
         _currentTutorials = tutorials;
         _currentTutorialIndex = 0;
-        Time.timeScale = 0;
 
         // Find the Title child of the tutorialPanel
         tutorialPanel.transform.Find("Title").GetComponent<TMPro.TextMeshProUGUI>().text = tutorials[0].title;
@@ -106,7 +104,6 @@ public class TutorialController : MonoBehaviour
     
     public void HideTutorial()
     {
-        Time.timeScale = 1;
         OnTutorialCompleted?.Invoke();
         HideTutorialUI();
         _currentTutorials.Clear();

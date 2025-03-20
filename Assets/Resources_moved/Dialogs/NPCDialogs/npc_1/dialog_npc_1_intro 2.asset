@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2008eece822dcc7458169ec19c2cef92, type: 3}
+  m_Name: dialog_npc_1_intro 2
+  m_EditorClassIdentifier: 
+  dialogID: dialog_npc_1_intro_2
+  characterName: '[npc_1]'
+  isLeft: 1
+  text: Ah well, isn't is cool to be the unique student in school? Plus everything
+    here is so nice!
+  isSelfDialog: 0
+  nextDialog: {fileID: 0}
+  associatedTutorials:
+  - {fileID: 11400000, guid: 9cc2a320bd2c4de4a945fe0bfdddba9e, type: 2}
+  associatedQuests: []

@@ -38,7 +38,6 @@ public class DialogController : MonoBehaviour
     {
         Debug.Log(_currentDialog.associatedTutorials.Count);
         _dialogPanel.SetActive(false);
-        Time.timeScale = 1;
         OnDialogEnded?.Invoke(_currentDialog);
         _currentDialog = null;
     }
@@ -46,7 +45,6 @@ public class DialogController : MonoBehaviour
 
     public void SetDialog(Dialog dialog)
     {
-        Time.timeScale = 0;
         _currentDialog = dialog;
 
         string name = ReplacePlaceholders(dialog.characterName);
