@@ -3,8 +3,8 @@ using UnityEngine;
 public class MinigamePlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _minSpeedFactor = 0.3f;
+    [SerializeField] private float _speed = 20f;
+    [SerializeField] private float _minSpeedFactor = 0.25f;
     [SerializeField] private float _maxSpeedFactor = 0.9f;
 
     [Header("Screen Bounds Settings")]
