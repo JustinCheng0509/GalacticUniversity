@@ -57,7 +57,7 @@ public class MinigameUIScoreController : MonoBehaviour
         List<int> safetyScorePositions = GetRelevantPositions(safetyScoreLeaderboard, playerName);
 
         // Update UI panels
-        UpdateLeaderboardPanel(_totalScoreLeaderboardPanel, totalScoreLeaderboard, totalScorePositions);
+        // UpdateLeaderboardPanel(_totalScoreLeaderboardPanel, totalScoreLeaderboard, totalScorePositions);
         // UpdateLeaderboardPanel(_destructionScoreLeaderboardPanel, destructionScoreLeaderboard, destructionScorePositions);
         // UpdateLeaderboardPanel(_safetyScoreLeaderboardPanel, safetyScoreLeaderboard, safetyScorePositions);
 

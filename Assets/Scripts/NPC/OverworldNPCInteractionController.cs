@@ -32,14 +32,19 @@ public class OverworldNPCInteractionController : MonoBehaviour
         {
             _gameDataManager.UpdateNPCRelationship(npc.npcID, 0);
             _dialogController.SetDialog(npc.introDialog);
-            _dialogController.OnDialogEnded += (_) => HandleStartInteraction(npc);
+            _dialogController.OnDialogEnded += HandleDialogEnded;
         } else {
             HandleStartInteraction(npc);
         }
     }
 
+    public void HandleDialogEnded(Dialog dialog) {
+        HandleStartInteraction(_currentNPC);
+    }
+
     public void HandleStartInteraction(NPC npc)
     {
+        _dialogController.OnDialogEnded -= HandleDialogEnded;
         OnNPCInteractionStarted?.Invoke(npc);
     }
 

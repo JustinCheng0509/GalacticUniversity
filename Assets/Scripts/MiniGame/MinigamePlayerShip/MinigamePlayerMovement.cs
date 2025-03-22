@@ -58,7 +58,7 @@ public class MinigamePlayerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         // Check if applying skill system
-        if (!GameConstants.USE_SKILL_SYSTEM)
+        if (true)
         {
             transform.position += new Vector3(horizontalInput, verticalInput, 0f) * _speed * Time.deltaTime;
         } else {
