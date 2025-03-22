@@ -4,8 +4,8 @@ public class MinigamePlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _minSpeedFactor = 0.08f;
-    [SerializeField] private float _maxSpeedFactor = 0.8f;
+    [SerializeField] private float _minSpeedFactor = 0.3f;
+    [SerializeField] private float _maxSpeedFactor = 0.9f;
 
     [Header("Screen Bounds Settings")]
     private Vector2 _screenBounds;
@@ -58,7 +58,7 @@ public class MinigamePlayerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         // Check if applying skill system
-        if (true)
+        if (!GameConstants.USE_SKILL_SYSTEM)
         {
             transform.position += new Vector3(horizontalInput, verticalInput, 0f) * _speed * Time.deltaTime;
         } else {
