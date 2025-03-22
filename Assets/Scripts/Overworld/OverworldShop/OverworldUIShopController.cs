@@ -45,6 +45,7 @@ public class OverworldUIShopController : MonoBehaviour
     public void OpenShopUI()
     {
         ShopUI.SetActive(true);
+        HideInfo();
     }
 
     private void HideInfo()
