@@ -43,6 +43,7 @@ public class OverworldGameController : MonoBehaviour
             _gameDataManager.IntroDialogPlayed = true;
             _dialogController.SetDialog(DialogIDs.DIALOG_INTRO);
         }
+        PauseManager.Instance.CheckPauseState();
     }
 
     private void HandleDialogEnd(Dialog dialog)

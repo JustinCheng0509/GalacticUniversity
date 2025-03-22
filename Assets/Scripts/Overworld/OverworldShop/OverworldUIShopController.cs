@@ -62,14 +62,25 @@ public class OverworldUIShopController : MonoBehaviour
         _notEnoughMoneyText.gameObject.SetActive(false);
         _itemNameText.text = item.itemName;
         _itemDescriptionText.text = OverworldUIInventoryController.AppendItemDescription(item);
-        _itemValueText.text = "$" + item.itemValue.ToString();
+        int itemValue = item.itemValue;
+        if (_gameDataManager != null)
+        {
+            itemValue -= (int) (itemValue * _gameDataManager.ShopItemDiscount / 100);
+        }
+        _itemValueText.text = "$" + itemValue.ToString();
+        _buyButton.onClick.RemoveAllListeners();
         _buyButton.onClick.AddListener(() => BuyItem(item));
         _buyButton.gameObject.SetActive(true);
     }
 
     public void BuyItem(Item item)
     {
-        if (_gameDataManager.Money < item.itemValue)
+        int itemValue = item.itemValue;
+        if (_gameDataManager != null)
+        {
+            itemValue -= (int) (itemValue * _gameDataManager.ShopItemDiscount / 100);
+        }
+        if (_gameDataManager.Money < itemValue)
         {
             _notEnoughMoneyText.gameObject.SetActive(true);
             return;
@@ -77,8 +88,7 @@ public class OverworldUIShopController : MonoBehaviour
         // Add the item to the inventory and subtract the value from the player's money
         _gameDataManager.NumberOfItemsBought++;
         _gameDataManager.AddItemToInventory(item);
-        _gameDataManager.Money -= item.itemValue;
+        _gameDataManager.Money -= itemValue;
         _sfxAudioSource.PlayOneShot(_buyItemAudioClip);
-        HideInfo();
     }
 }

@@ -26,3 +26,4 @@ MonoBehaviour:
   overworldMoveSpeedBonus: 0
   minigameMoveSpeedBonus: 0
   learningSpeedBonus: 0
+  shopItemDiscount: 15

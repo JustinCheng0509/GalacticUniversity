@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Guiding Engine
   itemDescription: This engine can adapt to your maneuvering intentions and help
     you pilot better.
-  itemSprite: {fileID: -163599830608881577, guid: 7486a4a400e856e4295a1a4c1d44c372, type: 3}
+  itemSprite: {fileID: -935216230100867075, guid: 10d954c8a8ad8bb4891f8103ddec5119, type: 3}
   itemValue: 200
   isConsumable: 0
   energyRestore: 0
@@ -26,3 +26,5 @@ MonoBehaviour:
   energyRecoveryBonus: 0
   overworldMoveSpeedBonus: 0
   minigameMoveSpeedBonus: 20
+  learningSpeedBonus: 0
+  shopItemDiscount: 0
