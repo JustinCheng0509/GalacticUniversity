@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed1f2a2550ff9b4d82a8a21fa5b488f, type: 3}
   m_Name: npc_2
   m_EditorClassIdentifier: 
-  npcID: npc_1
+  npcID: npc_2
   npcName: Bloop Zargleflorp
   npcRace: Drelvian
   npcDescription: Nobody at Galactic University has ever seen Bloop outside their
