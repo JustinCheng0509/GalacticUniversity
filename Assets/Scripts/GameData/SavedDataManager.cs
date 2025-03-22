@@ -1,16 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
-using Defective.JSON;
 using UnityEngine;
 
 public class SavedDataManager : MonoBehaviour
 {
-    // private string filePath;
-    // // Start is called once before the first execution of Update after the MonoBehaviour is created
-    // void Start()
-    // {   
-    //     filePath = Application.persistentDataPath + GameConstants.GAME_DATA_JSON_PATH;
-    // }
+    private static string FilePath => Path.Combine(Application.persistentDataPath, GameConstants.GAME_DATA_JSON_PATH);
 
     public static List<LeaderboardEntry> GenerateLeaderboard(string playerName)
     {
@@ -24,8 +18,10 @@ public class SavedDataManager : MonoBehaviour
                 safetyScore = 0
             }
         };
-        for (int i = 1 ; i <= 19; i++) {
-            leaderboard.Add(new LeaderboardEntry {
+        for (int i = 1; i <= 19; i++)
+        {
+            leaderboard.Add(new LeaderboardEntry
+            {
                 name = GameConstants.ALIEN_NAMES[i],
                 totalScore = 0,
                 destructionScore = 0,
@@ -36,25 +32,27 @@ public class SavedDataManager : MonoBehaviour
         return leaderboard;
     }
 
-    public static GameData CreateNewGameData() {
+    public static GameData CreateNewGameData()
+    {
         return CreateNewGameData("Player");
     }
 
-    
-    public static GameData CreateNewGameData(string playerName) {
+    public static GameData CreateNewGameData(string playerName)
+    {
         int totalNumberOfDays = GameConstants.TOTAL_NUMBER_OF_DAYS;
-        
+
         List<DailyGameData> dailyGameDataList = new List<DailyGameData>();
-        // Add daily game data
-        for (int i = 0; i < totalNumberOfDays; i++) {
-            DailyGameData dailyGameData = new DailyGameData {
+        for (int i = 0; i < totalNumberOfDays; i++)
+        {
+            dailyGameDataList.Add(new DailyGameData
+            {
                 homeworkProgress = 0,
-                attendance = AttendanceStatus.NOT_STARTED,
-            };
-            dailyGameDataList.Add(dailyGameData);
+                attendance = AttendanceStatus.NOT_STARTED
+            });
         }
-        
-        GameData newGameData = new GameData {
+
+        GameData newGameData = new GameData
+        {
             playerName = playerName,
             energy = 100,
             hunger = 100,
@@ -78,7 +76,7 @@ public class SavedDataManager : MonoBehaviour
             openedChests = new List<string>(),
             dailyGameDataList = dailyGameDataList,
             inventory = new List<Item>(),
-            leaderboard = GenerateLeaderboard("Player"),
+            leaderboard = GenerateLeaderboard(playerName),
             moveSpeedBonus = 0,
             minigameMoveSpeedBonus = 0,
             numberOfItemsBought = 0,
@@ -90,26 +88,35 @@ public class SavedDataManager : MonoBehaviour
         return newGameData;
     }
 
-    public static void SaveGameData(GameData gameData) {
-        // string json = JsonUtility.ToJson(gameData, true);
-        // File.WriteAllText(filePath, json);
-        // Debug.Log("Game data saved: " + filePath);
-
-        PlayerPrefs.SetString(GameConstants.GAME_DATA_KEY, JsonUtility.ToJson(gameData));
+    public static void SaveGameData(GameData gameData)
+    {
+        string json = JsonUtility.ToJson(gameData, true);
+        try
+        {
+            File.WriteAllText(FilePath, json);
+            Debug.Log("Game data saved to: " + FilePath);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to save game data: " + e);
+        }
     }
 
-    public static GameData LoadGameData() {
-        // if (File.Exists(filePath)) {
-        //     string json = File.ReadAllText(filePath);
-        //     return JsonUtility.FromJson<GameData>(json);
-        // } 
-
-        if (PlayerPrefs.HasKey(GameConstants.GAME_DATA_KEY)) {
-            GameData gameData = JsonUtility.FromJson<GameData>(PlayerPrefs.GetString(GameConstants.GAME_DATA_KEY));
-
-            // Debug.Log("Game data " + gameData.dailyGameDataList.Count + " loaded from PlayerPrefs");
-
-            return JsonUtility.FromJson<GameData>(PlayerPrefs.GetString(GameConstants.GAME_DATA_KEY));
+    public static GameData LoadGameData()
+    {
+        if (File.Exists(FilePath))
+        {
+            try
+            {
+                Debug.Log("Loading game data from: " + FilePath);
+                string json = File.ReadAllText(FilePath);
+                return JsonUtility.FromJson<GameData>(json);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("Failed to load game data, creating new: " + e);
+                return CreateNewGameData();
+            }
         }
 
         return CreateNewGameData();
