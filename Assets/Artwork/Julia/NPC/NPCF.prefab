@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5382602637618375401}
   - component: {fileID: -971290924350786087}
   m_Layer: 0
-  m_Name: NPCD
+  m_Name: NPCF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7935230736950799002, guid: be20b17e299e83a4f8000b423eae7ad7, type: 3}
+  m_Sprite: {fileID: -290422109253798303, guid: a09db9a7ddbc3a8459f56ebb058e10d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
