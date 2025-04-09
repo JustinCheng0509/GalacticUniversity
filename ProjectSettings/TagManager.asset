@@ -31,7 +31,7 @@ TagManager:
   - Player
   - INTERACTABLE_LAYER
   - MINIMAP
-  - 
+  - POSTPROCESS_VOLUME
   - 
   - 
   - 
@@ -85,7 +85,7 @@ TagManager:
   - name: UI
     uniqueID: 3136614727
     locked: 0
-  - name: Minimap
+  - name: MinimapIcon
     uniqueID: 3984499193
     locked: 0
   m_RenderingLayers:
