@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 866de7d630c76814aad293da903e8890
   m_currentHash:
     serializedVersion: 2
-    Hash: e43f41827e553a8d3d36a16099247257
+    Hash: f3a363d1c6bf2091252d1fb9436114d5
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -79,6 +79,34 @@ MonoBehaviour:
         m_Value: 'ServerData/[BuildTarget]'
       - m_Id: f5ebb10e2b893a94085e5fc942f821a2
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+    - m_InheritedParent: 
+      m_Id: d6c8848d61efc5f49a1846a854a907a9
+      m_ProfileName: New Profile1
+      m_Values:
+      - m_Id: 3356ffeb49b899440b04bdac8d66fa01
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 87359f0809ca5fd4792b01b6243a38d6
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: c63fa699223f9814ba54b04c86e55b55
+        m_Value: <undefined>
+      - m_Id: db04c64d27d418c41a5c14c6c75944e9
+        m_Value: 'ServerData/[BuildTarget]'
+      - m_Id: f5ebb10e2b893a94085e5fc942f821a2
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+    - m_InheritedParent: 
+      m_Id: e1ba7d703b78c234da29726f81fc447a
+      m_ProfileName: New Profile
+      m_Values:
+      - m_Id: 3356ffeb49b899440b04bdac8d66fa01
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 87359f0809ca5fd4792b01b6243a38d6
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: c63fa699223f9814ba54b04c86e55b55
+        m_Value: <undefined>
+      - m_Id: db04c64d27d418c41a5c14c6c75944e9
+        m_Value: 'ServerData/[BuildTarget]'
+      - m_Id: f5ebb10e2b893a94085e5fc942f821a2
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
     m_ProfileEntryNames:
     - m_Id: 3356ffeb49b899440b04bdac8d66fa01
       m_Name: Local.LoadPath
@@ -117,4 +145,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c46cfaf610f7c1d4fa23dfd1445c370c, type: 2}
   - {fileID: 11400000, guid: daa74c536c534144aa8e2e479f7b9c2d, type: 2}
   - {fileID: 11400000, guid: f8acaa63267e2554d8421dd16dc35e9b, type: 2}
-  m_ActiveProfileId: 52d8f33bb0396f540bc04319e5e2f64c
+  m_ActiveProfileId: e1ba7d703b78c234da29726f81fc447a
