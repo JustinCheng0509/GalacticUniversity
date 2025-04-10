@@ -29,6 +29,8 @@ public class Quest : ScriptableObject
     public float currentValue;
     public string itemID; // For item delivery quests
     public string npcID; // For item delivery quests
+    public string navigationTag;
+    public string navigationCompleteTag;
     public Dialog startDialog;
     public Dialog incompleteDialog;
     public Dialog completeDialog;

@@ -52,32 +52,65 @@ public class QuestController : MonoBehaviour
     public void TryReturnQuest(Quest quest)
     {
         // Check if quest is in the active quests list
-        if (!_gameDataManager.GetActiveQuests().Contains(quest)) {
+        if (!_gameDataManager.IsQuestActive(quest.questID)) {
             Debug.LogWarning("Quest " + quest.questID + " is not in the active quests list.");
             return;
         }
-        // Switch statement to check the quest type
+
+        if (CheckQuestCompletion(quest))
+        {
+            HandleQuestCompletion(quest);
+        } else {
+            _dialogController.SetDialog(quest.incompleteDialog);
+        }
+    }
+
+    private void HandleQuestCompletion(Quest quest)
+    {
         switch (quest.questType)
         {
-            case QuestType.ScoreTotal:
-                CheckScoreTotalQuest(quest);
-                break;
-            case QuestType.NumberOfItemsBought:
-                CheckNumberOfItemsBoughtQuest(quest);
-                break;
-            case QuestType.Attendance:
-                CheckAttendanceQuest(quest);
-                break;
             case QuestType.ItemDelivery:
-                CheckItemDeliveryQuest(quest);
+                for (int i = 0; i < quest.targetValue; i++)
+                {
+                    _gameDataManager.RemoveItemFromInventory(quest.itemID);
+                }
+                _dialogController.SetDialog(quest.completeDialog);
+                CompleteQuest(quest);
                 break;
+            case QuestType.ScoreTotal:
+            case QuestType.NumberOfItemsBought:
+            case QuestType.Attendance:
             default:
+                _dialogController.SetDialog(quest.completeDialog);
                 CompleteQuest(quest);
                 break;
         }
     }
 
-    private void CheckItemDeliveryQuest(Quest quest)
+    public bool CheckQuestCompletion(Quest quest)
+    {
+        // Check if quest is in the active quests list
+        if (!_gameDataManager.IsQuestActive(quest.questID)) {
+            Debug.LogWarning("Quest " + quest.questID + " is not in the active quests list.");
+            return false;
+        }
+        // Switch statement to check the quest type
+        switch (quest.questType)
+        {
+            case QuestType.ScoreTotal:
+                return CheckScoreTotalQuest(quest);
+            case QuestType.NumberOfItemsBought:
+                return CheckNumberOfItemsBoughtQuest(quest);
+            case QuestType.Attendance:
+                return CheckAttendanceQuest(quest);
+            case QuestType.ItemDelivery:
+                return CheckItemDeliveryQuest(quest);
+            default:
+                return true; // Default case if no specific type is matched
+        }
+    }
+
+    private bool CheckItemDeliveryQuest(Quest quest)
     {
         int numberOfItems = 0;
         foreach (Item item in _gameDataManager.Inventory)
@@ -87,36 +120,17 @@ public class QuestController : MonoBehaviour
                 numberOfItems++;
             }
         }
-        if (numberOfItems >= quest.targetValue)
-        {
-            // Remove number of items from inventory
-            for (int i = 0; i < quest.targetValue; i++)
-            {
-                _gameDataManager.RemoveItemFromInventory(quest.itemID);
-            }
-            _dialogController.SetDialog(quest.completeDialog);
-            CompleteQuest(quest);
-        }
-        else
-        {
-            _dialogController.SetDialog(quest.incompleteDialog);
-        }
+        if (numberOfItems >= quest.targetValue) return true;
+        return false;
     }
 
-    private void CheckNumberOfItemsBoughtQuest(Quest quest)
+    private bool CheckNumberOfItemsBoughtQuest(Quest quest)
     {
-        if (_gameDataManager.NumberOfItemsBought >= quest.targetValue)
-        {
-            _dialogController.SetDialog(quest.completeDialog);
-            CompleteQuest(quest);
-        }
-        else
-        {
-            _dialogController.SetDialog(quest.incompleteDialog);
-        }
+        if (_gameDataManager.NumberOfItemsBought >= quest.targetValue) return true;
+        return false;
     }
 
-    private void CheckAttendanceQuest(Quest quest)
+    private bool CheckAttendanceQuest(Quest quest)
     {
         // Count the number of days the player has attended
         int attendance = 0;
@@ -127,15 +141,14 @@ public class QuestController : MonoBehaviour
                 attendance++;
             }
         }
-        if (attendance >= quest.targetValue)
-        {
-            _dialogController.SetDialog(quest.completeDialog);
-            CompleteQuest(quest);
-        }
-        else
-        {
-            _dialogController.SetDialog(quest.incompleteDialog);
-        }
+        if (attendance >= quest.targetValue) return true;
+        return false;
+    }
+
+    private bool CheckScoreTotalQuest(Quest quest)
+    {
+        if (_gameDataManager.TotalScore >= quest.targetValue) return true;
+        return false;
     }
 
     private void CompleteQuest(Quest quest)
@@ -148,18 +161,5 @@ public class QuestController : MonoBehaviour
             _gameDataManager.AddItemToInventory(quest.rewardItem);
         }
         OnQuestCompleted?.Invoke(quest);
-    }
-
-    private void CheckScoreTotalQuest(Quest quest)
-    {
-        if (_gameDataManager.TotalScore >= quest.targetValue)
-        {
-            _dialogController.SetDialog(quest.completeDialog);
-            CompleteQuest(quest);
-        }
-        else
-        {
-            _dialogController.SetDialog(quest.incompleteDialog);
-        }
     }
 }

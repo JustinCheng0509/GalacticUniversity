@@ -21,6 +21,11 @@ TagManager:
   - TRIGGER_TAG_SHOP
   - TRIGGER_TAG_PLAYROOM
   - TRIGGER_TAG_WORK
+  - NAVIGATION_CLASS
+  - NAVIGATION_DORM
+  - NAVIGATION_WORKSHOP
+  - NAVIGATION_SHOP
+  - NAVIGATION_RECREATION
   layers:
   - Default
   - TransparentFX
@@ -31,7 +36,7 @@ TagManager:
   - Player
   - INTERACTABLE_LAYER
   - MINIMAP
-  - 
+  - POSTPROCESS_VOLUME
   - 
   - 
   - 
@@ -85,7 +90,7 @@ TagManager:
   - name: UI
     uniqueID: 3136614727
     locked: 0
-  - name: Minimap
+  - name: MinimapIcon
     uniqueID: 3984499193
     locked: 0
   m_RenderingLayers:
