@@ -91,6 +91,7 @@ public class OverworldInteractionController : MonoBehaviour
             return;
         }
         Chest Chest = chestController.Chest;
+        InteractableGameObject = null;
         _gameDataManager.OpenChest(Chest);
         _overworldUIChestController.OpenChestUI(Chest);
     }
