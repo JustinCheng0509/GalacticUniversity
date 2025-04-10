@@ -15,8 +15,8 @@ MonoBehaviour:
   dialogID: dialog_intro_dorm
   characterName: '[PlayerName]'
   isLeft: 0
-  text: This is my dorm room. I can sleep in my bed whenever I am tired. I can also
-    do homework at my desk.
+  text: This is the dorm. I can sleep in my bed whenever I am tired. I can also do
+    homework at my desk.
   isSelfDialog: 1
   nextDialog: {fileID: 0}
   associatedTutorials:

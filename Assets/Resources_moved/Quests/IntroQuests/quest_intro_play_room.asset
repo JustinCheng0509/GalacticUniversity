@@ -21,6 +21,9 @@ MonoBehaviour:
   currentValue: 0
   itemID: 0
   npcID: 0
+  navigationTag: NAVIGATION_RECREATION
+  navigationCompleteTag: NAVIGATION_RECREATION
+  startDialog: {fileID: 0}
   incompleteDialog: {fileID: 0}
   completeDialog: {fileID: 11400000, guid: 98ad2e75d89630644a3cf6c2ef0a0101, type: 2}
   rewardMoney: 0

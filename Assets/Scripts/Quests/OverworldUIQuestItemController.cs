@@ -69,19 +69,24 @@ public class OverworldUIQuestItemController : MonoBehaviour
     {
         if (_questColumnController == null) return;
 
-        if (_questColumnController.SelectedQuest == _quest)
+        if (_questColumnController.SelectedQuest == null || _questColumnController.SelectedQuest.questID != _quest.questID)
         {
-            _questColumnController.SelectedQuest = null;
+            _questColumnController.SelectedQuest = _quest;
         }
         else
         {
-            _questColumnController.SelectedQuest = _quest;
+            _questColumnController.SelectedQuest = null;
         }
     }
 
     public void HandleQuestSelected(Quest quest)
     {
-        ToggleQuestDescription(quest == _quest);
+        if (_questColumnController == null) return;
+        if (quest == null) {
+            ToggleQuestDescription(false);
+            return;
+        }
+        ToggleQuestDescription(quest.questID == _quest.questID);
     }
 
     private void ToggleQuestDescription(bool isShown)
