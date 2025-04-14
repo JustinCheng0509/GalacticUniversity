@@ -14,7 +14,7 @@ public class OverworldItemPrefabController : MonoBehaviour
         // Set width of _itemCount to 20% of the width of the parent object
         RectTransform itemCountRect = _itemCount.GetComponent<RectTransform>();
         RectTransform parentRect = _itemCount.transform.parent.GetComponent<RectTransform>();
-        itemCountRect.sizeDelta = new Vector2(parentRect.rect.width * 0.2f, parentRect.rect.width * 0.2f);
+        itemCountRect.sizeDelta = new Vector2(parentRect.rect.width * 0.25f, parentRect.rect.width * 0.25f);
     }
 
     public void SetItemInfo(Sprite itemSprite, UnityEngine.Events.UnityAction onClickAction)
