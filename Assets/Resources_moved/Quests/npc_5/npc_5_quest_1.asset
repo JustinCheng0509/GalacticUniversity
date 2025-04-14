@@ -21,8 +21,8 @@ MonoBehaviour:
   itemID: 
   navigationTag: 
   navigationCompleteTag: 
-  startDialog: {fileID: 11400000, guid: 744cbb72540d9574083fc957d007767f, type: 2}
-  incompleteDialog: {fileID: 11400000, guid: dbedb20fbef03554f8dd57880803dc68, type: 2}
-  completeDialog: {fileID: 11400000, guid: 86dee2391e6e1d6499bf218a62e5dfbf, type: 2}
+  startDialog: {fileID: 11400000, guid: 231a14a9b7e5d054ea7a7d70336f96ef, type: 2}
+  incompleteDialog: {fileID: 11400000, guid: e3b8fd516e325f3498d8c6e91bf5f5ae, type: 2}
+  completeDialog: {fileID: 11400000, guid: c0ed4beefafada04fa1f1ba69f55bb5b, type: 2}
   rewardMoney: 0
-  rewardItem: {fileID: 11400000, guid: fdba6560291b9354b8313b4cc1e4332e, type: 2}
+  rewardItem: {fileID: 11400000, guid: 05fe2188d15e78341a1ce5e8043697c5, type: 2}

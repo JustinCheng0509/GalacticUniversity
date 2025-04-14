@@ -76,7 +76,7 @@ public class SavedDataManager : MonoBehaviour
             tutorialsCompleted = new List<string>(),
             openedChests = new List<string>(),
             dailyGameDataList = dailyGameDataList,
-            inventory = new List<Item>(),
+            inventory = new List<InventoryItem>(),
             leaderboard = GenerateLeaderboard(playerName),
             moveSpeedBonus = 0,
             minigameMoveSpeedBonus = 0,

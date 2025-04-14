@@ -70,10 +70,7 @@ public class QuestController : MonoBehaviour
         switch (quest.questType)
         {
             case QuestType.ItemDelivery:
-                for (int i = 0; i < quest.targetValue; i++)
-                {
-                    _gameDataManager.RemoveItemFromInventory(quest.itemID);
-                }
+                _gameDataManager.InventoryManager.RemoveItem(quest.itemID, (int) quest.targetValue);
                 _dialogController.SetDialog(quest.completeDialog);
                 CompleteQuest(quest);
                 break;
@@ -119,16 +116,7 @@ public class QuestController : MonoBehaviour
 
     private bool CheckItemDeliveryQuest(Quest quest)
     {
-        int numberOfItems = 0;
-        foreach (Item item in _gameDataManager.Inventory)
-        {
-            if (item.itemID == quest.itemID)
-            {
-                numberOfItems++;
-            }
-        }
-        if (numberOfItems >= quest.targetValue) return true;
-        return false;
+        return _gameDataManager.InventoryManager.GetItemCount(quest.itemID) >= quest.targetValue;
     }
 
     private bool CheckNumberOfItemsBoughtQuest(Quest quest)
@@ -138,17 +126,7 @@ public class QuestController : MonoBehaviour
 
     private bool CheckAttendanceQuest(Quest quest)
     {
-        // Count the number of days the player has attended
-        int attendance = 0;
-        foreach (var day in _gameDataManager.DailyGameDataList)
-        {
-            if (day.attendance == AttendanceStatus.ATTENDED)
-            {
-                attendance++;
-            }
-        }
-        if (attendance >= quest.targetValue) return true;
-        return false;
+        return _gameDataManager.NumberOfAttendances >= (int) quest.targetValue;
     }
 
     private bool CheckScoreTotalQuest(Quest quest)
@@ -163,7 +141,7 @@ public class QuestController : MonoBehaviour
         _gameDataManager.Money += quest.rewardMoney;
         if (quest.rewardItem != null)
         {
-            _gameDataManager.AddItemToInventory(quest.rewardItem);
+            _gameDataManager.InventoryManager.AddItem(quest.rewardItem);
         }
         OnQuestCompleted?.Invoke(quest);
     }

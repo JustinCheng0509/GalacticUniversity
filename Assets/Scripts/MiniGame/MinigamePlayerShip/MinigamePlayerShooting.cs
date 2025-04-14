@@ -65,11 +65,7 @@ public class MinigamePlayerShooting : MonoBehaviour
 
     private void UpdateDamage()
     {
-        // Check if applying skill system
-        if (GameConstants.USE_SKILL_SYSTEM)
-        {
-            _damage *= Mathf.Lerp(1f, 3f, _gameDataManager.Destruction / 100f);
-        }
+        _damage *= Mathf.Lerp(1f, 3f, _gameDataManager.Destruction / 100f);
     }
 
     void Fire()

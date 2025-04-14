@@ -5,5 +5,12 @@ using UnityEngine;
 public class Chest : ScriptableObject
 {
     public string chestID;
-    public List<Item> items;
+    public List<ChestItemEntry> chestItems;
+}
+
+[System.Serializable]
+public class ChestItemEntry
+{
+    public Item item;
+    public int quantity = 1;
 }

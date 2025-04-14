@@ -31,13 +31,13 @@ public class OverworldItemController : MonoBehaviour
         _gameDataManager.Hunger += item.hungerRestore;
         _gameDataManager.Mood += item.moodRestore;
         // Remove the item from the inventory
-        _gameDataManager.RemoveItemFromInventory(item);
+        _gameDataManager.InventoryManager.RemoveItem(item);
         OnUseItem?.Invoke(item);
     }
 
     public void DiscardItem(Item item)
     {
-        _gameDataManager.RemoveItemFromInventory(item);
+        _gameDataManager.InventoryManager.RemoveItem(item);
         OnDiscardItem?.Invoke(item);
     }
 }

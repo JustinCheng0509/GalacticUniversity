@@ -22,4 +22,5 @@ public class Item : ScriptableObject
     public float minigameMoveSpeedBonus;
     public float learningSpeedBonus;
     public float shopItemDiscount;
+    public float workMoneyBonus;
 }

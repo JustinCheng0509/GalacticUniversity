@@ -127,11 +127,8 @@ public class OverworldPlayerStatusController : MonoBehaviour
         {
             _gameDataManager.HomeworkProgress += 1f;
 
-            if (GameConstants.USE_SKILL_SYSTEM)
-            {
-                int chanceToIncreaseSkill = 5 + (int) _gameDataManager.LeaningSpeedBonus;
-                TryIncreaseRandomSkill(chanceToIncreaseSkill);
-            }
+            int chanceToIncreaseSkill = 5 + (int) _gameDataManager.LeaningSpeedBonus;
+            TryIncreaseRandomSkill(chanceToIncreaseSkill);
         }
 
         if (_gameDataManager.HomeworkProgress >= 100)
@@ -144,13 +141,12 @@ public class OverworldPlayerStatusController : MonoBehaviour
     {
         if (_currentStatus == OverworldPlayerStatus.Working)
         {
-            _gameDataManager.Money += 1;
+            float moneyGained = 1f + 1f * _gameDataManager.WorkshopMoneyBonus / 100f;
+            _gameDataManager.Money += moneyGained;
             _gameDataManager.TotalWorkshopMinutes += 1;
-            if (GameConstants.USE_SKILL_SYSTEM)
-            {
-                int chanceToIncreaseSkill = 5 + (int) _gameDataManager.LeaningSpeedBonus;
-                TryIncreaseRandomSkill(chanceToIncreaseSkill);
-            }
+            
+            int chanceToIncreaseSkill = 5 + (int) _gameDataManager.LeaningSpeedBonus;
+            TryIncreaseRandomSkill(chanceToIncreaseSkill);
         }
     }
 
