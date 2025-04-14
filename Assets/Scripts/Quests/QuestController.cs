@@ -105,9 +105,16 @@ public class QuestController : MonoBehaviour
                 return CheckAttendanceQuest(quest);
             case QuestType.ItemDelivery:
                 return CheckItemDeliveryQuest(quest);
+            case QuestType.TotalWorkHours:
+                return CheckTotalWorkHoursQuest(quest);
             default:
                 return true; // Default case if no specific type is matched
         }
+    }
+
+    private bool CheckTotalWorkHoursQuest(Quest quest)
+    {
+        return _gameDataManager.TotalWorkshopMinutes/60 >= quest.targetValue;
     }
 
     private bool CheckItemDeliveryQuest(Quest quest)
@@ -126,8 +133,7 @@ public class QuestController : MonoBehaviour
 
     private bool CheckNumberOfItemsBoughtQuest(Quest quest)
     {
-        if (_gameDataManager.NumberOfItemsBought >= quest.targetValue) return true;
-        return false;
+        return _gameDataManager.NumberOfItemsBought >= quest.targetValue;
     }
 
     private bool CheckAttendanceQuest(Quest quest)
@@ -147,8 +153,7 @@ public class QuestController : MonoBehaviour
 
     private bool CheckScoreTotalQuest(Quest quest)
     {
-        if (_gameDataManager.TotalScore >= quest.targetValue) return true;
-        return false;
+        return _gameDataManager.TotalScore >= quest.targetValue;
     }
 
     private void CompleteQuest(Quest quest)

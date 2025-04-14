@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SavedDataManager : MonoBehaviour
@@ -81,7 +82,9 @@ public class SavedDataManager : MonoBehaviour
             minigameMoveSpeedBonus = 0,
             numberOfItemsBought = 0,
             learningSpeedBonus = 0,
-            shopItemDiscount = 0
+            shopItemDiscount = 0,
+            totalWorkshopMinutes = 0,
+            workshopMoneyBonus = 0,
         };
 
         SaveGameData(newGameData);

@@ -74,13 +74,11 @@ public class GameData
     public int numberOfItemsBought;
     public float learningSpeedBonus;
     public float shopItemDiscount;
+    public float totalWorkshopMinutes;
+    public float workshopMoneyBonus;
 
     // Intros and tutorials
     public bool isTutorialEnabled = true;
     public bool introDialogPlayed = false;
-    // public bool introClassPlayed = false;
-    // public bool introShopPlayed = false;
-    // public bool introDormPlayed = false;
-    // public bool introPlayRoomPlayed = false;
-    // public bool introWorkPlayed = false;
+    
 }

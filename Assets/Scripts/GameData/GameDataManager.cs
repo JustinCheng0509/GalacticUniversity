@@ -42,6 +42,18 @@ public class GameDataManager : MonoBehaviour
     public List<Quest> QuestList => _questList;
     public List<NPC> NPCList => _npcList;
 
+    public float TotalWorkshopMinutes 
+    {
+        get => _gameData.totalWorkshopMinutes;
+        set => _gameData.totalWorkshopMinutes = value;
+    }
+
+    public float workshopMoneyBonus
+    {
+        get => _gameData.workshopMoneyBonus;
+        set => _gameData.workshopMoneyBonus = value;
+    }
+
     public float MoveSpeedBonus
     {
         get => _gameData.moveSpeedBonus;

@@ -145,6 +145,7 @@ public class OverworldPlayerStatusController : MonoBehaviour
         if (_currentStatus == OverworldPlayerStatus.Working)
         {
             _gameDataManager.Money += 1;
+            _gameDataManager.TotalWorkshopMinutes += 1;
             if (GameConstants.USE_SKILL_SYSTEM)
             {
                 int chanceToIncreaseSkill = 5 + (int) _gameDataManager.LeaningSpeedBonus;

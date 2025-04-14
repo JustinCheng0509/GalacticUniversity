@@ -16,6 +16,7 @@ public enum QuestType
     TotalManeuverability,
     TotalDestruction,
     TotalMechanics,
+    TotalWorkHours,
 }
 
 [CreateAssetMenu(fileName = "Quest", menuName = "Scriptable Objects/Quest")]
@@ -28,7 +29,6 @@ public class Quest : ScriptableObject
     public float targetValue;
     public float currentValue;
     public string itemID; // For item delivery quests
-    public string npcID; // For item delivery quests
     public string navigationTag;
     public string navigationCompleteTag;
     public Dialog startDialog;
