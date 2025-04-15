@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2008eece822dcc7458169ec19c2cef92, type: 3}
+  m_Name: npc_5_quest_1_start_dialog_2
+  m_EditorClassIdentifier: 
+  dialogID: npc_5_quest_1_start_dialog_2
+  characterName: '[npc_5]'
+  isLeft: 1
+  text: '[PlayerName]! It''s great that you are here. I do need more hands in fact.
+    Can you help me in the workshop for some hours? I''ll give you a nice reward!'
+  isSelfDialog: 0
+  nextDialog: {fileID: 0}
+  associatedTutorials: []
+  associatedQuests: []

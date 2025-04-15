@@ -28,10 +28,7 @@ public class MinigamePlayerHealthController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (GameConstants.USE_SKILL_SYSTEM)
-{
-            damage *= Mathf.Lerp(1f, 1f / 3f, _gameDataManager.Mechanics / 100f);
-        }
+        damage *= Mathf.Lerp(1f, 1f / 3f, _gameDataManager.Mechanics / 100f);
 
         if (damage >= _currentHealth)
         {

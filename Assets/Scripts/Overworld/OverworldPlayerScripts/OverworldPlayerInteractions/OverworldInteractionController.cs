@@ -24,7 +24,7 @@ public class OverworldInteractionController : MonoBehaviour
     private DialogController _dialogController;
     private SwitchScene _switchScene;
     private OverworldNPCInteractionController _overworldNPCInteractionController;
-    private OverworldUIChestController _overworldUIChestController;
+    private OverworldUIItemReceivedController _overworldUIItemReceivedController;
     private OverworldUIShopController _overworldUIShopController;
 
     [SerializeField] private AudioSource _interactionAudioSource;
@@ -39,7 +39,7 @@ public class OverworldInteractionController : MonoBehaviour
         _dialogController = FindAnyObjectByType<DialogController>();
         _switchScene = FindAnyObjectByType<SwitchScene>();
         _overworldNPCInteractionController = FindAnyObjectByType<OverworldNPCInteractionController>();
-        _overworldUIChestController = FindAnyObjectByType<OverworldUIChestController>();
+        _overworldUIItemReceivedController = FindAnyObjectByType<OverworldUIItemReceivedController>();
         _overworldUIShopController = FindAnyObjectByType<OverworldUIShopController>();
     }
 
@@ -93,7 +93,7 @@ public class OverworldInteractionController : MonoBehaviour
         Chest Chest = chestController.Chest;
         InteractableGameObject = null;
         _gameDataManager.OpenChest(Chest);
-        _overworldUIChestController.OpenChestUI(Chest);
+        _overworldUIItemReceivedController.OpenChestUI(Chest);
     }
 
     private void StartNPCInteraction(GameObject interactableGameObject) {

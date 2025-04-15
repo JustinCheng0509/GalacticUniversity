@@ -57,46 +57,39 @@ public class MinigamePlayerMovement : MonoBehaviour
         
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        // Check if applying skill system
-        if (!GameConstants.USE_SKILL_SYSTEM)
+
+        // Calculate acceleration/deceleration based on maneuverability
+        float speedFactor = Mathf.Lerp(_minSpeedFactor, _maxSpeedFactor, _gameDataManager.Maneuverability / 100f);
+
+        speedFactor += speedFactor * _gameDataManager.MinigameMoveSpeedBonus / 100f;
+
+        // Calculate the desired velocity (direction multiplied by speed)
+        Vector2 desiredVelocity = new Vector2(horizontalInput, Input.GetAxis("Vertical")) * _speed;
+
+        // Apply smooth acceleration/deceleration based on maneuverability
+        // Apply velocity change over time to create deceleration
+        Vector2 currentVelocity = _rb.linearVelocity;
+        Vector2 velocityChange;
+
+        // Gradual deceleration if no input is given
+        if (horizontalInput == 0 && verticalInput == 0)
         {
-            transform.position += new Vector3(horizontalInput, verticalInput, 0f) * _speed * Time.deltaTime;
-        } else {
-            // Calculate acceleration/deceleration based on maneuverability
-            // float speedFactor = playerShipInfo.maneuverability/ 100f;
-            float speedFactor = Mathf.Lerp(_minSpeedFactor, _maxSpeedFactor, _gameDataManager.Maneuverability / 100f);
-
-            speedFactor += speedFactor * _gameDataManager.MinigameMoveSpeedBonus / 100f;
-
-            // Calculate the desired velocity (direction multiplied by speed)
-            Vector2 desiredVelocity = new Vector2(horizontalInput, Input.GetAxis("Vertical")) * _speed;
-
-            // Apply smooth acceleration/deceleration based on maneuverability
-            // Apply velocity change over time to create deceleration
-            Vector2 currentVelocity = _rb.linearVelocity;
-            Vector2 velocityChange;
-
-            // Gradual deceleration if no input is given
-            if (horizontalInput == 0 && verticalInput == 0)
-            {
-                // Apply gradual deceleration
-                velocityChange = Vector2.Lerp(currentVelocity, Vector2.zero, speedFactor * Time.fixedDeltaTime);
-            }
-            else
-            {
-                // Apply smooth velocity change towards the desired velocity
-                velocityChange = Vector2.Lerp(currentVelocity, desiredVelocity, speedFactor * Time.fixedDeltaTime);
-            }
-
-            // Set the velocity after applying smooth change
-            _rb.linearVelocity = velocityChange;
+            // Apply gradual deceleration
+            velocityChange = Vector2.Lerp(currentVelocity, Vector2.zero, speedFactor * Time.fixedDeltaTime);
         }
+        else
+        {
+            // Apply smooth velocity change towards the desired velocity
+            velocityChange = Vector2.Lerp(currentVelocity, desiredVelocity, speedFactor * Time.fixedDeltaTime);
+        }
+
+        // Set the velocity after applying smooth change
+        _rb.linearVelocity = velocityChange;
 
         // Clamp player position to screen bounds
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, _screenBounds.x * -1 + _xPadding, _screenBounds.x - _xPadding);
         pos.y = Mathf.Clamp(pos.y, _screenBounds.y * -1 + _yPadding, _screenBounds.y - _yPadding);
         transform.position = pos;
-        
     }
 }

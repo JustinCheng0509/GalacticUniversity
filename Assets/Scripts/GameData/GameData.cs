@@ -32,6 +32,25 @@ public class LeaderboardEntry
     public int safetyScore = 0;
 }
 
+[System.Serializable]
+public class InventoryItem
+{
+    public Item item;
+    public int quantity;
+
+    public InventoryItem(Item item)
+    {
+        this.item = item;
+        this.quantity = 1;
+    }
+
+    public InventoryItem(Item item, int quantity)
+    {
+        this.item = item;
+        this.quantity = quantity;
+    }
+}
+
 
 [System.Serializable]
 public class GameData
@@ -63,7 +82,7 @@ public class GameData
 
     public List<string> openedChests = new List<string>();
 
-    public List<Item> inventory = new List<Item>();
+    public List<InventoryItem> inventory = new List<InventoryItem>();
 
     public List<DailyGameData> dailyGameDataList = new List<DailyGameData>();
 
@@ -74,13 +93,11 @@ public class GameData
     public int numberOfItemsBought;
     public float learningSpeedBonus;
     public float shopItemDiscount;
+    public float totalWorkshopMinutes;
+    public float workshopMoneyBonus;
 
     // Intros and tutorials
     public bool isTutorialEnabled = true;
     public bool introDialogPlayed = false;
-    // public bool introClassPlayed = false;
-    // public bool introShopPlayed = false;
-    // public bool introDormPlayed = false;
-    // public bool introPlayRoomPlayed = false;
-    // public bool introWorkPlayed = false;
+    
 }

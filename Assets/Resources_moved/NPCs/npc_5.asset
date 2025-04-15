@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed1f2a2550ff9b4d82a8a21fa5b488f, type: 3}
+  m_Name: npc_5
+  m_EditorClassIdentifier: 
+  npcID: npc_5
+  npcName: Nyamira
+  npcRace: Meowthari
+  npcDescription: "Nyamira was born among the orbital petals of Velari Prime, where
+    the Meowthari clans weave metal and starlight into living sculptures. From a
+    young age, her nimble paws were always tinkering\u2014whether with broken drones,
+    music boxes, or forbidden tech scraps smuggled from deep space."
+  npcSprite: {fileID: 21300000, guid: 9fd5a599ffe458f4aad767db7fa15756, type: 3}
+  introDialog: {fileID: 11400000, guid: 4b2977befcce97446ae11dda0e6ffe8c, type: 2}
+  quests:
+  - {fileID: 11400000, guid: 00f53388ed0d5754ca640475cf38a003, type: 2}

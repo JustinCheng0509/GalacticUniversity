@@ -88,7 +88,7 @@ public class OverworldUIShopController : MonoBehaviour
         }
         // Add the item to the inventory and subtract the value from the player's money
         _gameDataManager.NumberOfItemsBought++;
-        _gameDataManager.AddItemToInventory(item);
+        _gameDataManager.InventoryManager.AddItem(item);
         _gameDataManager.Money -= itemValue;
         _sfxAudioSource.PlayOneShot(_buyItemAudioClip);
     }

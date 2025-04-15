@@ -23,7 +23,7 @@ public class OverworldUIInventoryController : MonoBehaviour
 
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
         _gameDataManager.OnGameDataLoaded += ReloadItemList;
-        _gameDataManager.OnInventoryUpdated += ReloadItemList;
+        _gameDataManager.InventoryManager.OnInventoryUpdated += ReloadItemList;
     }
 
     private void ReloadItemList()
@@ -33,11 +33,17 @@ public class OverworldUIInventoryController : MonoBehaviour
             Destroy(child.gameObject);
         }
         // Loop through the inventory and create a slot for each item
-        foreach (Item item in _gameDataManager.Inventory)
+        foreach (InventoryItem item in _gameDataManager.InventoryManager.Inventory)
         {
             GameObject itemSlot = Instantiate(_itemSlotPrefab, _itemGrid.transform);
             OverworldItemPrefabController itemSlotController = itemSlot.GetComponent<OverworldItemPrefabController>();
-            itemSlotController.SetItemInfo(item.itemSprite, () => _overworldItemController.SelectItem(item));
+            if (item.item.isConsumable)
+            {
+                itemSlotController.SetItemInfo(item.item.itemSprite, item.quantity, () => _overworldItemController.SelectItem(item.item));
+            } else
+            {
+                itemSlotController.SetItemInfo(item.item.itemSprite, () => _overworldItemController.SelectItem(item.item));
+            }
             // Set the grid as the parent of the item slot
             itemSlot.transform.SetParent(_itemGrid.transform, false);
         }
@@ -47,7 +53,7 @@ public class OverworldUIInventoryController : MonoBehaviour
 
     private void HideInfo()
     {
-        if (_gameDataManager != null && _gameDataManager.Inventory.Count == 0)
+        if (_gameDataManager != null && _gameDataManager.InventoryManager.Inventory.Count == 0)
         {
             _itemNameText.text = "No items in inventory";
         } else
@@ -59,7 +65,7 @@ public class OverworldUIInventoryController : MonoBehaviour
         _discardButton.gameObject.SetActive(false);
     }
 
-    private void ReloadItemList(List<Item> items)
+    private void ReloadItemList(List<InventoryItem> items)
     {
         ReloadItemList();
     }
@@ -93,15 +99,15 @@ public class OverworldUIInventoryController : MonoBehaviour
         }
         if (item.hungerRestore > 0)
         {
-            description += "Hunger Restore: +" + item.hungerRestore + "\n";
+            description += "Hunger restore: +" + item.hungerRestore + "\n";
         }
         if (item.overworldMoveSpeedBonus > 0)
         {
-            description += "Campus Move Speed Bonus: +" + item.overworldMoveSpeedBonus + "%\n";
+            description += "Campus move speed bonus: +" + item.overworldMoveSpeedBonus + "%\n";
         }
         if (item.minigameMoveSpeedBonus > 0)
         {
-            description += "Minigame Move Speed Bonus: +" + item.minigameMoveSpeedBonus + "%\n";
+            description += "Minigame move speed bonus: +" + item.minigameMoveSpeedBonus + "%\n";
         }
         if (item.learningSpeedBonus > 0)
         {
@@ -109,7 +115,11 @@ public class OverworldUIInventoryController : MonoBehaviour
         }
         if (item.shopItemDiscount > 0)
         {
-            description += "Shop Discount: -" + item.shopItemDiscount + "%\n";
+            description += "Shop discount: -" + item.shopItemDiscount + "%\n";
+        }
+        if (item.workMoneyBonus > 0)
+        {
+            description += "Bonus money from workshop: +" + item.workMoneyBonus + "%\n";
         }
         return description;
     }

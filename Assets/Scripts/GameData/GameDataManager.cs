@@ -34,13 +34,27 @@ public class GameDataManager : MonoBehaviour
     public event Action<List<Quest>> OnActiveQuestsUpdated;
     public event Action<Quest> OnQuestCompleted;
     public event Action<NPC> OnNPCRelationshipUpdated;
-    public event Action<List<Item>> OnInventoryUpdated;
     public event Action<string> OnChestOpened;
 
     public List<Dialog> DialogList => _dialogList;
     public List<Tutorial> TutorialList => _tutorialList;
     public List<Quest> QuestList => _questList;
     public List<NPC> NPCList => _npcList;
+    
+    private InventoryDataManager _inventoryManager = new InventoryDataManager();
+    public InventoryDataManager InventoryManager => _inventoryManager;
+
+    public float TotalWorkshopMinutes 
+    {
+        get => _gameData.totalWorkshopMinutes;
+        set => _gameData.totalWorkshopMinutes = value;
+    }
+
+    public float WorkshopMoneyBonus
+    {
+        get => _gameData.workshopMoneyBonus;
+        set => _gameData.workshopMoneyBonus = value;
+    }
 
     public float MoveSpeedBonus
     {
@@ -328,41 +342,20 @@ public class GameDataManager : MonoBehaviour
         set => _gameData.shopItemDiscount = value;
     }
 
-    public List<Item> Inventory => _gameData.inventory;
-
-    public void AddItemToInventory(Item item)
+    public int NumberOfAttendances
     {
-        _gameData.inventory.Add(item);
-        if (item.hasPassiveEffect) {
-            if (item.overworldMoveSpeedBonus > 0) {
-                MoveSpeedBonus += item.overworldMoveSpeedBonus;
+        get {
+            // Count the number of days the player has attended
+            int attendance = 0;
+            foreach (var day in DailyGameDataList)
+            {
+                if (day.attendance == AttendanceStatus.ATTENDED)
+                {
+                    attendance++;
+                }
             }
-            if (item.minigameMoveSpeedBonus > 0) {
-                MinigameMoveSpeedBonus += item.minigameMoveSpeedBonus;
-            }
-            if (item.learningSpeedBonus > 0) {
-                LeaningSpeedBonus += item.learningSpeedBonus;
-            }
-            if (item.shopItemDiscount > 0) {
-                ShopItemDiscount += item.shopItemDiscount;
-            }
+            return attendance;
         }
-        OnInventoryUpdated?.Invoke(_gameData.inventory);
-    }
-
-    public void RemoveItemFromInventory(string itemId)
-    {
-        Item item = _gameData.inventory.Find(i => i.itemID == itemId);
-        if (item != null)
-        {
-            RemoveItemFromInventory(item);
-        }
-    }
-
-    public void RemoveItemFromInventory(Item item)
-    {
-        _gameData.inventory.Remove(item);
-        OnInventoryUpdated?.Invoke(_gameData.inventory);
     }
     
     public bool IsTutorialCompleted(string tutorialId)
@@ -387,13 +380,13 @@ public class GameDataManager : MonoBehaviour
     {
         if (!_gameData.openedChests.Contains(chest.chestID))
         {
-            // Add the chest to the list of opened chests
             _gameData.openedChests.Add(chest.chestID);
-            // Add the items to the inventory
-            foreach (Item item in chest.items)
+
+            foreach (ChestItemEntry chestItemEntry in chest.chestItems)
             {
-                AddItemToInventory(item);
+                InventoryManager.AddItem(chestItemEntry.item, chestItemEntry.quantity);
             }
+
             OnChestOpened?.Invoke(chest.chestID);
         }
     }
@@ -417,15 +410,16 @@ public class GameDataManager : MonoBehaviour
         _questList = questTask.Result;
         _npcList = npcTask.Result;
 
-        foreach (Dialog dialog in _dialogList) {
-            Debug.Log(dialog.text);
-            Debug.Log(dialog.associatedTutorials.Count);
-        }
+        // foreach (Dialog dialog in _dialogList) {
+        //     Debug.Log(dialog.text);
+        //     Debug.Log(dialog.associatedTutorials.Count);
+        // }
 
         // Now all assets are loaded, fire game data event
         OnGameDataLoaded?.Invoke();
 
         // Update game state
+        _inventoryManager.Initialize(_gameData.inventory);
         OnAttendanceUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].attendance);
         OnHomeworkProgressUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress);
         OnEnergyUpdated?.Invoke(_gameData.energy);

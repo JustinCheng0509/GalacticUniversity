@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: chest_1
   m_EditorClassIdentifier: 
   chestID: chest_1
-  items:
-  - {fileID: 11400000, guid: dbddcc5ef647ee5469f178e450a336fd, type: 2}
-  - {fileID: 11400000, guid: 72f82d2f032ff3c4a8618ad3768ad682, type: 2}
+  chestItems:
+  - item: {fileID: 11400000, guid: dbddcc5ef647ee5469f178e450a336fd, type: 2}
+    quantity: 2
+  - item: {fileID: 11400000, guid: 72f82d2f032ff3c4a8618ad3768ad682, type: 2}
+    quantity: 2

@@ -36,7 +36,7 @@ public class DialogController : MonoBehaviour
 
     public void EndDialog()
     {
-        Debug.Log(_currentDialog.associatedTutorials.Count);
+        // Debug.Log(_currentDialog.associatedTutorials.Count);
         _dialogPanel.SetActive(false);
         OnDialogEnded?.Invoke(_currentDialog);
         _currentDialog = null;
