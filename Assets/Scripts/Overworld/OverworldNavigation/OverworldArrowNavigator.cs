@@ -49,8 +49,8 @@ public class OverworldArrowNavigator : MonoBehaviour
     public void ShowArrowNavigator(string targetTag)
     {
         GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
-        Debug.Log("Target Object: " + targetObject);
-        Debug.Log("Target Tag: " + targetTag);
+        // Debug.Log("Target Object: " + targetObject);
+        // Debug.Log("Target Tag: " + targetTag);
         if (targetObject != null)
         {
             _target = targetObject.transform;
@@ -67,7 +67,7 @@ public class OverworldArrowNavigator : MonoBehaviour
         // Calculate a new path
         if (NavMesh.CalculatePath(_player.position, _target.position, NavMesh.AllAreas, _path))
         {
-            Debug.Log("Found path length: " + _path.corners.Length);
+            // Debug.Log("Found path length: " + _path.corners.Length);
             if (_path.corners.Length > 1)
             {
                 Vector3 nextPoint = _path.corners[1]; // First corner after player position
