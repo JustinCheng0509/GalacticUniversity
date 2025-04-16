@@ -12,6 +12,7 @@ public enum QuestType
     TotalDestruction,
     TotalMechanics,
     TotalWorkHours,
+    TotalChestsOpened,
 }
 
 [CreateAssetMenu(fileName = "Quest", menuName = "Scriptable Objects/Quest")]

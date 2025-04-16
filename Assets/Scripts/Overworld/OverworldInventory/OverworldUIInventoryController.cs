@@ -129,6 +129,10 @@ public class OverworldUIInventoryController : MonoBehaviour
         {
             description += "Ship fire rate increase: +" + item.shipFireRateIncrease + "%\n";
         }
+        if (item.shipDamageIncrease > 0)
+        {
+            description += "Ship damage increase: +" + item.shipDamageIncrease + "%\n";
+        }
         return description;
     }
 }

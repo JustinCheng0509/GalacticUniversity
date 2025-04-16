@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2549f8833a0d8ab47bc9943c0416a767, type: 3}
+  m_Name: item_shard
+  m_EditorClassIdentifier: 
+  itemID: item_shard
+  itemName: Stellar Core Fragment
+  itemDescription: A pulsing shard of ancient battleship energy. Embeds into your
+    ship to boost base damage with every strike, echoing the fury of forgotten stars.
+  itemSprite: {fileID: 4387876596314699730, guid: af1edaeca4660824597636701a8f3c1a, type: 3}
+  itemValue: 800
+  isConsumable: 0
+  energyRestore: 0
+  hungerRestore: 0
+  moodRestore: 0
+  hasPassiveEffect: 1
+  energyRecoveryBonus: 0
+  overworldMoveSpeedBonus: 0
+  minigameMoveSpeedBonus: 0
+  learningSpeedBonus: 0
+  shopItemDiscount: 0
+  workMoneyBonus: 0
+  shipFireRateIncrease: 0
+  shipDamageIncrease: 20

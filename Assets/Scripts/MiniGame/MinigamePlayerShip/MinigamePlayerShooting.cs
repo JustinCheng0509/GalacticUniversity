@@ -63,6 +63,7 @@ public class MinigamePlayerShooting : MonoBehaviour
         // Update only once when the game data is loaded
         _gameDataManager.OnGameDataLoaded -= UpdateDamage;
         _damage *= Mathf.Lerp(1f, 3f, _gameDataManager.Destruction / 100f);
+        _damage += _damage * (_gameDataManager.InventoryManager.ShipDamageIncrease / 100f);
         fireRate -= fireRate * (_gameDataManager.InventoryManager.ShipFireRateIncrease / 100f);
     }
 

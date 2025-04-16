@@ -1,6 +1,6 @@
 public class GameConstants
 {
-    public const int TOTAL_NUMBER_OF_DAYS = 2;
+    public const int TOTAL_NUMBER_OF_DAYS = 7;
     public const string GAME_DATA_JSON_PATH = "gamedata.json";
     public const string NEW_GAME_START_TIME = "08:00";
     public const string CLASS_START_TIME = "14:00";

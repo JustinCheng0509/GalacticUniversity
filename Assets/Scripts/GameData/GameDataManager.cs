@@ -298,6 +298,8 @@ public class GameDataManager : MonoBehaviour
         return npc != null ? npc.npcName : "Unknown NPC";
     }
 
+    public List<string> OpenedChests => _gameData.openedChests;
+
     public void UpdateNPCRelationship(string npcId, float relationshipChange)
     {
         NPCRelationshipKeyValuePair n = _gameData.npcRelationships.Find(n => n.npcID == npcId);
@@ -412,6 +414,7 @@ public class GameDataManager : MonoBehaviour
         _gameData.workshopMoneyBonus = _inventoryManager.WorkshopMoneyBonus;
         _gameData.shopItemDiscount = _inventoryManager.ShopItemDiscount;
         _gameData.shipFireRateIncrease = _inventoryManager.ShipFireRateIncrease;
+        _gameData.shipDamageIncrease = _inventoryManager.ShipDamageIncrease;
         OnPotentialQuestProgressUpdated?.Invoke();
     }
 

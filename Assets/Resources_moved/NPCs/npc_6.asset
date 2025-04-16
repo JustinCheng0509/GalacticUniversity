@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed1f2a2550ff9b4d82a8a21fa5b488f, type: 3}
+  m_Name: npc_6
+  m_EditorClassIdentifier: 
+  npcID: npc_6
+  npcName: Headmaster Quarnyx Vell
+  npcRace: Aetherion
+  npcDescription: "The enigmatic leader of Galactic University, Quarnyx Vell speaks
+    in riddles, floats instead of walks, and somehow always knows when you've skipped
+    class. Rumor has it he\u2019s been the headmaster for the last 300 years... and
+    still hasn't aged a day."
+  npcSprite: {fileID: 21300000, guid: 8d1c06e0275fd2148a0b15feae86b038, type: 3}
+  introDialog: {fileID: 11400000, guid: be87869cd4e5bc944acdfc2d592273ae, type: 2}
+  quests:
+  - {fileID: 11400000, guid: 322d951098b53994ca536dffb753456f, type: 2}

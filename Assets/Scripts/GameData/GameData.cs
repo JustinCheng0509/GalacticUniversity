@@ -103,6 +103,7 @@ public class GameData
     public float shopItemDiscount;
     public float workshopMoneyBonus;
     public float shipFireRateIncrease;
+    public float shipDamageIncrease;
 
     // Intros and tutorials
     public bool isTutorialEnabled = true;
