@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eaf922f79ce2c4a4598a93f2e28e1e62
+guid: abc7a9712358ccf4aada3fe01fd6226a
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -98,3 +98,63 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
 <<<<<<< Updated upstream
+    buildTarget: WebGL
+=======
+    buildTarget: WindowsStoreApps
+>>>>>>> Stashed changes
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 505F3DD2897244E65D0D6ACB29A8933A_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 600
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c2b08252aac49b80800000000000000
+      internalID: -8388857407366712632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      505F3DD2897244E65D0D6ACB29A8933A_0: -8388857407366712632
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

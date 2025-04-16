@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: eaf922f79ce2c4a4598a93f2e28e1e62
+guid: e45e403db7632104fa7e6fb49fef467e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8388857407366712632
-    second: 505F3DD2897244E65D0D6ACB29A8933A_0
+      213: 2631070857643824785
+    second: IMG_6435_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,5 +96,47 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-<<<<<<< Updated upstream
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: IMG_6435_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3
+        width: 1200
+        height: 666
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1961eb84101738420800000000000000
+      internalID: 2631070857643824785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
