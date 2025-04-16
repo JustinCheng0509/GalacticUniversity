@@ -15,8 +15,6 @@ public class SavedDataManager : MonoBehaviour
             {
                 name = playerName,
                 totalScore = 0,
-                destructionScore = 0,
-                safetyScore = 0
             }
         };
         for (int i = 1; i <= 19; i++)
@@ -25,8 +23,6 @@ public class SavedDataManager : MonoBehaviour
             {
                 name = GameConstants.ALIEN_NAMES[i],
                 totalScore = 0,
-                destructionScore = 0,
-                safetyScore = 0
             });
         }
 
@@ -68,8 +64,10 @@ public class SavedDataManager : MonoBehaviour
             isTutorialEnabled = true,
             introDialogPlayed = false,
             totalScore = 0,
-            totalDestructionScore = 0,
-            totalSafetyScore = 0,
+            totalDamageDealt = 0,
+            totalDamageTaken = 0,
+            dangersDestroyedScore = 0,
+            timesDead = 0,
             activeQuests = new List<Quest>(),
             completedQuestIDs = new List<string>(),
             npcRelationships = new List<NPCRelationshipKeyValuePair>(),

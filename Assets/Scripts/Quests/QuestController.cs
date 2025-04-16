@@ -131,7 +131,7 @@ public class QuestController : MonoBehaviour
 
     private bool CheckScoreTotalQuest(Quest quest)
     {
-        return _gameDataManager.TotalScore >= quest.targetValue;
+        return _gameDataManager.ScoreDataManager.TotalScore >= quest.targetValue;
     }
 
     private void CompleteQuest(Quest quest)

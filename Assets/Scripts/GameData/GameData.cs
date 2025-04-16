@@ -28,8 +28,6 @@ public class LeaderboardEntry
 {
     public string name = "name";
     public int totalScore = 0;
-    public int destructionScore = 0;
-    public int safetyScore = 0;
 }
 
 [System.Serializable]
@@ -70,8 +68,10 @@ public class GameData
     public int totalNumberOfDays = 10;
 
     public int totalScore = 0;
-    public int totalDestructionScore = 0;
-    public int totalSafetyScore = 0;
+    public int totalDamageDealt = 0;
+    public int dangersDestroyedScore;
+    public int totalDamageTaken = 0;
+    public int timesDead = 0;
 
     public List<Quest> activeQuests = new List<Quest>();
     public List<string> completedQuestIDs = new List<string>();

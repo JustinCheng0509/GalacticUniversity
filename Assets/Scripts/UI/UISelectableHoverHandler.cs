@@ -6,37 +6,43 @@ using UnityEngine.UI;
 public class UISelectableHoverHandler : MonoBehaviour
 {
     [Header("Cursor Settings")]
-    public Texture2D hoverCursor;                 // Set this to your hand cursor
-    public Vector2 hotspot = Vector2.zero;
-    public CursorMode cursorMode = CursorMode.Auto;
+    [SerializeField] private Texture2D hoverCursor;
 
-    private bool isCursorOverButton = false;
-
-    private GraphicRaycaster raycaster;
-    private EventSystem eventSystem;
+    private Vector2 _hotspot = Vector2.zero;
+    private CursorMode _cursorMode = CursorMode.Auto;
+    private bool _isCursorOverButton = false;
+    private GraphicRaycaster[] _allRaycasters;
+    private EventSystem _eventSystem;
 
     void Start()
     {
-        raycaster = FindAnyObjectByType<GraphicRaycaster>();
-        eventSystem = EventSystem.current;
+        _allRaycasters = FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None);
+        _eventSystem = EventSystem.current;
 
-        if (raycaster == null)
+        if (_allRaycasters == null)
             Debug.LogError("GlobalCursorHoverHandler: No GraphicRaycaster found in scene!");
-        if (eventSystem == null)
+        if (_eventSystem == null)
             Debug.LogError("GlobalCursorHoverHandler: No EventSystem found in scene!");
     }
 
     void Update()
     {
-        if (raycaster == null || eventSystem == null) return;
+        if (_allRaycasters == null || _allRaycasters.Length == 0 || _eventSystem == null) return;
 
-        PointerEventData pointerData = new PointerEventData(eventSystem)
+        PointerEventData pointerData = new PointerEventData(_eventSystem)
         {
             position = Input.mousePosition
         };
 
         List<RaycastResult> results = new List<RaycastResult>();
-        raycaster.Raycast(pointerData, results);
+
+        // Raycast against all raycasters in the scene
+        foreach (var raycaster in _allRaycasters) {
+            if (raycaster.gameObject.activeInHierarchy) {
+                // Use this one for raycasting
+                raycaster.Raycast(pointerData, results);
+            }
+        }
 
         bool hoveringButton = false;
 
@@ -50,15 +56,15 @@ public class UISelectableHoverHandler : MonoBehaviour
             }
         }
 
-        if (hoveringButton && !isCursorOverButton)
+        if (hoveringButton && !_isCursorOverButton)
         {
-            Cursor.SetCursor(hoverCursor, hotspot, cursorMode);
-            isCursorOverButton = true;
+            Cursor.SetCursor(hoverCursor, _hotspot, _cursorMode);
+            _isCursorOverButton = true;
         }
-        else if (!hoveringButton && isCursorOverButton)
+        else if (!hoveringButton && _isCursorOverButton)
         {
-            Cursor.SetCursor(null, Vector2.zero, cursorMode);
-            isCursorOverButton = false;
+            Cursor.SetCursor(null, Vector2.zero, _cursorMode);
+            _isCursorOverButton = false;
         }
     }
 }

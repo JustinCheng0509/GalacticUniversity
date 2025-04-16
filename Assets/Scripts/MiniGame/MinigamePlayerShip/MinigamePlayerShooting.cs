@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MinigamePlayerShooting : MonoBehaviour
 {
+    [SerializeField] private InputActionReference _shootAction;
     [SerializeField] private GameObject bulletPrefab;
 
     [SerializeField] private Transform bulletSpawn;
@@ -42,21 +44,12 @@ public class MinigamePlayerShooting : MonoBehaviour
         UpdateDamage();
     }
 
-    void OnEnable()
-    {
-        _canFire = true;        
-    }
-
-    void OnDisable()
-    {
-        _canFire = false;
-    }
-
     void Update()
     {
-        if (!_canFire) return;
+        if (!_canFire || Time.time < nextFireTime || !_shootAction.action.enabled) return;
 
-        if (Input.GetKey(KeyCode.Space) && Time.time > nextFireTime)
+        float shootValue = _shootAction.action.ReadValue<float>();
+        if (shootValue > 0.5f && Time.time > nextFireTime)
         {
             Fire();
             nextFireTime = Time.time + fireRate;
@@ -68,17 +61,12 @@ public class MinigamePlayerShooting : MonoBehaviour
         _damage *= Mathf.Lerp(1f, 3f, _gameDataManager.Destruction / 100f);
     }
 
-    void Fire()
+    private void Fire()
     {
-        // Instantiate the bullet at the spawn point
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
-
-        // Add velocity to the bullet
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.up * bulletSpeed;
 
-        // Play shooting sound effect
         sfxSource.PlayOneShot(shootSFX);
     }
-
 }

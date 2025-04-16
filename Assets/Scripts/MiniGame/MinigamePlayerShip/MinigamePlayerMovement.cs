@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class MinigamePlayerMovement : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float _speed = 20f;
-    [SerializeField] private float _minSpeedFactor = 0.25f;
-    [SerializeField] private float _maxSpeedFactor = 0.9f;
+    private float _speed = MinigameConstants.MINIGAME_PLAYER_TERMINAL_SPEED;
+    private float _minSpeedFactor = MinigameConstants.MINIMGAME_PLAYER_MIN_SPEED_FACTOR;
+    private float _maxSpeedFactor = MinigameConstants.MINIMGAME_PLAYER_MAX_SPEED_FACTOR;
 
     [Header("Screen Bounds Settings")]
     private Vector2 _screenBounds;
@@ -18,6 +17,7 @@ public class MinigamePlayerMovement : MonoBehaviour
     private MinigameController _minigameController;
     private GameDataManager _gameDataManager;
     private MinigamePlayerHealthController _playerHealthController;
+    private MinigameUIPlayerShipSpriteController _minigameUIPlayerShipSpriteController;
 
     void Start()
     {
@@ -32,6 +32,7 @@ public class MinigamePlayerMovement : MonoBehaviour
         _playerHealthController.OnPlayerRespawn += () => _canMove = true;
 
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _minigameUIPlayerShipSpriteController = FindAnyObjectByType<MinigameUIPlayerShipSpriteController>();
         
         _screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         _rb = GetComponent<Rigidbody2D>();
@@ -74,13 +75,15 @@ public class MinigamePlayerMovement : MonoBehaviour
         // Gradual deceleration if no input is given
         if (horizontalInput == 0 && verticalInput == 0)
         {
+            _minigameUIPlayerShipSpriteController.UpdateSprite(false);
             // Apply gradual deceleration
-            velocityChange = Vector2.Lerp(currentVelocity, Vector2.zero, speedFactor * Time.fixedDeltaTime);
+            velocityChange = Vector2.Lerp(currentVelocity, Vector2.zero, speedFactor * Time.deltaTime);
         }
         else
         {
+            _minigameUIPlayerShipSpriteController.UpdateSprite(true);
             // Apply smooth velocity change towards the desired velocity
-            velocityChange = Vector2.Lerp(currentVelocity, desiredVelocity, speedFactor * Time.fixedDeltaTime);
+            velocityChange = Vector2.Lerp(currentVelocity, desiredVelocity, speedFactor * Time.deltaTime);
         }
 
         // Set the velocity after applying smooth change

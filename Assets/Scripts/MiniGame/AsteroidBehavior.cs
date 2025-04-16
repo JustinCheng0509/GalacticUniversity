@@ -3,19 +3,21 @@ using UnityEngine.UI;
 
 public class AsteroidBehavior : MonoBehaviour
 {
-    private float _scale = 1f;
-    private Vector2 _moveDirection = Vector2.down;
+    // Scale affects size, health, damage, and score
+    private float _scale = MinigameConstants.MINIGAME_ENEMY_BASE_MIN_SCALE;
 
     // Movement
     private readonly float _rotationSpeed = 100f;
-    private float _moveSpeed = 6f;
+    private float _moveSpeed = MinigameConstants.MINIGAME_ENEMY_BASE_MIN_SPEED;
+    private Vector2 _moveDirection = Vector2.down;
 
     // Health and Damage
-    private float _maxHealth = 100;
+    private float _maxHealth = MinigameConstants.MINIGAME_ENEMY_BASE_HEALTH;
     private float _currentHealth;
-    private float _damage = 20;
-
-    private float _score = GameConstants.MINIGAME_ENEMY_BASE_SCORE;
+    private float _damage = MinigameConstants.MINIGAME_ENEMY_BASE_DAMAGE;
+    
+    // Score
+    private float _score = MinigameConstants.MINIGAME_ENEMY_BASE_SCORE;
 
     [SerializeField] private GameObject _destructionEffect;
     [SerializeField] private AudioClip _enemyDestroyedSFX;
@@ -31,7 +33,7 @@ public class AsteroidBehavior : MonoBehaviour
 
     void Start()
     {
-        GameObject sfxSourceObject = GameObject.Find(GameConstants.ENEMY_DESTROYED_SFX_AUDIO_SOURCE);
+        GameObject sfxSourceObject = GameObject.Find(MinigameConstants.MINIGAME_ENEMY_DESTROYED_SFX_AUDIO_SOURCE);
         if (sfxSourceObject != null) {
             _sfxSource = sfxSourceObject.GetComponent<AudioSource>();
         }
@@ -82,7 +84,6 @@ public class AsteroidBehavior : MonoBehaviour
         if (collision.CompareTag("Bullet"))
         {
             TakeDamage(_playerShooting.Damage);
-            _minigameScoreController.Score += _playerShooting.Damage;
             _minigameScoreController.DamageDealt += _playerShooting.Damage;
 
             Destroy(collision.gameObject);
@@ -109,9 +110,9 @@ public class AsteroidBehavior : MonoBehaviour
 
     private void DestroyWithEffects(bool isScored = true)
     {
+        // Differentiate between destruction by bullet and player collision
         if (isScored) {
             // Add score to player
-            _minigameScoreController.Score += _score;
             _minigameScoreController.DangersDestroyedScore += _score;
         }
         

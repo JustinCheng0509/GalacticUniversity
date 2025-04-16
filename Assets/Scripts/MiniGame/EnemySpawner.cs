@@ -3,10 +3,14 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _asteroidPrefab;
-    [SerializeField] private float _spawnRate = 0.4f;
-    [SerializeField] private float _maxScale = 2f;
-    [SerializeField] private float _minMoveSpeed = 6f;
-    [SerializeField] private float _maxMoveSpeed = 10f;
+    private float _spawnDelay = MinigameConstants.MINIGAME_ENEMY_BASE_SPAWN_DELAY;
+    private float _minScale = MinigameConstants.MINIGAME_ENEMY_BASE_MIN_SCALE;
+    private float _maxScale = MinigameConstants.MINIGAME_ENEMY_BASE_MAX_SCALE;
+    private float _minMoveSpeed = MinigameConstants.MINIGAME_ENEMY_BASE_MIN_SPEED;
+    private float _maxMoveSpeed = MinigameConstants.MINIGAME_ENEMY_BASE_MAX_SPEED;
+
+    // Offset to spawn the asteroids above the screen
+    private float _spawnYOffset = 2f;
 
     private GameDataManager _gameDataManager;
 
@@ -20,16 +24,16 @@ public class EnemySpawner : MonoBehaviour
     private void UpdateDifficulty()
     {
         // Adjust spawn rate based on day
-        _spawnRate -= 0.05f * (_gameDataManager.CurrentDay - 1);
+        _spawnDelay -= MinigameConstants.MINIGAME_ENEMY_DAILY_SPAWN_DELAY_DECREASE * (_gameDataManager.CurrentDay - 1);
         // Adjust scale based on day
-        _maxScale += 0.4f * (_gameDataManager.CurrentDay - 1);
-        InvokeRepeating(nameof(SpawnAsteroid), 1f, _spawnRate);
+        _maxScale += MinigameConstants.MINIGAME_ENEMY_DAILY_MAX_SCALE_INCREASE * (_gameDataManager.CurrentDay - 1);
+        InvokeRepeating(nameof(SpawnAsteroid), 1f, _spawnDelay);
     }
 
     void SpawnAsteroid()
     {
         // Get the Y position of the top of the screen + padding
-        float yPos = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y + 2f;
+        float yPos = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y + _spawnYOffset;
         // Get the X position within the width of the screen
         float xPos = Random.Range(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x);
         Vector3 spawnPosition = new Vector3(xPos, yPos, 0f);
@@ -49,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
         moveDirection.Normalize();
 
         // Randomize the scale of the asteroid
-        float scale = Random.Range(1f, _maxScale);
+        float scale = Random.Range(_minScale, _maxScale);
 
         GameObject asteroid = Instantiate(_asteroidPrefab, spawnPosition, Quaternion.identity);
 

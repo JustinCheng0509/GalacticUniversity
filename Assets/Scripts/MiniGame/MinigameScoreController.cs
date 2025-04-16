@@ -6,20 +6,14 @@ using UnityEngine;
 public class MinigameScoreController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _scoreText;
-
-    private float _score = 0f;
-    private float _baseScore = 3000f;
     private float _damageDealt = 0f;
     private float _damageTaken = 0f;
     private float _dangersDestroyedScore = 0f;
     private int _timesDead = 0;
-    private float _baseDeathPenalty = 500f;
+    private float _deathPenaltyScore = 0f;
+    private float _totalScoreThisRound = 0f;
 
-
-    private int _totalScoreThisRound = 0;
-
-    public event Action<int, int, int, int> OnMinigameEndScoreCalculated;
-    public event Action<List<LeaderboardEntry>, string> OnLeaderboardUpdated;
+    public event Action OnMinigameEndScoreCalculated;
 
     private GameDataManager _gameDataManager;
     
@@ -28,17 +22,15 @@ public class MinigameScoreController : MonoBehaviour
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
     }
 
-    public float Score
+    public float TotalScoreThisRound
     {
-        get => _score;
+        get => _totalScoreThisRound;
         set
         {
-            _score = value;
-            _scoreText.text = "Score: " + Mathf.RoundToInt(_score).ToString();
+            _totalScoreThisRound = value;
+            _scoreText.text = "Score: " + Mathf.RoundToInt(_totalScoreThisRound).ToString();
         }
     }
-
-    public float BaseScore => _baseScore;
 
     public float DamageDealt
     {
@@ -46,6 +38,7 @@ public class MinigameScoreController : MonoBehaviour
         set
         {
             _damageDealt = value;
+            RecalculateScore();
         }
     }
 
@@ -55,6 +48,7 @@ public class MinigameScoreController : MonoBehaviour
         set
         {
             _damageTaken = value;
+            RecalculateScore();
         }
     }
 
@@ -64,6 +58,7 @@ public class MinigameScoreController : MonoBehaviour
         set
         {
             _dangersDestroyedScore = value;
+            RecalculateScore();
         }
     }
 
@@ -73,98 +68,32 @@ public class MinigameScoreController : MonoBehaviour
         set
         {
             _timesDead = value;
+            RecalculateScore();
         }
     }
 
-    public float TotalScoreThisRound => _totalScoreThisRound;
+    public float DeathPenaltyScore => _deathPenaltyScore;
 
-    public float BaseDeathPenalty => _baseDeathPenalty;
+    private void RecalculateScore()
+    {
+        _deathPenaltyScore = _timesDead * MinigameConstants.MINIGAME_PLAYER_BASE_DEATH_PENALTY;
+        TotalScoreThisRound = _damageDealt - _damageTaken - _deathPenaltyScore + _dangersDestroyedScore;
+    }
 
     public void CalculateFinalScore()
     {
-        // Round everything to the nearest integer
-        _baseScore = Mathf.RoundToInt(_baseScore);
         _damageDealt = Mathf.RoundToInt(_damageDealt);
         _damageTaken = Mathf.RoundToInt(_damageTaken);
         _dangersDestroyedScore = Mathf.RoundToInt(_dangersDestroyedScore);
-
-        int _deatlhPenaltyScore = Mathf.RoundToInt(_baseDeathPenalty * _timesDead);
-
-        _totalScoreThisRound = Mathf.RoundToInt(_baseScore + _damageDealt - _damageTaken - _deatlhPenaltyScore + _dangersDestroyedScore);
-        int previousTotalScore = _gameDataManager.TotalScore;
-        _gameDataManager.TotalScore += _totalScoreThisRound;
-        _gameDataManager.TotalDestructionScore += Mathf.RoundToInt(_damageDealt + _dangersDestroyedScore);
-        _gameDataManager.TotalSafetyScore += Mathf.RoundToInt(_damageTaken + _deatlhPenaltyScore);
-        GenerateLeaderboardScore();
-        OnMinigameEndScoreCalculated?.Invoke(_gameDataManager.CurrentDay, _deatlhPenaltyScore, previousTotalScore, _gameDataManager.TotalScore);
-    }
-
-    private void GenerateLeaderboardScore()
-    {
-        List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>(_gameDataManager.Leaderboard);
-        for (int i = 0; i < leaderboard.Count; i++)
-        {
-            if (leaderboard[i].name == _gameDataManager.PlayerName)
-            {
-                leaderboard[i].totalScore = _gameDataManager.TotalScore;
-                leaderboard[i].destructionScore = _gameDataManager.TotalDestructionScore;
-                leaderboard[i].safetyScore = _gameDataManager.TotalSafetyScore;
-            } else {
-                float minRange = 0.5f;
-                float maxRange = 1.5f;
-                int npcDestructionScore = (int) (GetExpectedDestructionScore() * UnityEngine.Random.Range(minRange, maxRange));
-                int npcSafetyScore = (int) (GetExpectedSafetyScore() * UnityEngine.Random.Range(minRange, maxRange));
-                int npcTotalScore = (int) (_baseScore + npcDestructionScore - npcSafetyScore);
-                
-                leaderboard[i].totalScore += npcTotalScore;
-                leaderboard[i].destructionScore += npcDestructionScore;
-                leaderboard[i].safetyScore += npcSafetyScore;
-            }
-        }
-
-        _gameDataManager.Leaderboard = leaderboard;
-        OnLeaderboardUpdated?.Invoke(leaderboard, _gameDataManager.PlayerName);
-    }
-
-    private int GetExpectedDestructionScore()
-    {
-        int day = _gameDataManager.CurrentDay;
-        float spawnRate = 0.4f - 0.05f * (day - 1);
-        float maxScale = 2f + 0.4f * (day - 1);
-        float scorePerAsteroidDestroyed = 100 * (maxScale + 1);
-
-        // Total asteroids in 60s
-        int totalAsteroids = Mathf.RoundToInt(60f / spawnRate);
-
-        // Expected asteroid destruction rate (estimate: 10% to 50% destruction depending on skill)
-        float destructionRate = Mathf.Lerp(0.1f, 0.5f, _gameDataManager.Destruction / 100f);
-        int expectedAsteroidsDestroyed = Mathf.RoundToInt(totalAsteroids * destructionRate);
-
-        return Mathf.RoundToInt(expectedAsteroidsDestroyed * scorePerAsteroidDestroyed);
-    }
-
-    private int GetExpectedSafetyScore()
-    {
-        int day = _gameDataManager.CurrentDay;
-        float spawnRate = 0.4f - 0.05f * (day - 1);
-        float maxScale = 2f + 0.4f * (day - 1);
-        float asteroidDamage = 20 * maxScale;
-
-        // Player skill multipliers
-        float mechanicsMultiplier = Mathf.Lerp(1f, 1f / 3f, _gameDataManager.Mechanics / 100f);
-
-        // Total asteroids in 60s
-        int totalAsteroids = Mathf.RoundToInt(60f / spawnRate);
-
-        // Expected damage taken (assuming 10-40% of asteroids hit the player)
-        float hitRate = Mathf.Lerp(0.1f, 0.4f, (100 - _gameDataManager.Maneuverability) / 100f);
-        float expectedDamageTaken = totalAsteroids * hitRate * asteroidDamage * mechanicsMultiplier;
-        int expectedDamageTakenScore = Mathf.RoundToInt(expectedDamageTaken);
-
-        // Player is expected to die less when they have higher mechanics skill
-        int totalDeaths = Mathf.CeilToInt(Mathf.Lerp(3f, 1f, Mathf.Clamp01((day - 1) / 9f)));
-        int expectedDeathPenalty = Mathf.RoundToInt(_baseDeathPenalty * totalDeaths);
-
-        return Mathf.RoundToInt(expectedDamageTakenScore + expectedDeathPenalty);
+        RecalculateScore();
+        
+        // Update GameDataManager
+        _gameDataManager.ScoreDataManager.TotalDamageDealt += (int) _damageDealt;
+        _gameDataManager.ScoreDataManager.TotalDamageTaken += (int) _damageTaken;
+        _gameDataManager.ScoreDataManager.DangersDestroyedScore += (int) _dangersDestroyedScore;
+        _gameDataManager.ScoreDataManager.TimesDead += _timesDead;
+        _gameDataManager.ScoreDataManager.TotalScore += (int) _totalScoreThisRound;
+        _gameDataManager.GenerateLeaderboardScore();
+        OnMinigameEndScoreCalculated?.Invoke();
     }
 }
