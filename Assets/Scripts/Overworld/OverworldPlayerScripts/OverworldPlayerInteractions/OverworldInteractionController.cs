@@ -117,6 +117,7 @@ public class OverworldInteractionController : MonoBehaviour
         }
 
         _gameDataManager.Attendance = AttendanceStatus.ATTENDED;
+        _gameDataManager.CurrentScene = GameConstants.SCENE_MINIGAME;
         SavedDataManager.SaveGameData(_gameDataManager.GameData);
         // Play the school bell sound
         _interactionAudioSource.PlayOneShot(_sfxSchoolBellClip);

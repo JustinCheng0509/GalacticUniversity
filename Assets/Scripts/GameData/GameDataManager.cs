@@ -31,6 +31,7 @@ public class GameDataManager : MonoBehaviour
     public event Action<string> OnTimeUpdated;
     public event Action<int> OnDayUpdated;
     public event Action<List<Quest>> OnActiveQuestsUpdated;
+    public event Action OnPotentialQuestProgressUpdated;
     public event Action<Quest> OnQuestCompleted;
     public event Action<NPC> OnNPCRelationshipUpdated;
     public event Action<string> OnChestOpened;
@@ -46,6 +47,24 @@ public class GameDataManager : MonoBehaviour
 
     private ScoreDataManager _scoreDataManager = new ScoreDataManager();
     public ScoreDataManager ScoreDataManager => _scoreDataManager;
+
+    public float OverworldPosX
+    {
+        get => _gameData.overworldPosX;
+        set => _gameData.overworldPosX = value;
+    }
+
+    public float OverworldPosY
+    {
+        get => _gameData.overworldPosY;
+        set => _gameData.overworldPosY = value;
+    }
+
+    public string CurrentScene
+    {
+        get => _gameData.currentScene;
+        set => _gameData.currentScene = value;
+    }
 
     public float TotalWorkshopMinutes 
     {
@@ -74,7 +93,11 @@ public class GameDataManager : MonoBehaviour
     public int NumberOfItemsBought
     {
         get => _gameData.numberOfItemsBought;
-        set => _gameData.numberOfItemsBought = value;
+        set
+        {
+            _gameData.numberOfItemsBought = value;
+            OnPotentialQuestProgressUpdated?.Invoke();
+        } 
     }
     
     public string PlayerName

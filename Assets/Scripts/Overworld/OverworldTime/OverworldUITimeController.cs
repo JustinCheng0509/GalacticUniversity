@@ -20,6 +20,7 @@ public class OverworldUITimeController : MonoBehaviour
 
         _overworldTimeController = FindAnyObjectByType<OverworldTimeController>();
         _overworldTimeController.OnPastClassTime += OnPastClassTime;
+        _overworldTimeController.OnPastClassLateTime += OnPastClassLateTime;
         _overworldTimeController.OnAfterClass += OnAfterClass;
 
         _tutorialController = FindAnyObjectByType<TutorialController>();
@@ -37,6 +38,11 @@ public class OverworldUITimeController : MonoBehaviour
     private void OnPastClassTime()
     {
         _classTimeWarningPanel.SetActive(true);
+    }
+
+    private void OnPastClassLateTime()
+    {
+        _classTimeWarningPanel.SetActive(false);
     }
 
     private void OnAfterClass()

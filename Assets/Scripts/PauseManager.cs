@@ -29,7 +29,7 @@ public class PauseManager : MonoBehaviour
 
         foreach (var ui in pauseUIs)
         {
-            if (ui.activeSelf) 
+            if (ui != null && ui.activeSelf) 
             {
                 shouldPause = true;
                 break;

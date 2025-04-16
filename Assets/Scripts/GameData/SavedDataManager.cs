@@ -51,6 +51,9 @@ public class SavedDataManager : MonoBehaviour
         GameData newGameData = new GameData
         {
             playerName = playerName,
+            overworldPosX = -8.4f,
+            overworldPosY = -2.74f,
+            currentScene = GameConstants.SCENE_OVERWORLD,
             energy = 100,
             hunger = 100,
             mood = 100,
@@ -100,6 +103,27 @@ public class SavedDataManager : MonoBehaviour
         catch (System.Exception e)
         {
             Debug.LogError("Failed to save game data: " + e);
+        }
+    }
+
+    public static bool GameDataExists()
+    {
+        return File.Exists(FilePath);
+    }
+
+    public static void DeleteGameData()
+    {
+        if (File.Exists(FilePath))
+        {
+            try
+            {
+                File.Delete(FilePath);
+                Debug.Log("Game data deleted from: " + FilePath);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Failed to delete game data: " + e);
+            }
         }
     }
 
