@@ -46,7 +46,7 @@ public class MinigamePlayerShooting : MonoBehaviour
 
     void Update()
     {
-        if (!_canFire || Time.time < nextFireTime || !_shootAction.action.enabled) return;
+        if (!_canFire || Time.time < nextFireTime) return;
 
         float shootValue = _shootAction.action.ReadValue<float>();
         if (shootValue > 0.5f && Time.time > nextFireTime)

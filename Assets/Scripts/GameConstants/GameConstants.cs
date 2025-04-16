@@ -27,6 +27,7 @@ public class GameConstants
     public const string SCENE_OVERWORLD = "Overworld";
     public const string SCENE_MAIN_MENU = "MainMenu";
     public const string SCENE_MINIGAME = "Minigame";
+    public const string SCENE_ENDING = "Ending";
 
     public static readonly string[] ALIEN_NAMES = new string[] {
         // Original Alien Names

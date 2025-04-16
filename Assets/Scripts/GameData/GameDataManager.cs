@@ -376,6 +376,26 @@ public class GameDataManager : MonoBehaviour
         _scoreDataManager.GenerateLeaderboardScore(_gameData.playerName, _gameData.currentDay, _gameData.mechanics, _gameData.destruction, _gameData.maneuverability);
     }
 
+    private void OnInventoryUpdated(List<InventoryItem> inventory)
+    {
+        _gameData.inventory = inventory;
+        _gameData.moveSpeedBonus = _inventoryManager.MoveSpeedBonus;
+        _gameData.minigameMoveSpeedBonus = _inventoryManager.MinigameMoveSpeedBonus;
+        _gameData.learningSpeedBonus = _inventoryManager.LearningSpeedBonus;
+        _gameData.workshopMoneyBonus = _inventoryManager.WorkshopMoneyBonus;
+        _gameData.shopItemDiscount = _inventoryManager.ShopItemDiscount;
+    }
+
+    private void OnScoreUpdated()
+    {
+        _gameData.totalScore = _scoreDataManager.TotalScore;
+        _gameData.totalDamageDealt = _scoreDataManager.TotalDamageDealt;
+        _gameData.dangersDestroyedScore = _scoreDataManager.DangersDestroyedScore;
+        _gameData.totalDamageTaken = _scoreDataManager.TotalDamageTaken;
+        _gameData.timesDead = _scoreDataManager.TimesDead;
+        _gameData.leaderboard = _scoreDataManager.Leaderboard;
+    }
+
     async void Start()
     {
         // Load game data first
@@ -394,13 +414,16 @@ public class GameDataManager : MonoBehaviour
         _tutorialList = tutorialTask.Result;
         _questList = questTask.Result;
         _npcList = npcTask.Result;
+        
+        // Initialize managers
+        _inventoryManager.Initialize(_gameData.inventory);
+        _inventoryManager.OnInventoryUpdated += OnInventoryUpdated;
+
+        _scoreDataManager.Initialize(_gameData.totalScore, _gameData.totalDamageDealt, _gameData.dangersDestroyedScore, _gameData.totalDamageTaken,  _gameData.timesDead, _gameData.leaderboard);
+        _scoreDataManager.OnScoreUpdated += OnScoreUpdated;
 
         // Now all assets are loaded, fire game data event
         OnGameDataLoaded?.Invoke();
-
-        // Initialize managers
-        _inventoryManager.Initialize(_gameData.inventory);
-        _scoreDataManager.Initialize(_gameData.totalScore, _gameData.totalDamageDealt, _gameData.dangersDestroyedScore, _gameData.totalDamageTaken,  _gameData.timesDead, _gameData.leaderboard);
 
         // Invoke all the events to update the game state
         OnAttendanceUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].attendance);

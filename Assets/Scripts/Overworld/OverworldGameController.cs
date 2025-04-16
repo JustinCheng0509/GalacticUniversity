@@ -4,12 +4,11 @@ public class OverworldGameController : MonoBehaviour
 {
     private GameDataManager _gameDataManager;
     private SwitchScene _switchScene;
-
     private DialogController _dialogController;
     private QuestController _questController;
     private TutorialController _tutorialController;
-    
     private OverworldUILayoutController _overworldUILayoutController;
+    private OverworldTimeController _overworldTimeController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,6 +27,14 @@ public class OverworldGameController : MonoBehaviour
 
         _tutorialController = FindAnyObjectByType<TutorialController>();
         _overworldUILayoutController = FindAnyObjectByType<OverworldUILayoutController>();
+
+        _overworldTimeController = FindAnyObjectByType<OverworldTimeController>();
+        _overworldTimeController.OnLastDayEnded += HandleLastDayEnded;
+    }
+
+    private void HandleLastDayEnded()
+    {
+        _switchScene.FadeOutScene(GameConstants.SCENE_ENDING, 1f);
     }
 
     private void OnGameDataLoaded()
