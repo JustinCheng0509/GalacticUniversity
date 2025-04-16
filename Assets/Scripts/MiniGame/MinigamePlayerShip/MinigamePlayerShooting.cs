@@ -46,11 +46,14 @@ public class MinigamePlayerShooting : MonoBehaviour
 
     void Update()
     {
-        if (!_canFire || Time.time < nextFireTime) return;
+        // Debug.Log($"Can Fire: {_canFire}");
+        if (!_canFire) return;
 
         float shootValue = _shootAction.action.ReadValue<float>();
+        // Debug.Log($"Shoot Value: {shootValue}");
         if (shootValue > 0.5f && Time.time > nextFireTime)
         {
+            Debug.Log("Shooting");
             Fire();
             nextFireTime = Time.time + fireRate;
         }
