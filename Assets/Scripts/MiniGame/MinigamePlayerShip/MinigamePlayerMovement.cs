@@ -17,6 +17,7 @@ public class MinigamePlayerMovement : MonoBehaviour
     private MinigameController _minigameController;
     private GameDataManager _gameDataManager;
     private MinigamePlayerHealthController _playerHealthController;
+    private MinigameUIPlayerShipSpriteController _minigameUIPlayerShipSpriteController;
 
     void Start()
     {
@@ -31,6 +32,7 @@ public class MinigamePlayerMovement : MonoBehaviour
         _playerHealthController.OnPlayerRespawn += () => _canMove = true;
 
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _minigameUIPlayerShipSpriteController = FindAnyObjectByType<MinigameUIPlayerShipSpriteController>();
         
         _screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         _rb = GetComponent<Rigidbody2D>();
@@ -73,11 +75,13 @@ public class MinigamePlayerMovement : MonoBehaviour
         // Gradual deceleration if no input is given
         if (horizontalInput == 0 && verticalInput == 0)
         {
+            _minigameUIPlayerShipSpriteController.UpdateSprite(false);
             // Apply gradual deceleration
             velocityChange = Vector2.Lerp(currentVelocity, Vector2.zero, speedFactor * Time.deltaTime);
         }
         else
         {
+            _minigameUIPlayerShipSpriteController.UpdateSprite(true);
             // Apply smooth velocity change towards the desired velocity
             velocityChange = Vector2.Lerp(currentVelocity, desiredVelocity, speedFactor * Time.deltaTime);
         }
