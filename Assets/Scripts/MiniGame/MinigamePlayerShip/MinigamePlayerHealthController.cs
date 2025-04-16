@@ -36,7 +36,6 @@ public class MinigamePlayerHealthController : MonoBehaviour
         }
 
         _minigameScoreController.DamageTaken += damage;
-        _minigameScoreController.Score -= damage;
 
         _currentHealth = Math.Max(0, _currentHealth - damage);
         OnHealthChanged?.Invoke();
@@ -50,7 +49,6 @@ public class MinigamePlayerHealthController : MonoBehaviour
     public void DestroyPlayerShip()
     {
         _minigameScoreController.TimesDead++;
-        _minigameScoreController.Score -= _minigameScoreController.BaseDeathPenalty;
 
         _playerShip.SetActive(false);
         OnPlayerDeath?.Invoke();

@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class MinigamePlayerMovement : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float _speed = 20f;
-    [SerializeField] private float _minSpeedFactor = 0.25f;
-    [SerializeField] private float _maxSpeedFactor = 0.9f;
+    private float _speed = MinigameConstants.MINIGAME_PLAYER_TERMINAL_SPEED;
+    private float _minSpeedFactor = MinigameConstants.MINIMGAME_PLAYER_MIN_SPEED_FACTOR;
+    private float _maxSpeedFactor = MinigameConstants.MINIMGAME_PLAYER_MAX_SPEED_FACTOR;
 
     [Header("Screen Bounds Settings")]
     private Vector2 _screenBounds;
@@ -75,12 +74,12 @@ public class MinigamePlayerMovement : MonoBehaviour
         if (horizontalInput == 0 && verticalInput == 0)
         {
             // Apply gradual deceleration
-            velocityChange = Vector2.Lerp(currentVelocity, Vector2.zero, speedFactor * Time.fixedDeltaTime);
+            velocityChange = Vector2.Lerp(currentVelocity, Vector2.zero, speedFactor * Time.deltaTime);
         }
         else
         {
             // Apply smooth velocity change towards the desired velocity
-            velocityChange = Vector2.Lerp(currentVelocity, desiredVelocity, speedFactor * Time.fixedDeltaTime);
+            velocityChange = Vector2.Lerp(currentVelocity, desiredVelocity, speedFactor * Time.deltaTime);
         }
 
         // Set the velocity after applying smooth change

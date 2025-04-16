@@ -11,7 +11,6 @@ public class GameDataManager : MonoBehaviour
     private List<Tutorial> _tutorialList = new List<Tutorial>();
     private List<Quest> _questList = new List<Quest>();
     private List<NPC> _npcList = new List<NPC>();
-    private List<Chest> _chestList = new List<Chest>();
 
     private GameData _gameData;
 
@@ -41,8 +40,12 @@ public class GameDataManager : MonoBehaviour
     public List<Quest> QuestList => _questList;
     public List<NPC> NPCList => _npcList;
     
+    // Separate Manager classes for different data types
     private InventoryDataManager _inventoryManager = new InventoryDataManager();
     public InventoryDataManager InventoryManager => _inventoryManager;
+
+    private ScoreDataManager _scoreDataManager = new ScoreDataManager();
+    public ScoreDataManager ScoreDataManager => _scoreDataManager;
 
     public float TotalWorkshopMinutes 
     {
@@ -188,24 +191,6 @@ public class GameDataManager : MonoBehaviour
         set => _gameData.introDialogPlayed = value;
     }
 
-    public int TotalScore
-    {
-        get => _gameData.totalScore;
-        set => _gameData.totalScore = value;
-    }
-
-    public int TotalDestructionScore
-    {
-        get => _gameData.totalDestructionScore;
-        set => _gameData.totalDestructionScore = value;
-    }
-
-    public int TotalSafetyScore
-    {
-        get => _gameData.totalSafetyScore;
-        set => _gameData.totalSafetyScore = value;
-    }
-
     public float LeaningSpeedBonus {
         get => _gameData.learningSpeedBonus;
         set => _gameData.learningSpeedBonus = value;
@@ -309,12 +294,6 @@ public class GameDataManager : MonoBehaviour
         set => _gameData.dailyGameDataList = value;
     }
 
-    public List<LeaderboardEntry> Leaderboard
-    {
-        get => _gameData.leaderboard;
-        set => _gameData.leaderboard = value;
-    }
-
     public AttendanceStatus Attendance
     {
         get => _gameData.dailyGameDataList[_gameData.currentDay - 1].attendance;
@@ -391,6 +370,12 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
+    public void GenerateLeaderboardScore()
+    {
+        // Generate the leaderboard score based on the player's stats
+        _scoreDataManager.GenerateLeaderboardScore(_gameData.playerName, _gameData.currentDay, _gameData.mechanics, _gameData.destruction, _gameData.maneuverability);
+    }
+
     async void Start()
     {
         // Load game data first
@@ -410,16 +395,14 @@ public class GameDataManager : MonoBehaviour
         _questList = questTask.Result;
         _npcList = npcTask.Result;
 
-        // foreach (Dialog dialog in _dialogList) {
-        //     Debug.Log(dialog.text);
-        //     Debug.Log(dialog.associatedTutorials.Count);
-        // }
-
         // Now all assets are loaded, fire game data event
         OnGameDataLoaded?.Invoke();
 
-        // Update game state
+        // Initialize managers
         _inventoryManager.Initialize(_gameData.inventory);
+        _scoreDataManager.Initialize(_gameData.totalScore, _gameData.totalDamageDealt, _gameData.dangersDestroyedScore, _gameData.totalDamageTaken,  _gameData.timesDead, _gameData.leaderboard);
+
+        // Invoke all the events to update the game state
         OnAttendanceUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].attendance);
         OnHomeworkProgressUpdated?.Invoke(_gameData.dailyGameDataList[_gameData.currentDay - 1].homeworkProgress);
         OnEnergyUpdated?.Invoke(_gameData.energy);

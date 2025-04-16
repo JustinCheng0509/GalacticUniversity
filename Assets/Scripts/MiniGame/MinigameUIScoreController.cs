@@ -1,67 +1,53 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class MinigameUIScoreController : MonoBehaviour
 {
     private MinigameScoreController _minigameScoreController;
+    private GameDataManager _gameDataManager;
 
     [SerializeField] private GameObject _gameEndPanel;
-
     [SerializeField] private TMP_Text _dayCompleteText;
-    [SerializeField] private TMP_Text _baseScoreText;
     [SerializeField] private TMP_Text _damageDealtScoreText;
     [SerializeField] private TMP_Text _dangersDestroyedScoreText;
     [SerializeField] private TMP_Text _damageTakenScoreText;
-    [SerializeField] private TMP_Text _timesDeadScoreText;
+    [SerializeField] private TMP_Text _deathPenaltyScoreText;
     [SerializeField] private TMP_Text _todayScoreText;
-    [SerializeField] private TMP_Text _previousTotalScoreText;
-    [SerializeField] private TMP_Text _newTotalScoreText;
-
     [SerializeField] private GameObject _totalScoreLeaderboardPanel;
-    [SerializeField] private GameObject _destructionScoreLeaderboardPanel;
-    [SerializeField] private GameObject _safetyScoreLeaderboardPanel;
 
     void Start()
     {
         _minigameScoreController = FindAnyObjectByType<MinigameScoreController>();
-        _minigameScoreController.OnMinigameEndScoreCalculated += UpdateScoreUI;
-        _minigameScoreController.OnLeaderboardUpdated += UpdateLeaderboardUI;
+        _minigameScoreController.OnMinigameEndScoreCalculated += UpdateUI;
+        _gameDataManager = FindAnyObjectByType<GameDataManager>();
     }
 
-    public void UpdateScoreUI(int currentDay, int deathPenaltyScore, int previousTotalScore, int newTotalScore)
+    public void UpdateUI()
     {
-        _dayCompleteText.text = "Day " + currentDay + " Complete!";
-        _baseScoreText.text = _minigameScoreController.BaseScore.ToString();
+        _dayCompleteText.text = "Day " + _gameDataManager.CurrentDay + " Complete!";
         _damageDealtScoreText.text = _minigameScoreController.DamageDealt.ToString();
         _dangersDestroyedScoreText.text = _minigameScoreController.DangersDestroyedScore.ToString();
         _damageTakenScoreText.text = "- " + _minigameScoreController.DamageTaken.ToString();
-        _timesDeadScoreText.text = "- " + deathPenaltyScore.ToString();
+        _deathPenaltyScoreText.text = "- " + _minigameScoreController.DeathPenaltyScore.ToString();
         _todayScoreText.text = _minigameScoreController.TotalScoreThisRound.ToString();
-        _previousTotalScoreText.text = previousTotalScore.ToString();
-        _newTotalScoreText.text = newTotalScore.ToString();
+        UpdateLeaderboardUI();
+        
+        _gameEndPanel.SetActive(true);
     }
 
-    private void UpdateLeaderboardUI(List<LeaderboardEntry> leaderboard, string playerName)
+    private void UpdateLeaderboardUI()
     {
         // Sort leaderboards separately
-        List<LeaderboardEntry> totalScoreLeaderboard = leaderboard.OrderByDescending(x => x.totalScore).ToList();
-        List<LeaderboardEntry> destructionScoreLeaderboard = leaderboard.OrderByDescending(x => x.destructionScore).ToList();
-        List<LeaderboardEntry> safetyScoreLeaderboard = leaderboard.OrderBy(x => x.safetyScore).ToList(); // Lower safety score = better rank
+        List<LeaderboardEntry> totalScoreLeaderboard = _gameDataManager.ScoreDataManager.GetSortedLeaderboard();
 
         // Find the player's ranking in each leaderboard and get the 3 relevant positions
-        List<int> totalScorePositions = GetRelevantPositions(totalScoreLeaderboard, playerName);
-        List<int> destructionScorePositions = GetRelevantPositions(destructionScoreLeaderboard, playerName);
-        List<int> safetyScorePositions = GetRelevantPositions(safetyScoreLeaderboard, playerName);
+        List<int> totalScorePositions = GetRelevantPositions(totalScoreLeaderboard, _gameDataManager.PlayerName);
 
         // Update UI panels
         UpdateLeaderboardPanel(_totalScoreLeaderboardPanel, totalScoreLeaderboard, totalScorePositions);
-        // UpdateLeaderboardPanel(_destructionScoreLeaderboardPanel, destructionScoreLeaderboard, destructionScorePositions);
-        // UpdateLeaderboardPanel(_safetyScoreLeaderboardPanel, safetyScoreLeaderboard, safetyScorePositions);
 
-        _gameEndPanel.SetActive(true);
     }
 
     private List<int> GetRelevantPositions(List<LeaderboardEntry> sortedLeaderboard, string playerName)
@@ -99,16 +85,11 @@ public class MinigameUIScoreController : MonoBehaviour
             // Update UI elements
             entryUI.transform.Find("PositionLabel").GetComponent<TMP_Text>().text = (posIndex + 1).ToString() + ".";
             entryUI.transform.Find("ScoreLabel").GetComponent<TMP_Text>().text = sortedLeaderboard[posIndex].name;
-            entryUI.transform.Find("ScoreText").GetComponent<TMP_Text>().text = GetScoreText(sortedLeaderboard[posIndex], panel);
+            entryUI.transform.Find("ScoreText").GetComponent<TMP_Text>().text = GetScoreText(sortedLeaderboard[posIndex]);
         }
     }
-    private string GetScoreText(LeaderboardEntry entry, GameObject panel)
+    private string GetScoreText(LeaderboardEntry entry)
     {
-        if (panel == _totalScoreLeaderboardPanel)
-            return entry.totalScore.ToString();
-        else if (panel == _destructionScoreLeaderboardPanel)
-            return entry.destructionScore.ToString();
-        else
-            return entry.safetyScore.ToString();
+        return entry.totalScore.ToString();
     }
 }

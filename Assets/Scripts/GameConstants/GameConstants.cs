@@ -1,7 +1,6 @@
 public class GameConstants
 {
     public const int TOTAL_NUMBER_OF_DAYS = 10;
-    public const string LEADERBOARD_JSON_PATH = "/leaderboard.json";
     public const string GAME_DATA_JSON_PATH = "gamedata.json";
     public const string NEW_GAME_START_TIME = "08:00";
     public const string CLASS_START_TIME = "14:00";
@@ -28,7 +27,6 @@ public class GameConstants
     public const string SCENE_OVERWORLD = "Overworld";
     public const string SCENE_MAIN_MENU = "MainMenu";
     public const string SCENE_MINIGAME = "Minigame";
-    public const string TAG_BOSS = "TAG_BOSS";
 
     public static readonly string[] ALIEN_NAMES = new string[] {
         // Original Alien Names
@@ -58,10 +56,5 @@ public class GameConstants
 
     public const string GAME_DATA_KEY = "GameData";
 
-    public const string ENEMY_DESTROYED_SFX_AUDIO_SOURCE = "EnemyDestroyedSFXAudioSource";
-
     public const string BGM_AUDIO_SOURCE = "BGMAudioSource";
-
-    public const int MINIGAME_BASE_DAMAGE = 10;
-    public const int MINIGAME_ENEMY_BASE_SCORE = 100;
 }
