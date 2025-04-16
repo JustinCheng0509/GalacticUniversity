@@ -39,7 +39,7 @@ public class QuestController : MonoBehaviour
 
     public void TryReturnQuest(string questID)
     {
-        if (_gameDataManager == null) {
+        if (_gameDataManager == null || _gameDataManager.GetActiveQuests() == null){
             Debug.LogWarning("GameDataManager is not initialized.");
             return;
         }
