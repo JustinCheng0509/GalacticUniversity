@@ -22,6 +22,7 @@ public class OverworldUIQuestItemController : MonoBehaviour
 
         _layoutController = FindAnyObjectByType<OverworldUILayoutController>();
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        _gameDataManager.OnPotentialQuestProgressUpdated += UpdateQuestProgressText;
 
         ToggleQuestDescription(false);
     }
@@ -32,6 +33,10 @@ public class OverworldUIQuestItemController : MonoBehaviour
         {
             _questColumnController.OnQuestSelected += HandleQuestSelected;
         }
+        if (_gameDataManager != null)
+        {
+            _gameDataManager.OnPotentialQuestProgressUpdated += UpdateQuestProgressText;
+        }
     }
 
     void OnDisable()
@@ -40,6 +45,10 @@ public class OverworldUIQuestItemController : MonoBehaviour
         {
             _questColumnController.OnQuestSelected -= HandleQuestSelected;
         }
+        if (_gameDataManager != null)
+        {
+            _gameDataManager.OnPotentialQuestProgressUpdated -= UpdateQuestProgressText;
+        }
     }
 
     void OnDestroy()
@@ -47,6 +56,10 @@ public class OverworldUIQuestItemController : MonoBehaviour
         if (_questColumnController != null)
         {
             _questColumnController.OnQuestSelected -= HandleQuestSelected;
+        }
+        if (_gameDataManager != null)
+        {
+            _gameDataManager.OnPotentialQuestProgressUpdated -= UpdateQuestProgressText;
         }
     }
 
@@ -59,17 +72,20 @@ public class OverworldUIQuestItemController : MonoBehaviour
         _quest = quest;
         questTitleText.text = quest.questName;
         questDescriptionText.text = quest.questDescription;
-        questProgressText.text = GetQuestProgressText(quest);
+        UpdateQuestProgressText();
         
     }
 
-    private string GetQuestProgressText(Quest quest)
+    private void UpdateQuestProgressText()
     {
-        if (quest.questType == QuestType.ScoreTotal) return "Progress: " + _gameDataManager.ScoreDataManager.TotalScore + "/" + (int) quest.targetValue;
-        if (quest.questType == QuestType.NumberOfItemsBought) return "Progress: " + _gameDataManager.NumberOfItemsBought + "/" + (int) quest.targetValue;
-        if (quest.questType == QuestType.Attendance) return "Progress: " + _gameDataManager.NumberOfAttendances + "/" + (int) quest.targetValue;
+        if (_quest == null) return;
+        string progressText = "";
+        // Debug.Log("Quest Type: " + quest.questType);
+        if (_quest.questType == QuestType.ScoreTotal) progressText = "Progress: " + _gameDataManager.ScoreDataManager.TotalScore + "/" + (int) _quest.targetValue;
+        if (_quest.questType == QuestType.NumberOfItemsBought) progressText = "Progress: " + _gameDataManager.NumberOfItemsBought + "/" + (int) _quest.targetValue;
+        if (_quest.questType == QuestType.Attendance) progressText = "Progress: " + _gameDataManager.NumberOfAttendances + "/" + (int) _quest.targetValue;
         // if (quest.questType == QuestType.ItemDelivery) return "Progress: " + _gameDataManager.GetItemCount(quest.itemID) + "/" + (int) quest.targetValue;
-        return "";
+        questProgressText.text = progressText;
     }
 
     public void OnClick()
@@ -93,6 +109,7 @@ public class OverworldUIQuestItemController : MonoBehaviour
             ToggleQuestDescription(false);
             return;
         }
+        UpdateQuestProgressText();
         ToggleQuestDescription(quest.questID == _quest.questID);
     }
 

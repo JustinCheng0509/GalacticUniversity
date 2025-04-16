@@ -14,13 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questID: quest_intro_dorm
   questName: Check out your room
-  questDescription: To see the rooms you need to visit, look for the quest (?) icons
-    in the minimap. You can click on the minimap to expand it.
+  questDescription: Follow the navigation arrow to reach the room. You can see the
+    icons on the minimap for the entrances to each building.
   questType: 0
   targetValue: 0
   currentValue: 0
   itemID: 0
-  npcID: 0
   navigationTag: NAVIGATION_DORM
   navigationCompleteTag: NAVIGATION_DORM
   startDialog: {fileID: 0}

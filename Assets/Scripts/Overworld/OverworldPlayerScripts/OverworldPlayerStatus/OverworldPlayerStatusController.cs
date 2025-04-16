@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum OverworldPlayerStatus
@@ -36,6 +37,7 @@ public class OverworldPlayerStatusController : MonoBehaviour
     private GameDataManager _gameDataManager;
     private OverworldTimeController _overworldTimeController;
     private OverworldNPCInteractionController _overworldNPCInteractionController;
+    private TutorialController _tutorialController;
 
     private Coroutine _updateStatusCoroutine;
     public event Action<OverworldPlayerStatus> OnStatusChanged;
@@ -50,13 +52,17 @@ public class OverworldPlayerStatusController : MonoBehaviour
 
         _overworldNPCInteractionController = FindAnyObjectByType<OverworldNPCInteractionController>();
         _overworldNPCInteractionController.OnNPCStartChat += () => CurrentStatus = OverworldPlayerStatus.Chatting;
+
+        _tutorialController = FindAnyObjectByType<TutorialController>();
     }
 
     private void HandleLateClassTime()
     {
-        if (_gameDataManager.Attendance != AttendanceStatus.ATTENDED)
+        if (_gameDataManager.Attendance == AttendanceStatus.NOT_STARTED)
         {
             _gameDataManager.Attendance = AttendanceStatus.ABSENT;
+            _gameDataManager.GenerateLeaderboardScore();
+            _tutorialController.ShowTutorial(new List<string> { TutorialIDs.TUTORIAL_ABSENT, TutorialIDs.TUTORIAL_LEADERBOARD});
         }
     }
 

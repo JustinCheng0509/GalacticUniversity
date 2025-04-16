@@ -64,6 +64,7 @@ public class ImageDisplay : MonoBehaviour, IPointerClickHandler
             // We've reached the end of the images
             hasCompleted = true;
             Debug.Log("Reached the end of images.");
+            SavedDataManager.DeleteGameData();
             _switchScene.FadeOutScene(GameConstants.SCENE_MAIN_MENU, 1f);
             return;
         }

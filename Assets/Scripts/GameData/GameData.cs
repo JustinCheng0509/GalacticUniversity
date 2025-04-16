@@ -54,6 +54,10 @@ public class InventoryItem
 public class GameData
 {
     public string playerName = "Player";
+    public float overworldPosX = -8.4f;
+    public float overworldPosY = -2.74f;
+    public string currentScene = GameConstants.SCENE_OVERWORLD;
+
     public float energy = 100;
     public float hunger = 100;
     public float mood = 100;

@@ -11,4 +11,5 @@ public class TutorialIDs
     public const string TUTORIAL_SHOP = "tutorial_shop";
     public const string TUTORIAL_SHIP_CONTROL = "tutorial_ship_control";
     public const string TUTORIAL_MINIGAME = "tutorial_minigame";
+    public const string TUTORIAL_ABSENT = "tutorial_absent";
 }
