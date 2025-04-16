@@ -104,9 +104,16 @@ public class QuestController : MonoBehaviour
                 return CheckItemDeliveryQuest(quest);
             case QuestType.TotalWorkHours:
                 return CheckTotalWorkHoursQuest(quest);
+            case QuestType.TotalChestsOpened:
+                return CheckTotalChestsOpenedQuest(quest);
             default:
                 return true; // Default case if no specific type is matched
         }
+    }
+
+    private bool CheckTotalChestsOpenedQuest(Quest quest)
+    {
+        return _gameDataManager.OpenedChests.Count >= quest.targetValue;
     }
 
     private bool CheckTotalWorkHoursQuest(Quest quest)

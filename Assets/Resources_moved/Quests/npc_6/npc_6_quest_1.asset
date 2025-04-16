@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f08122b69ac13b4e824ad331d9cf942, type: 3}
+  m_Name: npc_6_quest_1
+  m_EditorClassIdentifier: 
+  questID: npc_6_quest_1
+  questName: Campus Cache Hunt
+  questDescription: Find and open 3 treasure chests around the campus.
+  questType: 10
+  targetValue: 3
+  currentValue: 0
+  itemID: 
+  navigationTag: 
+  navigationCompleteTag: npc_6
+  startDialog: {fileID: 11400000, guid: eb73904c72a90fb42b2b6bdf4bb03e50, type: 2}
+  incompleteDialog: {fileID: 11400000, guid: 68fde5d499b0ce4499ed6b87d910bca7, type: 2}
+  completeDialog: {fileID: 11400000, guid: 739b0528722af314f89b3872dd4763b3, type: 2}
+  rewardMoney: 0
+  rewardItem: {fileID: 11400000, guid: be1a898586d9e8f408e697f3624f0f65, type: 2}

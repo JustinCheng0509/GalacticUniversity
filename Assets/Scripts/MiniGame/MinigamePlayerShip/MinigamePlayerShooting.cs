@@ -40,8 +40,7 @@ public class MinigamePlayerShooting : MonoBehaviour
         _playerHealthController.OnPlayerRespawn += () => _canFire = true;
 
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
-        _gameDataManager.OnDestructionUpdated += _ => UpdateDamage();
-        UpdateDamage();
+        _gameDataManager.OnGameDataLoaded += () => UpdateDamage();
     }
 
     void Update()
@@ -61,7 +60,11 @@ public class MinigamePlayerShooting : MonoBehaviour
 
     private void UpdateDamage()
     {
+        // Update only once when the game data is loaded
+        _gameDataManager.OnGameDataLoaded -= UpdateDamage;
         _damage *= Mathf.Lerp(1f, 3f, _gameDataManager.Destruction / 100f);
+        _damage += _damage * (_gameDataManager.InventoryManager.ShipDamageIncrease / 100f);
+        fireRate -= fireRate * (_gameDataManager.InventoryManager.ShipFireRateIncrease / 100f);
     }
 
     private void Fire()

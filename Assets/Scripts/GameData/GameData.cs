@@ -92,13 +92,18 @@ public class GameData
 
     public List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
 
+    // Quest trackers
+    public int numberOfItemsBought;
+    public float totalWorkshopMinutes;
+
+    // Bonus from items
     public float moveSpeedBonus;
     public float minigameMoveSpeedBonus;
-    public int numberOfItemsBought;
     public float learningSpeedBonus;
     public float shopItemDiscount;
-    public float totalWorkshopMinutes;
     public float workshopMoneyBonus;
+    public float shipFireRateIncrease;
+    public float shipDamageIncrease;
 
     // Intros and tutorials
     public bool isTutorialEnabled = true;

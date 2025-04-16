@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialID: tutorial_npc
   title: NPC
-  description: You can find various NPCs around the campus. Each of them has a few
-    quests that you can take on to challenge yourself and gain handsome rewards.
-    Quests can only be unlocked when your relationship with the NPC reaches a certain
-    threshold (30, 60, 100).\n\nYou can chat with the NPC to gradually increase your
-    relationship.
+  description: You can find various NPCs around the campus. Each of them has a quest
+    that you can take on to challenge yourself and gain handsome rewards. The quest
+    will be unlocked when your relationship with the NPC reaches 100.\n\nYou can
+    chat with the NPC to gradually increase your relationship.

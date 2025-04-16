@@ -100,7 +100,7 @@ public class OverworldPlayerStatusController : MonoBehaviour
     {
         if (_currentStatus == OverworldPlayerStatus.Chatting)
         {
-            _gameDataManager.UpdateNPCRelationship(_overworldNPCInteractionController.CurrentNPC.npcID, 0.2f);
+            _gameDataManager.UpdateNPCRelationship(_overworldNPCInteractionController.CurrentNPC.npcID, 0.5f);
         }
     }
 

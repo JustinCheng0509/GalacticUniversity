@@ -102,6 +102,9 @@ public class OverworldUIQuestItemController : MonoBehaviour
             case QuestType.TotalWorkHours:
                 progressText = "Progress: " + ((int) _gameDataManager.TotalWorkshopMinutes/60) + "/" + (int)_quest.targetValue;
                 break;
+            case QuestType.TotalChestsOpened:
+                progressText = "Progress: " + _gameDataManager.OpenedChests.Count + "/" + (int)_quest.targetValue;
+                break;
         }
 
         questProgressText.text = progressText;
