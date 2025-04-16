@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: item_bonus_hoverboard
   m_EditorClassIdentifier: 
   itemID: item_bonus_hoverboard
-  itemName: Hoverboard
-  itemDescription: Helps you move faster
+  itemName: Zoomerang XT-90
+  itemDescription: Why walk when you can whoosh? The Zoomerang XT-90 uses low-grav
+    tech and anti-boredom thrusters to get you across campus in record time.
   itemSprite: {fileID: -163599830608881577, guid: 7486a4a400e856e4295a1a4c1d44c372, type: 3}
   itemValue: 200
   isConsumable: 0
@@ -24,3 +25,7 @@ MonoBehaviour:
   hasPassiveEffect: 1
   energyRecoveryBonus: 0
   overworldMoveSpeedBonus: 20
+  minigameMoveSpeedBonus: 0
+  learningSpeedBonus: 0
+  shopItemDiscount: 0
+  workMoneyBonus: 0

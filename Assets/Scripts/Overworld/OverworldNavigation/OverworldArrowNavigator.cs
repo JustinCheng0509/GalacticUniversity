@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class OverworldArrowNavigator : MonoBehaviour
 {
+    private Dictionary<string, GameObject> _navigationTargets = new();
     [SerializeField] private Transform _player;
     private Transform _target;
     [SerializeField] private Transform _arrow;
@@ -16,6 +18,10 @@ public class OverworldArrowNavigator : MonoBehaviour
     void Start()
     {
         _path = new NavMeshPath();
+        foreach (var obj in GameObject.FindGameObjectsWithTag(GameConstants.NAVIGATION_TAG))
+        {
+            _navigationTargets[obj.name] = obj;
+        }
         _questColumnController = FindAnyObjectByType<OverworldUIQuestColumnController>();
         _questController = FindAnyObjectByType<QuestController>();
         if (_questColumnController != null)
@@ -46,16 +52,17 @@ public class OverworldArrowNavigator : MonoBehaviour
         _arrow.gameObject.SetActive(false);
     }
 
-    public void ShowArrowNavigator(string targetTag)
+    private void ShowArrowNavigator(string targetTag)
     {
-        GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
-        // Debug.Log("Target Object: " + targetObject);
-        // Debug.Log("Target Tag: " + targetTag);
-        if (targetObject != null)
+        if (_navigationTargets.TryGetValue(targetTag, out GameObject targetObject) && targetObject != null)
         {
             _target = targetObject.transform;
+            _arrow.gameObject.SetActive(true);
         }
-        _arrow.gameObject.SetActive(true);
+        else
+        {
+            Debug.LogWarning($"Navigation target '{targetTag}' not found in _navigationTargets dictionary.");
+        }
     }
 
     void Update()

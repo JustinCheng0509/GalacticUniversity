@@ -65,6 +65,10 @@ public class OverworldTimeController : MonoBehaviour
             hour++;
             if (hour == 24)
             {  
+                if (_gameDataManager.CurrentDay == GameConstants.TOTAL_NUMBER_OF_DAYS - 1)
+                {
+                    _tutorialController.ShowTutorial(TutorialIDs.TUTORIAL_LAST_DAY);
+                }
                 if (_gameDataManager.CurrentDay == GameConstants.TOTAL_NUMBER_OF_DAYS)
                 {   
                     _gameDataManager.CurrentTime = "23:50";

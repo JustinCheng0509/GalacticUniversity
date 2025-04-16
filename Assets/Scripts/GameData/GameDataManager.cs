@@ -69,7 +69,11 @@ public class GameDataManager : MonoBehaviour
     public float TotalWorkshopMinutes 
     {
         get => _gameData.totalWorkshopMinutes;
-        set => _gameData.totalWorkshopMinutes = value;
+        set
+        {
+            _gameData.totalWorkshopMinutes = value;
+            OnPotentialQuestProgressUpdated?.Invoke();
+        } 
     }
 
     public float WorkshopMoneyBonus
@@ -407,6 +411,7 @@ public class GameDataManager : MonoBehaviour
         _gameData.learningSpeedBonus = _inventoryManager.LearningSpeedBonus;
         _gameData.workshopMoneyBonus = _inventoryManager.WorkshopMoneyBonus;
         _gameData.shopItemDiscount = _inventoryManager.ShopItemDiscount;
+        OnPotentialQuestProgressUpdated?.Invoke();
     }
 
     private void OnScoreUpdated()

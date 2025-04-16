@@ -13,13 +13,19 @@ MonoBehaviour:
   m_Name: item_consumable_burger
   m_EditorClassIdentifier: 
   itemID: item_consumable_burger
-  itemName: Burger
-  itemDescription: Just like your regular burger on Earth
+  itemName: Proto-Cow Delight
+  itemDescription: Exactly what you'd expect from a terrestrial burger. Nothing fancy.
+    No tentacles. No surprises.
   itemSprite: {fileID: 416187264504988275, guid: 9db161075ff79e04fbe451fa049bb017, type: 3}
   itemValue: 20
   isConsumable: 1
-  energyRestore: 10
+  energyRestore: 0
   hungerRestore: 30
   moodRestore: 0
   hasPassiveEffect: 0
   energyRecoveryBonus: 0
+  overworldMoveSpeedBonus: 0
+  minigameMoveSpeedBonus: 0
+  learningSpeedBonus: 0
+  shopItemDiscount: 0
+  workMoneyBonus: 0

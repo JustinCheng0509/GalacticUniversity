@@ -15,7 +15,8 @@ MonoBehaviour:
   tutorialID: tutorial_minigame
   title: Mini-game
   description: When you attend the class, you will play a spaceshooting 2D mini-game
-    that lasts for 60 seconds. Your goal is to get as much score as possible\n\nYou
-    can move the spaceship with WASD and shoot with Spacebar.\n\nYou can gain score
-    by damaging and destroying enemies.\n\nYou lose score when you take damage or
-    get blown up.
+    that lasts for 60 seconds. Your goal is to get as much score as possible\n\nUse
+    WASD or arrow keys to move the spaceship. Use spacebar or left mouse button to
+    shoot. You can hold the button to fire continuously.\n\nYou can gain score by
+    damaging and destroying enemies.\n\nYou lose score when you take damage or get
+    blown up.

@@ -101,6 +101,10 @@ public class OverworldUIInventoryController : MonoBehaviour
         {
             description += "Hunger restore: +" + item.hungerRestore + "\n";
         }
+        if (item.moodRestore > 0)
+        {
+            description += "Mood restore: +" + item.moodRestore + "\n";
+        }
         if (item.overworldMoveSpeedBonus > 0)
         {
             description += "Campus move speed bonus: +" + item.overworldMoveSpeedBonus + "%\n";

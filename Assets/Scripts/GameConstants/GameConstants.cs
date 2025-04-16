@@ -1,6 +1,6 @@
 public class GameConstants
 {
-    public const int TOTAL_NUMBER_OF_DAYS = 1;
+    public const int TOTAL_NUMBER_OF_DAYS = 2;
     public const string GAME_DATA_JSON_PATH = "gamedata.json";
     public const string NEW_GAME_START_TIME = "08:00";
     public const string CLASS_START_TIME = "14:00";
@@ -21,6 +21,7 @@ public class GameConstants
     public const string TRIGGER_TAG_SHOP = "TRIGGER_TAG_SHOP";
     public const string TRIGGER_TAG_PLAYROOM = "TRIGGER_TAG_PLAYROOM";
     public const string TRIGGER_TAG_WORK = "TRIGGER_TAG_WORK";
+    public const string NAVIGATION_TAG = "NAVIGATION";
     public const string LAYER_GROUND = "LAYER_GROUND";
     public const string TAG_GRASS = "TAG_GRASS";
     public const string TAG_INDOOR = "TAG_INDOOR";

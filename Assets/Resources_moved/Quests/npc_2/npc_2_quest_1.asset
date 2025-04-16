@@ -19,7 +19,8 @@ MonoBehaviour:
   targetValue: 10
   currentValue: 0
   itemID: 0
-  npcID: 0
+  navigationTag: 
+  navigationCompleteTag: npc_2
   startDialog: {fileID: 11400000, guid: 0c4dc5b7bc5e4c24ab632e63d17c3ad4, type: 2}
   incompleteDialog: {fileID: 11400000, guid: ee2f2019e9d3c12408d724d9566af03b, type: 2}
   completeDialog: {fileID: 11400000, guid: debbadc11afb5394cac5b50fcfb58557, type: 2}

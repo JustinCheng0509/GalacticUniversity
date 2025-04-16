@@ -13,13 +13,20 @@ MonoBehaviour:
   m_Name: item_consumable_ice_cream
   m_EditorClassIdentifier: 
   itemID: item_consumable_ice_cream
-  itemName: Ice cream
-  itemDescription: Very delicious
+  itemName: Chillcore Lobe-Freezer
+  itemDescription: "Exceptionally creamy and wildly delicious\u2014though some of
+    our extraterrestrial students report a distressing 'brain-freeze' sensation in
+    their taste antennae."
   itemSprite: {fileID: 5721016583348950094, guid: dfdde25dfdfccce41bfbfbdb08f0a6b7, type: 3}
   itemValue: 20
   isConsumable: 1
   energyRestore: 0
-  hungerRestore: 15
-  moodRestore: 15
+  hungerRestore: 10
+  moodRestore: 20
   hasPassiveEffect: 0
   energyRecoveryBonus: 0
+  overworldMoveSpeedBonus: 0
+  minigameMoveSpeedBonus: 0
+  learningSpeedBonus: 0
+  shopItemDiscount: 0
+  workMoneyBonus: 0

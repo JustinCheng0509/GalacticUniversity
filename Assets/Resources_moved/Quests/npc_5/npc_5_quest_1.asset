@@ -15,12 +15,12 @@ MonoBehaviour:
   questID: npc_5_quest_1
   questName: The apprentice
   questDescription: Work for a total of 10 hours at the workshop
-  questType: 14
+  questType: 9
   targetValue: 10
   currentValue: 0
   itemID: 
   navigationTag: 
-  navigationCompleteTag: 
+  navigationCompleteTag: npc_5
   startDialog: {fileID: 11400000, guid: 231a14a9b7e5d054ea7a7d70336f96ef, type: 2}
   incompleteDialog: {fileID: 11400000, guid: e3b8fd516e325f3498d8c6e91bf5f5ae, type: 2}
   completeDialog: {fileID: 11400000, guid: c0ed4beefafada04fa1f1ba69f55bb5b, type: 2}

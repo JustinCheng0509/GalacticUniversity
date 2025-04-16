@@ -79,12 +79,31 @@ public class OverworldUIQuestItemController : MonoBehaviour
     private void UpdateQuestProgressText()
     {
         if (_quest == null) return;
+
         string progressText = "";
-        // Debug.Log("Quest Type: " + quest.questType);
-        if (_quest.questType == QuestType.ScoreTotal) progressText = "Progress: " + _gameDataManager.ScoreDataManager.TotalScore + "/" + (int) _quest.targetValue;
-        if (_quest.questType == QuestType.NumberOfItemsBought) progressText = "Progress: " + _gameDataManager.NumberOfItemsBought + "/" + (int) _quest.targetValue;
-        if (_quest.questType == QuestType.Attendance) progressText = "Progress: " + _gameDataManager.NumberOfAttendances + "/" + (int) _quest.targetValue;
-        // if (quest.questType == QuestType.ItemDelivery) return "Progress: " + _gameDataManager.GetItemCount(quest.itemID) + "/" + (int) quest.targetValue;
+
+        switch (_quest.questType)
+        {
+            case QuestType.ScoreTotal:
+                progressText = "Progress: " + _gameDataManager.ScoreDataManager.TotalScore + "/" + (int)_quest.targetValue;
+                break;
+
+            case QuestType.NumberOfItemsBought:
+                progressText = "Progress: " + _gameDataManager.NumberOfItemsBought + "/" + (int)_quest.targetValue;
+                break;
+
+            case QuestType.Attendance:
+                progressText = "Progress: " + _gameDataManager.NumberOfAttendances + "/" + (int)_quest.targetValue;
+                break;
+
+            case QuestType.ItemDelivery:
+                progressText = "Progress: " + _gameDataManager.InventoryManager.GetItemCount(_quest.itemID) + "/" + (int)_quest.targetValue;
+                break;
+            case QuestType.TotalWorkHours:
+                progressText = "Progress: " + ((int) _gameDataManager.TotalWorkshopMinutes/60) + "/" + (int)_quest.targetValue;
+                break;
+        }
+
         questProgressText.text = progressText;
     }
 
