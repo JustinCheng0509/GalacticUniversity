@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,35 +11,61 @@ public class ScoreDataManager
   private int _timesDead = 0;
   private List<LeaderboardEntry> _leaderboard = new List<LeaderboardEntry>();
 
+  public event Action OnScoreUpdated;
+
   public int TotalScore
   {
     get => _totalScore;
-    set => _totalScore = value;
+    set 
+    {
+      _totalScore = value;
+      OnScoreUpdated?.Invoke();
+    }
   }
   public int TotalDamageDealt
   {
     get => _totalDamageDealt;
-    set => _totalDamageDealt = value;
+    set
+    {
+      _totalDamageDealt = value;
+      OnScoreUpdated?.Invoke();
+    }
   }
   public int DangersDestroyedScore
   {
     get => _dangersDestroyedScore;
-    set => _dangersDestroyedScore = value;
+    set
+    {
+      _dangersDestroyedScore = value;
+      OnScoreUpdated?.Invoke();
+    }
   }
   public int TotalDamageTaken
   {
     get => _totalDamageTaken;
-    set => _totalDamageTaken = value;
+    set
+    {
+      _totalDamageTaken = value;
+      OnScoreUpdated?.Invoke();
+    }
   }
   public int TimesDead
   {
     get => _timesDead;
-    set => _timesDead = value;
+    set
+    {
+      _timesDead = value;
+      OnScoreUpdated?.Invoke();
+    }
   }
   public List<LeaderboardEntry> Leaderboard
   {
     get => _leaderboard;
-    set => _leaderboard = value;
+    set
+    {
+      _leaderboard = value;
+      OnScoreUpdated?.Invoke();
+    }
   }
 
   public void Initialize(int totalScore, int totalDamageDealt, int dangersDestroyedScore, int totalDamageTaken, int timesDead, List<LeaderboardEntry> leaderboard)
@@ -61,11 +88,12 @@ public class ScoreDataManager
       } else {
         int npcDestructionScore = (int) (GetExpectedDestructionScore(currentDay, destruction) * UnityEngine.Random.Range(MinigameConstants.MINIGAME_NPC_MIN_RANGE, MinigameConstants.MINIGAME_NPC_MAX_RANGE));
         int npcSafetyScore = (int) (GetExpectedSafetyScore(currentDay, mechanics, maneuverability) * UnityEngine.Random.Range(MinigameConstants.MINIGAME_NPC_MIN_RANGE, MinigameConstants.MINIGAME_NPC_MAX_RANGE));
-        int npcTotalScore = (int) (npcDestructionScore - npcSafetyScore);
+        int npcTotalScore = npcDestructionScore - npcSafetyScore;
           
         _leaderboard[i].totalScore += npcTotalScore;
       }
     }
+    OnScoreUpdated?.Invoke();
   }
 
   public List<LeaderboardEntry> GetSortedLeaderboard(bool ascending = false)

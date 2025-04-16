@@ -64,14 +64,16 @@ public class OverworldTimeController : MonoBehaviour
             minute = 0;
             hour++;
             if (hour == 24)
-            {
-                hour = 0;
+            {  
                 if (_gameDataManager.CurrentDay == GameConstants.TOTAL_NUMBER_OF_DAYS)
-                {
+                {   
+                    _gameDataManager.CurrentTime = "23:50";
+                    SavedDataManager.SaveGameData(_gameDataManager.GameData);
                     OnLastDayEnded?.Invoke();
                 }
                 else
                 {
+                    hour = 0;
                     _gameDataManager.CurrentDay++;
                     SavedDataManager.SaveGameData(_gameDataManager.GameData);
                     OnNewDayStarted?.Invoke();
