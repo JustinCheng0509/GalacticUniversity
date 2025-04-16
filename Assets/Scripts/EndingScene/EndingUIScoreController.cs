@@ -39,7 +39,7 @@ public class EndingUIScoreController : MonoBehaviour
     {
         // Update the score UI
         _attendanceText.text = GetAttendancePercentage().ToString("P1");
-        _homeworkText.text = GetHomeworkPercentage().ToString("P1");
+        _homeworkText.text = GetHomeworkPercentage().ToString("F1") + "%";
         _damageDealText.text = _gameDataManager.ScoreDataManager.TotalDamageDealt.ToString();
         _dangerDestroyedText.text = _gameDataManager.ScoreDataManager.DangersDestroyedScore.ToString();
         _damageTakenText.text = _gameDataManager.ScoreDataManager.TotalDamageTaken.ToString();

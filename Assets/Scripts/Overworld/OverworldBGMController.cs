@@ -67,15 +67,10 @@ public class OverworldBGMController : MonoBehaviour
             _audioSource.Play();
             yield return new WaitForSeconds(transitionClip.length); // Wait until the transition clip is finished
         }
-
+        _audioSource.Stop();
         // Switch to the new BGM and fade it in
         _audioSource.clip = newBGM;
+        _audioSource.volume = 1;
         _audioSource.Play();
-        _audioSource.volume = 0; 
-        while (_audioSource.volume < targetVolume)
-        {
-            _audioSource.volume += Time.unscaledDeltaTime / 1; //fade 
-            yield return null;
-        }
     }
 }
