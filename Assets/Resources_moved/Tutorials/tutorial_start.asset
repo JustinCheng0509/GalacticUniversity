@@ -16,6 +16,6 @@ MonoBehaviour:
   title: Welcome
   description: 'Welcome to Galactic University! You have been accepted as one of
     the spaceship pilot trainees in the most prestigious university in the galaxy.
-    Become the best student in the school and have fun! \n\nUse WASD to move. E to
-    interact when prompted. Spacebar to shoot (when controlling the spaceship)\n\nNow,
-    try to follow the schedule in the top left panel. '
+    Become the best student in the school and have fun! \n\nUse WASD or arrow keys
+    to move. E to interact when prompted. Spacebar to shoot (when controlling the
+    spaceship)\n\nNow, try to follow the schedule in the top left panel. '

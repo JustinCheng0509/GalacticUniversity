@@ -53,7 +53,7 @@ public class MinigamePlayerShooting : MonoBehaviour
         // Debug.Log($"Shoot Value: {shootValue}");
         if (shootValue > 0.5f && Time.time > nextFireTime)
         {
-            Debug.Log("Shooting");
+            // Debug.Log("Shooting");
             Fire();
             nextFireTime = Time.time + fireRate;
         }

@@ -20,7 +20,7 @@ MonoBehaviour:
   currentValue: 0
   itemID: 0
   navigationTag: 
-  navigationCompleteTag: 
+  navigationCompleteTag: npc_1
   startDialog: {fileID: 11400000, guid: a4a52b870d5bb094d84fac60f740687c, type: 2}
   incompleteDialog: {fileID: 11400000, guid: 4227204a0d6f9344998d8d509943056d, type: 2}
   completeDialog: {fileID: 11400000, guid: debda272da22b4344a7e4740bd452f51, type: 2}

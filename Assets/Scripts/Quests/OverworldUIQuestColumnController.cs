@@ -30,6 +30,7 @@ public class OverworldUIQuestColumnController : MonoBehaviour
     {
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
         _gameDataManager.OnActiveQuestsUpdated += HandleQuestUpdate;
+        _gameDataManager.OnPotentialQuestProgressUpdated += () => OnQuestSelected?.Invoke(_selectedQuest);
         _layoutController = FindAnyObjectByType<OverworldUILayoutController>();
     }
 

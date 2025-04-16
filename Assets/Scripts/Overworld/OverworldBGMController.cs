@@ -30,7 +30,7 @@ public class OverworldBGMController : MonoBehaviour
         return OverworldTimeController.IsWithinTimeRange(
             _gameDataManager.CurrentTime,
             "05:30",
-            "19:00"
+            "18:30"
         );
     }
 

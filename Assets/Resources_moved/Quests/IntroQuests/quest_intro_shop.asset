@@ -20,8 +20,8 @@ MonoBehaviour:
   targetValue: 0
   currentValue: 0
   itemID: 0
-  navigationTag: NAVIGATION_SHOP
-  navigationCompleteTag: NAVIGATION_SHOP
+  navigationTag: NavigationShop
+  navigationCompleteTag: NavigationShop
   startDialog: {fileID: 0}
   incompleteDialog: {fileID: 0}
   completeDialog: {fileID: 11400000, guid: 57da5aeacc0723f49a1bc96cd93b5e45, type: 2}
