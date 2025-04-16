@@ -29,4 +29,6 @@ MonoBehaviour:
   learningSpeedBonus: 0
   shopItemDiscount: 0
   workMoneyBonus: 0
-  shipFireRateIncrease: 40
+  shipFireRateIncrease: 30
+  shipDamageIncrease: 0
+  shipDamageTakenDecrease: 0
