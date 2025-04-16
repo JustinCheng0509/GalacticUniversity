@@ -415,6 +415,7 @@ public class GameDataManager : MonoBehaviour
         _gameData.shopItemDiscount = _inventoryManager.ShopItemDiscount;
         _gameData.shipFireRateIncrease = _inventoryManager.ShipFireRateIncrease;
         _gameData.shipDamageIncrease = _inventoryManager.ShipDamageIncrease;
+        _gameData.shipDamageTakenDecrease = _inventoryManager.ShipDamageTakenDecrease;
         OnPotentialQuestProgressUpdated?.Invoke();
     }
 

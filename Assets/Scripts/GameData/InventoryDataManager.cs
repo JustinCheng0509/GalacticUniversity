@@ -15,6 +15,7 @@ public class InventoryDataManager
     public float ShopItemDiscount { get; private set; }
     public float ShipFireRateIncrease { get; private set; }
     public float ShipDamageIncrease { get; private set; }
+    public float ShipDamageTakenDecrease { get; private set; }
 
     public List<InventoryItem> Inventory => _inventory;
 
@@ -89,6 +90,7 @@ public class InventoryDataManager
         ShopItemDiscount += item.shopItemDiscount;
         ShipFireRateIncrease += item.shipFireRateIncrease;
         ShipDamageIncrease += item.shipDamageIncrease;
+        ShipDamageTakenDecrease += item.shipDamageTakenDecrease;
     }
 
     private void RecalculateBonuses()
@@ -100,6 +102,7 @@ public class InventoryDataManager
         ShopItemDiscount = 0;
         ShipFireRateIncrease = 0;
         ShipDamageIncrease = 0;
+        ShipDamageTakenDecrease = 0;
 
         foreach (var inventoryItem in _inventory)
         {

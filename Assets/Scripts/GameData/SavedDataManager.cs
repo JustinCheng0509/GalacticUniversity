@@ -88,6 +88,7 @@ public class SavedDataManager : MonoBehaviour
             workshopMoneyBonus = 0,
             shipFireRateIncrease = 0,
             shipDamageIncrease = 0,
+            shipDamageTakenDecrease = 0,
         };
 
         SaveGameData(newGameData);
