@@ -121,7 +121,7 @@ public class OverworldUIInteractionController : MonoBehaviour
             case var value when value == GameConstants.INTERACTABLE_TAG_SLEEP: return "(E) Sleep";
             case var value when value == GameConstants.INTERACTABLE_TAG_HOMEWORK: return "(E) Do homework";
             case var value when value == GameConstants.INTERACTABLE_TAG_NPC: return "(E) Interact";
-            case var value when value == GameConstants.INTERACTABLE_TAG_SHOP: return "(E) Buy food";
+            case var value when value == GameConstants.INTERACTABLE_TAG_SHOP: return "(E) Buy items";
             case var value when value == GameConstants.INTERACTABLE_TAG_PLAY: return "(E) Play";
             case var value when value == GameConstants.INTERACTABLE_TAG_WORK: return "(E) Work";
             case var value when value == GameConstants.INTERACTABLE_TAG_CHEST: return "(E) Open chest";
