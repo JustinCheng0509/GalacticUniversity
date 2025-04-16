@@ -36,6 +36,10 @@ public class OverworldPlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _overworldPlayerStatusController = FindAnyObjectByType<OverworldPlayerStatusController>();
         _gameDataManager = FindAnyObjectByType<GameDataManager>();
+        // Set the position to the saved position if it exists
+        if (_gameDataManager != null) {
+            transform.position = new Vector3(_gameDataManager.OverworldPosX, _gameDataManager.OverworldPosY, transform.position.z);
+        }
     }
 
     private void Update() {
@@ -62,6 +66,11 @@ public class OverworldPlayerMovement : MonoBehaviour
             moveSpeed = _moveSpeed + _moveSpeed * _gameDataManager.MoveSpeedBonus / 100;
         }
         _rb.linearVelocity = new Vector2(_moveDirection.x * _moveSpeed, _moveDirection.y * moveSpeed);    
+        // Save the position to the game data
+        if (_gameDataManager != null) {
+            _gameDataManager.OverworldPosX = transform.position.x;
+            _gameDataManager.OverworldPosY = transform.position.y;
+        }
     }
 
     private void PlayFootstepSound() {

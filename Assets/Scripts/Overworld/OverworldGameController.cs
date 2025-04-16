@@ -69,4 +69,19 @@ public class OverworldGameController : MonoBehaviour
             _dialogController.SetDialog(quest.completeDialog);
         }
     }
+
+    public void SaveAndQuit()
+    {
+        SavedDataManager.SaveGameData(_gameDataManager.GameData);
+        Application.Quit();
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+    }
+
+    public void SaveAndBackToMenu()
+    {
+        SavedDataManager.SaveGameData(_gameDataManager.GameData);
+        _switchScene.FadeOutScene(GameConstants.SCENE_MAIN_MENU, 1f);
+    }
 }

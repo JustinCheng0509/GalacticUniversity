@@ -117,6 +117,7 @@ public class MinigameController : MonoBehaviour
         Time.timeScale = 1; // Ensure time is running normally
         // Set currentTime to 16:00
         _gameDataManager.CurrentTime = GameConstants.CLASS_END_TIME;
+        _gameDataManager.CurrentScene = GameConstants.SCENE_OVERWORLD;
         SavedDataManager.SaveGameData(_gameDataManager.GameData);
         _switchScene.FadeOutScene(GameConstants.SCENE_OVERWORLD);
     }

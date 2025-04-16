@@ -69,6 +69,8 @@ public class OverworldUIQuestItemController : MonoBehaviour
             _gameDataManager = FindAnyObjectByType<GameDataManager>();
         }
         
+        if (quest == null) return;
+        
         _quest = quest;
         questTitleText.text = quest.questName;
         questDescriptionText.text = quest.questDescription;
