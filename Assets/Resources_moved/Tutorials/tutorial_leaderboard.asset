@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialID: tutorial_leaderboard
   title: The Leaderboards
-  description: 'The leaderboards record your performance in class and compare it
-    to other classmates. There are 3 leaderboards: total points, destruction (damage
-    dealth), and safety (damage taken).\n\nContinue improving your skills to score
-    high on the leaderboard!'
+  description: The leaderboards record your performance in class and compare it to
+    other classmates.\n\nContinue improving your skills to score high on the leaderboard!
