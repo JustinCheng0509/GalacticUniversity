@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 34791afe9e55522448f26e9fe9d7f846
+guid: d3a29dfb649cdc54485b64b30dc17448
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1342497298904750792
-    second: IMG_6380_0
+      213: 1361679380657661880
+    second: IMG_6402_0
+  - first:
+      213: 770063795977999846
+    second: IMG_6402_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +49,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1280
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,11 +100,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-<<<<<<< Updated upstream
     buildTarget: WebGL
-=======
-    buildTarget: WindowsStoreApps
->>>>>>> Stashed changes
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -117,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_6380_0
+      name: IMG_6402_0
       rect:
         serializedVersion: 2
-        x: 117
-        y: 0
-        width: 266
-        height: 500
+        x: 24
+        y: 852
+        width: 63
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,8 +131,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8ca93253e2281a210800000000000000
-      internalID: 1342497298904750792
+      spriteID: 8b7e216ae28a5e210800000000000000
+      internalID: 1361679380657661880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IMG_6402_1
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 0
+        width: 1039
+        height: 1585
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e558a541f0dfaa00800000000000000
+      internalID: 770063795977999846
       vertices: []
       indices: 
       edges: []
@@ -142,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -152,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IMG_6380_0: 1342497298904750792
+      IMG_6402_0: 1361679380657661880
+      IMG_6402_1: 770063795977999846
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
