@@ -411,6 +411,7 @@ public class GameDataManager : MonoBehaviour
         _gameData.learningSpeedBonus = _inventoryManager.LearningSpeedBonus;
         _gameData.workshopMoneyBonus = _inventoryManager.WorkshopMoneyBonus;
         _gameData.shopItemDiscount = _inventoryManager.ShopItemDiscount;
+        _gameData.shipFireRateIncrease = _inventoryManager.ShipFireRateIncrease;
         OnPotentialQuestProgressUpdated?.Invoke();
     }
 

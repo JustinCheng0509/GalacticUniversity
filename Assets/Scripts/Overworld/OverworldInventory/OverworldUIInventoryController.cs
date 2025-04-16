@@ -125,6 +125,10 @@ public class OverworldUIInventoryController : MonoBehaviour
         {
             description += "Bonus money from workshop: +" + item.workMoneyBonus + "%\n";
         }
+        if (item.shipFireRateIncrease > 0)
+        {
+            description += "Ship fire rate increase: +" + item.shipFireRateIncrease + "%\n";
+        }
         return description;
     }
 }

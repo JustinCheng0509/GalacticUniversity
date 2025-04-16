@@ -13,6 +13,7 @@ public class InventoryDataManager
     public float LearningSpeedBonus { get; private set; }
     public float WorkshopMoneyBonus { get; private set; }
     public float ShopItemDiscount { get; private set; }
+    public float ShipFireRateIncrease { get; private set; }
 
     public List<InventoryItem> Inventory => _inventory;
 
@@ -85,6 +86,7 @@ public class InventoryDataManager
         LearningSpeedBonus += item.learningSpeedBonus;
         WorkshopMoneyBonus += item.workMoneyBonus;
         ShopItemDiscount += item.shopItemDiscount;
+        ShipFireRateIncrease += item.shipFireRateIncrease;
     }
 
     private void RecalculateBonuses()
@@ -94,6 +96,7 @@ public class InventoryDataManager
         LearningSpeedBonus = 0;
         WorkshopMoneyBonus = 0;
         ShopItemDiscount = 0;
+        ShipFireRateIncrease = 0;
 
         foreach (var inventoryItem in _inventory)
         {

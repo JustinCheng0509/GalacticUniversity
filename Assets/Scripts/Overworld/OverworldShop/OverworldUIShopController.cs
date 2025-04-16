@@ -70,6 +70,12 @@ public class OverworldUIShopController : MonoBehaviour
         }
         _itemValueText.text = "$" + itemValue.ToString();
         _buyButton.onClick.RemoveAllListeners();
+        if (item.hasPassiveEffect && _gameDataManager.InventoryManager.GetItemCount(item) > 0)
+        {
+            _itemValueText.text = "Already owned";
+            _buyButton.gameObject.SetActive(false);
+            return;
+        }
         _buyButton.onClick.AddListener(() => BuyItem(item));
         _buyButton.gameObject.SetActive(true);
     }
@@ -91,5 +97,10 @@ public class OverworldUIShopController : MonoBehaviour
         _gameDataManager.InventoryManager.AddItem(item);
         _gameDataManager.Money -= itemValue;
         _sfxAudioSource.PlayOneShot(_buyItemAudioClip);
+
+        if (item.hasPassiveEffect)
+        {
+            SelectItem(item);
+        }
     }
 }

@@ -23,4 +23,5 @@ public class Item : ScriptableObject
     public float learningSpeedBonus;
     public float shopItemDiscount;
     public float workMoneyBonus;
+    public float shipFireRateIncrease;
 }
